@@ -5,7 +5,7 @@ import (
 	"nuga/pkg/color"
 )
 
-// ColorState represents keyboard color state.
+// BacklightColors represents keyboard color state.
 type BacklightColors [ModesCount][ModeColorsCount]color.RGB
 
 // Set color to state.
@@ -13,12 +13,12 @@ func (b *BacklightColors) Set(modeIndex uint8, colorIndex uint8, color *color.RG
 	b[modeIndex][colorIndex] = *color
 }
 
-// SetMacBacklight color to state.
+// SetMac color to state.
 func (b *BacklightColors) SetMac(modeIndex uint8, colorIndex uint8, color *color.RGB) {
 	b.Set(modeIndex+ModesCount, colorIndex, color)
 }
 
-// SetWinBacklight color to state.
+// SetWin color to state.
 func (b *BacklightColors) SetWin(modeIndex uint8, colorIndex uint8, color *color.RGB) {
 	b.Set(modeIndex, colorIndex, color)
 }
@@ -66,7 +66,7 @@ func (b *BacklightColors) toSlice(modes [][7]color.RGB) [][]color.RGB {
 	return result
 }
 
-// ParseColors parses the raw byte slice into ColorState.
+// ParseBacklightColors parses the raw byte slice into BacklightColors.
 func ParseBacklightColors(data []byte) *BacklightColors {
 	var colors BacklightColors
 	var offset int
@@ -83,7 +83,7 @@ func ParseBacklightColors(data []byte) *BacklightColors {
 	return &colors
 }
 
-// ColorsFromSlice loads color state from colors slice
+// BacklightColorsFromSlice loads color state from colors slice
 func BacklightColorsFromSlice(modes [][]color.RGB) *BacklightColors {
 	var colors BacklightColors
 	for effect := 0; effect < ModesCount; effect++ {

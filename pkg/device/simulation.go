@@ -4,12 +4,13 @@ import (
 	"nuga/pkg/features"
 )
 
+// OpenSimulation creates simulated features
 func OpenSimulation(t *features.SimulationTemplate) (*Device, error) {
-	name, err := TrimVendorPrefix(t.Name)
+	name, err := trimVendorPrefix(t.Name)
 	if err != nil {
 		return nil, err
 	}
-	if !IsSupported(name) {
+	if !isSupported(name) {
 		return nil, ErrNotSupported
 	}
 	repo := features.NewSimulation(t)

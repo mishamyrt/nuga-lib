@@ -1,3 +1,4 @@
+// Package hid contains utils for working with human interface devices
 package hid
 
 import (

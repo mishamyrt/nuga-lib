@@ -22,7 +22,7 @@ func (m Mask) IsSet(bits ...Mask) bool {
 	}, true)
 }
 
-// IsSetAny checks if any of bits is set.
+// IsAnySet checks if any of bits is set.
 func (m Mask) IsAnySet(bits ...Mask) bool {
 	return m.assert(bits, func(feature Mask) bool {
 		return m&feature != 0

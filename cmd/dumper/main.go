@@ -1,3 +1,4 @@
+// Simulation template dumper
 package main
 
 import (

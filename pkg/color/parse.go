@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-// ErrInvalidValue is returned when HEX color string format is unexpected
+// ErrInvalidFormat is returned when HEX color string format is unexpected
 var ErrInvalidFormat = errors.New("invalid hex color string")
 
 // ParseHex converts a string with HEX color into an RGB structure

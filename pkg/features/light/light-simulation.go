@@ -14,7 +14,7 @@ type FeatureSimulation struct {
 	colors  *BacklightColors
 }
 
-// OpenSimulation returns simulated light from template.
+// NewSimulation creates simulated light from template.
 func NewSimulation(t *SimulationTemplate) *FeatureSimulation {
 	feature := new(FeatureSimulation)
 	setupSimulation(feature, t)
@@ -32,12 +32,12 @@ func (f *FeatureSimulation) SetEffects(effects *Effects) error {
 	return nil
 }
 
-// GetColors returns current simulated color.
+// GetBacklightColors returns current simulated colors.
 func (f *FeatureSimulation) GetBacklightColors() (*BacklightColors, error) {
 	return f.colors, nil
 }
 
-// SetColors sets current simulated color.
+// SetBacklightColors sets current simulated colors.
 func (f *FeatureSimulation) SetBacklightColors(c *BacklightColors) error {
 	f.colors = c
 	return nil

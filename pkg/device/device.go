@@ -25,11 +25,11 @@ func Open() (*Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	name, err := TrimVendorPrefix(info.Name)
+	name, err := trimVendorPrefix(info.Name)
 	if err != nil {
 		return nil, err
 	}
-	if !IsSupported(name) {
+	if !isSupported(name) {
 		return nil, ErrNotSupported
 	}
 	repo := features.New(handle)

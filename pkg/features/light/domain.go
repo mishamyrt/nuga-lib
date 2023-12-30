@@ -181,7 +181,7 @@ var (
 	}
 )
 
-// Backlight is a list of backlight effects.
+// BacklightDomain is a domain of backlight effects.
 var BacklightDomain = Domain{
 	Name: "Backlight",
 	Modes: []Mode{
@@ -203,7 +203,7 @@ var BacklightDomain = Domain{
 	},
 }
 
-// Halo is a domain for halolight effects.
+// HaloDomain is a domain of halolight effects.
 var HaloDomain = Domain{
 	Name: "Halo",
 	Modes: []Mode{
@@ -215,7 +215,7 @@ var HaloDomain = Domain{
 	},
 }
 
-// Sidelight is a domain for sidelight effects.
+// SidelightDomain is a domain of sidelight effects.
 var SidelightDomain = Domain{
 	Name: "Sidelight",
 	Modes: []Mode{

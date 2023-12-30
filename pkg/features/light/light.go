@@ -5,11 +5,12 @@ import (
 	"nuga/pkg/hid"
 )
 
+// Feature represents keyboard light feature
 type Feature struct {
 	handle *hid.Device
 }
 
-// Open BYK916 NuPhy keyboard lights.
+// New creates light feature instance.
 func New(handle *hid.Device) *Feature {
 	return &Feature{
 		handle: handle,

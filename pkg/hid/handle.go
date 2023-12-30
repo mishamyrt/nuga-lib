@@ -25,6 +25,7 @@ type Device struct {
 	lock   *sync.Mutex
 }
 
+// Debug returns instance of device with enabled verbose logging
 func (d *Device) Debug() *Device {
 	dev := *d
 	dev.debug = true
@@ -146,7 +147,7 @@ func (d *Device) waitSync() {
 	time.Sleep(time.Millisecond * 50)
 }
 
-// OpenHandle opens a connection to the device
+// Open connection with the device
 func Open() (*Device, error) {
 	var path string
 	err := hid.Enumerate(0x05AC, 0x024F, func(info *hid.DeviceInfo) error {
