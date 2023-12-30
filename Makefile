@@ -27,3 +27,7 @@ test:
 .PHONY: build
 build:
 	$(call build_app,dumper)
+
+.PHONY: changelog
+changelog:
+	git-chglog -o CHANGELOG.md
