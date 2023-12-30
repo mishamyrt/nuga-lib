@@ -1,0 +1,35 @@
+name: Quality assurance
+
+on:
+  - push
+  - workflow_dispatch
+
+env:
+  GO_VERSION: '1.21.4'
+  PNPM_VERSION: '8.13.1'
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: Install C/C++ deps
+        run: sudo apt install libudev-dev -y
+      - name: Install project deps
+        run: go mod tidy
+
+      - name: Test
+        run: make test
+      - name: Check code style with golangci-lint
+        uses: golangci/golangci-lint-action@v3
+      - name: Check code style with revive
+        uses: docker://morphy/revive-action:v2
+        with:
+          config: revive.toml
+          path: "./..."
