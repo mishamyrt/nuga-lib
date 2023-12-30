@@ -12,6 +12,7 @@ options:
         - perf
         - ci
         - refactor
+        - test
   commit_groups:
     title_maps:
       feat: Features
@@ -19,6 +20,7 @@ options:
       perf: Performance Improvements
       refactor: Refactoring
       ci: CI
+      test: Testing
   header:
     pattern: "^(\\w*)\\:\\s(.*)$"
     pattern_maps:
