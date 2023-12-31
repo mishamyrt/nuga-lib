@@ -1,3 +1,4 @@
+// Keyboard describe example app
 package main
 
 import (
