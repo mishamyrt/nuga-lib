@@ -4,7 +4,7 @@ GIT_CHGLOG = v0.15.4
 GO_BIN_PATH := $(shell go env GOPATH)/bin
 
 define build_app
-	cd "cmd/$1"; go build -o ../../build/
+	cd "cmd/$1"; go build -o "../../build/nuga-$1"
 endef
 
 .PHONY: setup
@@ -26,7 +26,7 @@ test:
 
 .PHONY: build
 build:
-	$(call build_app,dumper)
+	$(call build_app,simulation)
 
 .PHONY: changelog
 changelog:
