@@ -14,7 +14,7 @@ const reportIDRead = 6
 // DeviceInfo represents keyboard handle information
 type DeviceInfo struct {
 	Name     string
-	Firmware string
+	Firmware uint16
 	Path     string
 }
 
@@ -38,6 +38,9 @@ func (d *Device) GetInfo() (*DeviceInfo, error) {
 	if err != nil {
 		return nil, err
 	}
+	if err != nil {
+		return nil, err
+	}
 	info, err := d.handle.GetDeviceInfo()
 	if err != nil {
 		return nil, err
@@ -45,7 +48,7 @@ func (d *Device) GetInfo() (*DeviceInfo, error) {
 	return &DeviceInfo{
 		Name:     name,
 		Path:     info.Path,
-		Firmware: formatVersion(info.ReleaseNbr),
+		Firmware: info.ReleaseNbr,
 	}, nil
 }
 

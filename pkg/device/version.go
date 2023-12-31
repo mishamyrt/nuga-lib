@@ -1,8 +1,8 @@
-package hid
+package device
 
 import "strconv"
 
-func formatVersion(v uint16) string {
+func FormatVersion(v uint16) string {
 	symbols := strconv.FormatInt(int64(v), 16)
 	version := ""
 	for i := range symbols {

@@ -1,25 +1,12 @@
 package device
 
-import (
-	"slices"
-	"strings"
-)
+import "strings"
 
-const vendorPrefix = "NuPhy "
+const VendorPrefix = "NuPhy "
 
-var supportedModels = []string{
-	"Halo96",
-	"Halo75",
-	"Halo65",
-}
-
-func trimVendorPrefix(hidName string) (string, error) {
-	if !strings.HasPrefix(hidName, vendorPrefix) {
+func TrimVendorPrefix(hidName string) (string, error) {
+	if !strings.HasPrefix(hidName, VendorPrefix) {
 		return "", ErrWrongVendor
 	}
-	return strings.TrimPrefix(hidName, vendorPrefix), nil
-}
-
-func isSupported(model string) bool {
-	return slices.Contains(supportedModels, model)
+	return strings.TrimPrefix(hidName, VendorPrefix), nil
 }
