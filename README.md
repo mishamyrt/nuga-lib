@@ -1,6 +1,6 @@
 <p align="center">
     <img src="./docs/logo@2x.png" alt="Nuga library Logo" width="150" />
-    <h2 align="center">Nuga library</h3>
+    <h3 align="center">Nuga library</h3>
     <p align="center">Go interface for BYK916 NuPhy® keyboards</p>
     <p align="center">
         <a href="https://github.com/mishamyrt/nuga-lib/actions/workflows/quality-assurance.yaml">
