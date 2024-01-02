@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"nuga/pkg/features"
+	"nuga"
 )
 
-func describe(t *features.SimulationTemplate) {
+func describe(t *nuga.SimulationTemplate) {
 	fmt.Printf("Name: %v\n", t.Name)
 	fmt.Printf("Firmware version: %v\n", t.Firmware)
 }

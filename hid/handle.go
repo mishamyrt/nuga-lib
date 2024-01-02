@@ -9,17 +9,19 @@ import (
 )
 
 const requestRetries = 5
-const reportIDRead = 6
 
-// DeviceInfo represents keyboard handle information
-type DeviceInfo struct {
-	Name     string
-	Firmware uint16
-	Path     string
-}
+const (
+	readReportID   = 0x06
+	nuphyVendorID  = 0x05AC
+	nuphyProductID = 0x024F
+	nuphyUsagePage = 0xFF00
+	nuphyUsage     = 0x01
+)
 
-// Device represents backlight device handle.
+// Device represents NuPhy device handle.
 type Device struct {
+	Info *DeviceInfo
+
 	handle *hid.Device
 	debug  bool
 	lock   *sync.Mutex
@@ -30,26 +32,6 @@ func (d *Device) Debug() *Device {
 	dev := *d
 	dev.debug = true
 	return &dev
-}
-
-// GetInfo returns handle device information.
-func (d *Device) GetInfo() (*DeviceInfo, error) {
-	name, err := d.handle.GetProductStr()
-	if err != nil {
-		return nil, err
-	}
-	if err != nil {
-		return nil, err
-	}
-	info, err := d.handle.GetDeviceInfo()
-	if err != nil {
-		return nil, err
-	}
-	return &DeviceInfo{
-		Name:     name,
-		Path:     info.Path,
-		Firmware: info.ReleaseNbr,
-	}, nil
 }
 
 // SendWithRetries sends the request and re-sends it if the request fails.
@@ -96,7 +78,7 @@ func (d *Device) Read(count int) ([]byte, error) {
 	d.lock.Lock()
 	defer d.lock.Unlock()
 	buf := make([]byte, count)
-	buf[0] = reportIDRead
+	buf[0] = readReportID
 	length, err := d.handle.GetFeatureReport(buf)
 	if err != nil {
 		return nil, err
@@ -153,8 +135,8 @@ func (d *Device) waitSync() {
 // Open connection with the device
 func Open() (*Device, error) {
 	var path string
-	err := hid.Enumerate(0x05AC, 0x024F, func(info *hid.DeviceInfo) error {
-		if info.Usage == 1 && info.UsagePage == 0xFF00 {
+	err := hid.Enumerate(nuphyVendorID, nuphyProductID, func(info *hid.DeviceInfo) error {
+		if info.Usage == nuphyUsage && info.UsagePage == nuphyUsagePage {
 			path = info.Path
 		}
 		return nil
@@ -169,7 +151,12 @@ func Open() (*Device, error) {
 	if err != nil {
 		return nil, err
 	}
+	info, err := GetDeviceInfo(handle)
+	if err != nil {
+		return nil, err
+	}
 	return &Device{
+		Info:   info,
 		handle: handle,
 		lock:   new(sync.Mutex),
 	}, nil

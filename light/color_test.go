@@ -1,16 +1,16 @@
-package color_test
+package light_test
 
 import (
 	"errors"
-	"nuga/pkg/color"
+	"nuga/light"
 	"testing"
 )
 
 func TestParseHexValidLong(t *testing.T) {
 	t.Parallel()
 	hexString := "#1a2b3c"
-	expectedRGB := color.RGB{R: 0x1a, G: 0x2b, B: 0x3c}
-	result, err := color.ParseHex(hexString)
+	expectedRGB := light.RGB{R: 0x1a, G: 0x2b, B: 0x3c}
+	result, err := light.ParseHexColor(hexString)
 	if err != nil {
 		t.Errorf("Unexpected error: %v", err)
 	}
@@ -22,8 +22,8 @@ func TestParseHexValidLong(t *testing.T) {
 func TestParseHexValidShort(t *testing.T) {
 	t.Parallel()
 	hexString := "#f00"
-	expectedRGB := color.RGB{R: 0xFF, G: 0, B: 0}
-	result, err := color.ParseHex(hexString)
+	expectedRGB := light.RGB{R: 0xFF, G: 0, B: 0}
+	result, err := light.ParseHexColor(hexString)
 	if err != nil {
 		t.Errorf("Unexpected error: %v", err)
 	}
@@ -34,14 +34,15 @@ func TestParseHexValidShort(t *testing.T) {
 
 func TestParseHexInvalid(t *testing.T) {
 	t.Parallel()
-	value, err := color.ParseHex("invalid_hex")
+	value, err := light.ParseHexColor("invalid_hex")
+	expectedErr := light.ErrInvalidColorFormat
 	if err == nil {
 		t.Error("Expected error, but got none")
 	}
 	if value != nil {
 		t.Errorf("Expected nil value, but got %v", value)
 	}
-	if !errors.Is(err, color.ErrInvalidFormat) {
-		t.Errorf("Expected: %v, Got: %v", color.ErrInvalidFormat, err)
+	if !errors.Is(err, expectedErr) {
+		t.Errorf("Expected: %v, Got: %v", expectedErr, err)
 	}
 }

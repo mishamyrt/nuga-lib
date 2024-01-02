@@ -1,19 +1,18 @@
-// Package features contains controllable keyboard features.
-package features
+package nuga
 
 import (
-	"nuga/pkg/features/light"
-	"nuga/pkg/hid"
+	"nuga/hid"
+	"nuga/light"
 )
 
-// Repository represents keyboard features repository.
-type Repository struct {
+// Features represents keyboard features repository.
+type Features struct {
 	Light LightFeature
 }
 
-// New creates repository instance
-func New(handle *hid.Device) *Repository {
-	return &Repository{
+// NewFeaturesWith creates Features instance with handle
+func NewFeaturesWith(handle *hid.Device) *Features {
+	return &Features{
 		Light: light.New(handle),
 	}
 }

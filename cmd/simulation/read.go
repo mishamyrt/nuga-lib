@@ -2,16 +2,16 @@ package main
 
 import (
 	"encoding/json"
-	"nuga/pkg/features"
+	"nuga"
 	"os"
 )
 
-func readTemplate(filePath string) (*features.SimulationTemplate, error) {
+func readTemplate(filePath string) (*nuga.SimulationTemplate, error) {
 	content, err := os.ReadFile(filePath)
 	if err != nil {
 		return nil, err
 	}
-	var template features.SimulationTemplate
+	var template nuga.SimulationTemplate
 	err = json.Unmarshal(content, &template)
 	if err != nil {
 		return nil, err

@@ -2,16 +2,15 @@ package main
 
 import (
 	"encoding/json"
+	"nuga"
+	"nuga/hid"
 	"nuga/internal/slices"
-	"nuga/pkg/device"
-	"nuga/pkg/features"
-	"nuga/pkg/features/light"
-	"nuga/pkg/hid"
+	"nuga/light"
 	"os"
 )
 
-func collectTemplate() (*features.SimulationTemplate, error) {
-	err := hid.Init()
+func collectTemplate() (*nuga.SimulationTemplate, error) {
+	err := nuga.Init()
 	if err != nil {
 		return nil, err
 	}
@@ -24,7 +23,6 @@ func collectTemplate() (*features.SimulationTemplate, error) {
 	if err != nil {
 		return nil, err
 	}
-	info, err := handle.GetInfo()
 	if err != nil {
 		return nil, err
 	}
@@ -32,9 +30,9 @@ func collectTemplate() (*features.SimulationTemplate, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &features.SimulationTemplate{
-		Name:     info.Name,
-		Firmware: device.FormatVersion(info.Firmware),
+	return &nuga.SimulationTemplate{
+		Name:     handle.Info.Model,
+		Firmware: handle.Info.Firmware,
 		Lights: &light.SimulationTemplate{
 			Colors: slices.Cast[byte, int](colors),
 			Params: slices.Cast[byte, int](params),

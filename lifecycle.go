@@ -1,4 +1,4 @@
-package hid
+package nuga
 
 import "github.com/sstallion/go-hid"
 

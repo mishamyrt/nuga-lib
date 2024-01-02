@@ -3,25 +3,24 @@ package main
 
 import (
 	"fmt"
-	"nuga/internal/bit"
-	"nuga/pkg/device"
+	"nuga"
 )
 
-func collectSupports(supports bit.Mask) []string {
+func collectFeatures(c *nuga.Capability) []string {
 	names := make([]string, 0)
-	if supports.IsSet(device.SupportsBacklight) {
+	if c.Has(nuga.BacklightCapability) {
 		names = append(names, "backlight")
 	}
-	if supports.IsSet(device.SupportsHalolight) {
+	if c.Has(nuga.HalolightCapability) {
 		names = append(names, "halolight")
 	}
-	if supports.IsSet(device.SupportsSidelight) {
+	if c.Has(nuga.SidelightCapability) {
 		names = append(names, "sidelight")
 	}
 	return names
 }
 
-func describe(d *device.Device, supports []string) {
+func describe(d *nuga.Device, supports []string) {
 	fmt.Printf("Model: %v\n", d.Name)
 	fmt.Printf("Firmware: %v\n", d.Firmware)
 	fmt.Printf("Path: %v\n", d.Path)
@@ -32,10 +31,10 @@ func describe(d *device.Device, supports []string) {
 }
 
 func main() {
-	dev, err := device.Open()
+	dev, err := nuga.Open()
 	if err != nil {
 		fmt.Printf("Can't open device: %v", err)
 	}
-	supports := collectSupports(dev.Supports)
+	supports := collectFeatures(dev.Capabilities)
 	describe(dev, supports)
 }

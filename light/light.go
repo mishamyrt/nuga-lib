@@ -1,8 +1,7 @@
 package light
 
 import (
-	"nuga/pkg/color"
-	"nuga/pkg/hid"
+	"nuga/hid"
 )
 
 // Feature represents keyboard light feature
@@ -79,13 +78,13 @@ func (f *Feature) SetBacklightColors(colors *BacklightColors) error {
 func (f *Feature) ResetColors() error {
 	var colors BacklightColors
 	for i := range colors {
-		colors[i][0] = color.Red
-		colors[i][1] = color.Green
-		colors[i][2] = color.Blue
-		colors[i][3] = color.Yellow
-		colors[i][4] = color.Purple
-		colors[i][5] = color.Cyan
-		colors[i][6] = color.White
+		colors[i][0] = ColorRed
+		colors[i][1] = ColorGreen
+		colors[i][2] = ColorBlue
+		colors[i][3] = ColorYellow
+		colors[i][4] = ColorPurple
+		colors[i][5] = ColorCyan
+		colors[i][6] = ColorWhite
 	}
 	return f.SetBacklightColors(&colors)
 }
