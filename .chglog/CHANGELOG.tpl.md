@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 {{ range .Versions }}
-## [{{ if .Tag.Previous }}[{{ .Tag.Name }}]{{ else }}{{ .Tag.Name }}{{ end }}]({{ $.Info.RepositoryURL }}/releases/tag/{{ .Tag.Name }}) - {{ datetime "2006-01-02" .Tag.Date }}
+## [{{ .Tag.Name }}]({{ $.Info.RepositoryURL }}/releases/tag/{{ .Tag.Name }}) - {{ datetime "2006-01-02" .Tag.Date }}
 {{ range .CommitGroups -}}
 ### {{ .Title }}
 {{ range .Commits -}}
