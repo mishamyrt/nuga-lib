@@ -15,7 +15,7 @@ func (p *BacklightEffect) CurrentParams() *EffectParams {
 	return &p.Params[code-1]
 }
 
-// SetBrightness sets current effect brightness.
+// SetBrightness sets current effect brightness (0 to 4).
 func (p *BacklightEffect) SetBrightness(brightness uint8) error {
 	if p.Mode.Code == 0 {
 		return ErrLightsOff
@@ -27,7 +27,7 @@ func (p *BacklightEffect) SetBrightness(brightness uint8) error {
 	return nil
 }
 
-// SetSpeed sets current effect speed.
+// SetSpeed sets current effect speed (0 to 4).
 func (p *BacklightEffect) SetSpeed(speed uint8) error {
 	if p.Mode.Code == 0 {
 		return ErrLightsOff
@@ -42,7 +42,7 @@ func (p *BacklightEffect) SetSpeed(speed uint8) error {
 	return nil
 }
 
-// SetColor sets current effect color.
+// SetColor sets current effect color (0 to 7).
 func (p *BacklightEffect) SetColor(color uint8) error {
 	if p.Mode.Code == 0 {
 		return ErrLightsOff

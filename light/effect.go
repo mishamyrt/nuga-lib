@@ -10,7 +10,7 @@ type EffectParams struct {
 	Color uint8 `json:"color"`
 	// Speed represents effect speed. Number from 0 to 4
 	Speed uint8 `json:"speed"`
-	// Speed represents effect speed. Number from 0 to 4
+	// Speed represents effect brightness. Number from 0 to 4
 	Brightness uint8 `json:"brightness"`
 }
 
