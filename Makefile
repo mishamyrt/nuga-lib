@@ -2,6 +2,7 @@ GOLANGCI_LINT_VERSION = v1.55.2
 REVIVE_VERSION = v1.3.4
 GIT_CHGLOG_VERSION = v0.15.4
 GO_BIN_PATH := $(shell go env GOPATH)/bin
+TEST_MODULES := $(shell go list ./... | grep -v /cmd/)
 
 define build_app
 	cd "cmd/$1"; go build -o "../../build/nuga-$1"
@@ -22,7 +23,7 @@ lint:
 
 .PHONY: test
 test:
-	go test -cover ./internal... ./pkg...
+	go test -cover $(TEST_MODULES)
 
 .PHONY: build
 build:

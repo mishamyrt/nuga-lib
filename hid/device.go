@@ -27,21 +27,14 @@ type Device struct {
 	lock   *sync.Mutex
 }
 
-// Debug returns instance of device with enabled verbose logging
-func (d *Device) Debug() *Device {
-	dev := *d
-	dev.debug = true
-	return &dev
-}
-
-// SendWithRetries sends the request and re-sends it if the request fails.
-func (d *Device) SendWithRetries(payload []byte) error {
+// Send the request and re-sends it if the request fails.
+func (d *Device) Send(payload []byte) error {
 	var err error
 	for i := 0; i < requestRetries; i++ {
 		if d.debug {
 			log.Println("Send attempt", i+1)
 		}
-		err = d.Send(payload)
+		err = d.send(payload)
 		if err == nil {
 			return nil
 		}
@@ -53,7 +46,7 @@ func (d *Device) SendWithRetries(payload []byte) error {
 }
 
 // Send packet to the device.
-func (d *Device) Send(payload []byte) error {
+func (d *Device) send(payload []byte) error {
 	d.lock.Lock()
 	defer d.lock.Unlock()
 	if d.debug {
@@ -118,6 +111,18 @@ func (d *Device) Request(payload []byte, count int) ([]byte, error) {
 // The function should be called after the end of operation with the device.
 func (d *Device) Close() error {
 	return d.handle.Close()
+}
+
+// Debug returns instance of device with enabled verbose logging
+func (d *Device) Debug() *Device {
+	dev := *d
+	dev.debug = true
+	return &dev
+}
+
+// GetInfo returns HID device information
+func (d *Device) GetInfo() *DeviceInfo {
+	return d.Info
 }
 
 func (d *Device) tryRequest(payload []byte, count int) ([]byte, error) {

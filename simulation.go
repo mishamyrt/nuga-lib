@@ -4,6 +4,22 @@ import (
 	"nuga/light"
 )
 
+// OpenSimulation opens simulated keyboard
+func OpenSimulation(t *SimulationTemplate) (*Device, error) {
+	capabilities, err := GetCapabilities(t.Name)
+	if err != nil {
+		return nil, err
+	}
+	repo := NewFeaturesSimulation(t)
+	return &Device{
+		Name:         t.Name,
+		Path:         "/simulated/device/path",
+		Firmware:     t.Firmware,
+		Features:     repo,
+		Capabilities: capabilities,
+	}, nil
+}
+
 // SimulationTemplate represents the structure of the file that is used for simulation
 type SimulationTemplate struct {
 	Name     string

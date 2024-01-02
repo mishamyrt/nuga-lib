@@ -19,7 +19,7 @@ type Device struct {
 	Firmware     string
 	Capabilities *Capability
 	Features     *Features
-	handle       *hid.Device
+	handle       hid.Handler
 }
 
 // Close connection with hid device
@@ -48,25 +48,5 @@ func Open() (*Device, error) {
 		Features:     repo,
 		Capabilities: capabilities,
 		handle:       handle,
-	}, nil
-}
-
-// OpenSimulation opens simulated keyboard
-func OpenSimulation(t *SimulationTemplate) (*Device, error) {
-	name, err := hid.TrimVendorPrefix(t.Name)
-	if err != nil {
-		return nil, err
-	}
-	capabilities, err := GetCapabilities(name)
-	if err != nil {
-		return nil, err
-	}
-	repo := NewFeaturesSimulation(t)
-	return &Device{
-		Name:         name,
-		Path:         "/simulated/device/path",
-		Firmware:     t.Firmware,
-		Features:     repo,
-		Capabilities: capabilities,
 	}, nil
 }

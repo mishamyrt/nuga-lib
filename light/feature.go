@@ -6,11 +6,11 @@ import (
 
 // Feature represents keyboard light feature
 type Feature struct {
-	handle *hid.Device
+	handle hid.Handler
 }
 
 // New creates light feature instance.
-func New(handle *hid.Device) *Feature {
+func New(handle hid.Handler) *Feature {
 	return &Feature{
 		handle: handle,
 	}
@@ -71,7 +71,7 @@ func (f *Feature) SetBacklightColors(colors *BacklightColors) error {
 	request := make([]byte, 0, cmdLength)
 	request = append(request, CmdSetColors...)
 	request = append(request, colorsContent...)
-	return f.handle.SendWithRetries(request)
+	return f.handle.Send(request)
 }
 
 // ResetColors resets colors to defaults.
@@ -100,5 +100,5 @@ func (f *Feature) SetEffects(p *Effects) error {
 	paramsRequest = append(paramsRequest, p.Bytes()...)
 	paramsRequest = append(paramsRequest, currentParams...)
 	paramsRequest = append(paramsRequest, make([]byte, 770)...)
-	return f.handle.SendWithRetries(paramsRequest)
+	return f.handle.Send(paramsRequest)
 }
