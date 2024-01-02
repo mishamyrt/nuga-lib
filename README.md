@@ -16,6 +16,36 @@
 
 This library provides the ability to control keyboard parameters through the HID USB interface. It is used in [Nuga.app](https://github.com/mishamyrt/nuga-app).
 
+## Usage
+
+First of all, add a library module to your project.
+
+```sh
+go get -u github.com/mishamyrt/nuga-lib@latest
+```
+
+Use the `nuga.Open()` method to get the keyboard controller. It allows you to control the keyboard. For example, the brightness can be changed.
+
+```go
+package main
+
+import (
+	"github.com/mishamyrt/nuga-lib"
+)
+
+func main() {
+    // Setup HID
+    nuga.Init()
+	defer nuga.Exit()
+	// Open connection with keyboard
+	device, _ := nuga.Open()
+	// Read current effects
+	effects, _ := device.Features.Light.GetEffects()
+	// Set brightness to 50%
+	effects.Backlight.SetBrightness(2)
+}
+```
+
 ## Terminology
 
 - Mode — keyboard light mode;
