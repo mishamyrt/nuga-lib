@@ -4,6 +4,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"github.com/mishamyrt/nuga-lib"
 )
 
 const usage = "Usage: nuga-simulation [read|dump] <file_path>"
@@ -16,6 +18,8 @@ func main() {
 	}
 	command := os.Args[1]
 	filePath := os.Args[2]
+	nuga.Init()
+	defer nuga.Exit()
 	var err error
 	switch command {
 	case "read":

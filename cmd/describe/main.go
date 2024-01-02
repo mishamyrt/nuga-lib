@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/mishamyrt/nuga-lib"
 )
 
@@ -31,9 +32,12 @@ func describe(d *nuga.Device, supports []string) {
 }
 
 func main() {
+	nuga.Init()
+	defer nuga.Exit()
 	dev, err := nuga.Open()
 	if err != nil {
 		fmt.Printf("Can't open device: %v", err)
+		return
 	}
 	supports := collectFeatures(dev.Capabilities)
 	describe(dev, supports)
