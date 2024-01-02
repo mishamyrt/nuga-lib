@@ -2,8 +2,9 @@ package hid_test
 
 import (
 	"errors"
-	"nuga/hid"
 	"testing"
+
+	"github.com/mishamyrt/nuga-lib/hid"
 )
 
 func TestTrimVendorPrefixValid(t *testing.T) {

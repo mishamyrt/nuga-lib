@@ -2,10 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"nuga"
-	"nuga/hid"
-	"nuga/internal/slices"
-	"nuga/light"
+	"github.com/mishamyrt/nuga-lib"
+	"github.com/mishamyrt/nuga-lib/hid"
+	"github.com/mishamyrt/nuga-lib/internal/slices"
+	"github.com/mishamyrt/nuga-lib/light"
 	"os"
 )
 

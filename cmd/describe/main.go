@@ -3,7 +3,7 @@ package main
 
 import (
 	"fmt"
-	"nuga"
+	"github.com/mishamyrt/nuga-lib"
 )
 
 func collectFeatures(c *nuga.Capability) []string {

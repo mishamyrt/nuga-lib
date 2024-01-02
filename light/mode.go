@@ -1,6 +1,6 @@
 package light
 
-import "nuga/internal/bit"
+import "github.com/mishamyrt/nuga-lib/internal/bit"
 
 const (
 	// SpecificColor flag indicates that mode supports specific color.

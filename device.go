@@ -3,7 +3,8 @@ package nuga
 
 import (
 	"errors"
-	"nuga/hid"
+
+	"github.com/mishamyrt/nuga-lib/hid"
 )
 
 // VendorPrefix represents NuPhy HID name prefix

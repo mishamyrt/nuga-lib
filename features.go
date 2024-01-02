@@ -1,8 +1,8 @@
 package nuga
 
 import (
-	"nuga/hid"
-	"nuga/light"
+	"github.com/mishamyrt/nuga-lib/hid"
+	"github.com/mishamyrt/nuga-lib/light"
 )
 
 // Features represents keyboard features repository.

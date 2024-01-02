@@ -1,7 +1,7 @@
 package slices_test
 
 import (
-	"nuga/internal/slices"
+	"github.com/mishamyrt/nuga-lib/internal/slices"
 	"reflect"
 	"testing"
 )

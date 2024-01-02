@@ -1,7 +1,7 @@
 package nuga
 
 import (
-	"nuga/light"
+	"github.com/mishamyrt/nuga-lib/light"
 )
 
 // OpenSimulation opens simulated keyboard

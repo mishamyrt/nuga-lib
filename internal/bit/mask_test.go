@@ -1,7 +1,7 @@
 package bit_test
 
 import (
-	"nuga/internal/bit"
+	"github.com/mishamyrt/nuga-lib/internal/bit"
 	"testing"
 )
 

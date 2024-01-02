@@ -1,6 +1,6 @@
 package light
 
-import "nuga/internal/slices"
+import "github.com/mishamyrt/nuga-lib/internal/slices"
 
 // SimulationTemplate represents simulation data.
 type SimulationTemplate struct {

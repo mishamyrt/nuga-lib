@@ -2,8 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"nuga"
 	"os"
+
+	"github.com/mishamyrt/nuga-lib"
 )
 
 func readTemplate(filePath string) (*nuga.SimulationTemplate, error) {

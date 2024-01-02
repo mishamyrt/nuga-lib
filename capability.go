@@ -2,7 +2,7 @@ package nuga
 
 import (
 	"errors"
-	"nuga/internal/bit"
+	"github.com/mishamyrt/nuga-lib/internal/bit"
 )
 
 // Capability represents supported keyboard features

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"nuga"
+	"github.com/mishamyrt/nuga-lib"
 )
 
 func readTemplate(model string) (*nuga.SimulationTemplate, error) {

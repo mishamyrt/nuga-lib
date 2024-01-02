@@ -2,7 +2,7 @@ package light_test
 
 import (
 	"errors"
-	"nuga/light"
+	"github.com/mishamyrt/nuga-lib/light"
 	"testing"
 )
 

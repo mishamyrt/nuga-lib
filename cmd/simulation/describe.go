@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"nuga"
+	"github.com/mishamyrt/nuga-lib"
 )
 
 func describe(t *nuga.SimulationTemplate) {
