@@ -18,9 +18,11 @@ func main() {
 	}
 	command := os.Args[1]
 	filePath := os.Args[2]
-	nuga.Init()
-	defer nuga.Exit()
-	var err error
+	err := nuga.Init()
+	if err != nil {
+		fmt.Printf("HID initialization failed: %v", err)
+		os.Exit(1)
+	}
 	switch command {
 	case "read":
 		template, err := readTemplate(filePath)
@@ -41,5 +43,10 @@ func main() {
 	}
 	if err != nil {
 		fmt.Printf("Error while handling command: %v\n", err)
+	}
+	err = nuga.Exit()
+	if err != nil {
+		fmt.Printf("HID exiting failed: %v", err)
+		os.Exit(1)
 	}
 }

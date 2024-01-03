@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/mishamyrt/nuga-lib"
 )
@@ -32,13 +33,21 @@ func describe(d *nuga.Device, supports []string) {
 }
 
 func main() {
-	nuga.Init()
-	defer nuga.Exit()
+	err := nuga.Init()
+	if err != nil {
+		fmt.Printf("HID initialization failed: %v", err)
+		os.Exit(1)
+	}
 	dev, err := nuga.Open()
 	if err != nil {
 		fmt.Printf("Can't open device: %v", err)
-		return
+		os.Exit(1)
 	}
 	supports := collectFeatures(dev.Capabilities)
 	describe(dev, supports)
+	err = nuga.Exit()
+	if err != nil {
+		fmt.Printf("HID exiting failed: %v", err)
+		os.Exit(1)
+	}
 }
