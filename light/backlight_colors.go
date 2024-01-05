@@ -11,7 +11,7 @@ func (b *BacklightColors) Set(modeIndex uint8, colorIndex uint8, color *RGB) {
 
 // SetMac color to state.
 func (b *BacklightColors) SetMac(modeIndex uint8, colorIndex uint8, color *RGB) {
-	b.Set(modeIndex+ModesCount, colorIndex, color)
+	b.Set(modeIndex+ModesCountPerOS, colorIndex, color)
 }
 
 // SetWin color to state.
