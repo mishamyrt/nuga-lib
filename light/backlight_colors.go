@@ -66,8 +66,8 @@ func (b *BacklightColors) toSlice(modes [][7]RGB) [][]RGB {
 func ParseBacklightColors(data []byte) *BacklightColors {
 	var colors BacklightColors
 	var offset int
-	for effect := 0; effect < 48; effect++ {
-		for i := 0; i < 7; i++ {
+	for effect := 0; effect < ModesCount; effect++ {
+		for i := 0; i < ModeColorsCount; i++ {
 			offset = (effect * 21) + (i * 3)
 			colors[effect][i] = RGB{
 				R: data[offset],
