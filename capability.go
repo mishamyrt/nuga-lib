@@ -2,6 +2,7 @@ package nuga
 
 import (
 	"errors"
+
 	"github.com/mishamyrt/nuga-lib/internal/bit"
 )
 
@@ -20,13 +21,15 @@ const (
 	SidelightCapability Capability = 2 << iota
 	// HalolightCapability represents that keyboard supports halolight control
 	HalolightCapability Capability = 4 << iota
+	// KeysCapability represents that keyboard supports key mapping control
+	KeysCapability Capability = 8 << iota
 )
 
 const haloSeriesCapabilities = BacklightCapability | SidelightCapability | HalolightCapability
 
 var supportedModels = map[string]Capability{
 	"Halo96": haloSeriesCapabilities,
-	"Halo75": haloSeriesCapabilities,
+	"Halo75": haloSeriesCapabilities | KeysCapability,
 	"Halo65": haloSeriesCapabilities,
 }
 

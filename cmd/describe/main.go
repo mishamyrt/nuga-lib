@@ -19,6 +19,9 @@ func collectFeatures(c *nuga.Capability) []string {
 	if c.Has(nuga.SidelightCapability) {
 		names = append(names, "sidelight")
 	}
+	if c.Has(nuga.KeysCapability) {
+		names = append(names, "keys")
+	}
 	return names
 }
 
