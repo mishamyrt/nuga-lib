@@ -46,12 +46,13 @@ func TestOpenSimulation(t *testing.T) {
 
 func TestNewFeaturesSimulation(t *testing.T) {
 	t.Parallel()
-	template, err := readTemplate("Halo75")
+	model := "Halo75"
+	template, err := readTemplate(model)
 	if err != nil {
 		t.Errorf("Error while reading template: %v", err)
 	}
 
-	features := nuga.NewFeaturesSimulation(template)
+	features := nuga.NewFeaturesSimulation(template, model)
 	if features == nil {
 		t.Error("Expected non-nil Features, got nil")
 	}

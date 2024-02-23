@@ -120,6 +120,14 @@ var Halo75 = Template{
 }
 
 // Templates contains all keyboard templates
-var Templates = map[string]Template{
+var templates = map[string]Template{
 	"Halo75": Halo75,
+}
+
+func GetTemplate(name string) *Template {
+	t, exists := templates[name]
+	if exists {
+		return &t
+	}
+	return nil
 }

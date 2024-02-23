@@ -1,6 +1,7 @@
 package nuga
 
 import (
+	"github.com/mishamyrt/nuga-lib/keys"
 	"github.com/mishamyrt/nuga-lib/light"
 )
 
@@ -10,7 +11,7 @@ func OpenSimulation(t *SimulationTemplate) (*Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	repo := NewFeaturesSimulation(t)
+	repo := NewFeaturesSimulation(t, t.Name)
 	return &Device{
 		Name:         t.Name,
 		Path:         "/simulated/device/path",
@@ -25,11 +26,13 @@ type SimulationTemplate struct {
 	Name     string
 	Firmware string
 	Lights   *light.SimulationTemplate
+	Keys     *keys.SimulationTemplate
 }
 
 // NewFeaturesSimulation creates simulated feature repository
-func NewFeaturesSimulation(t *SimulationTemplate) *Features {
+func NewFeaturesSimulation(t *SimulationTemplate, model string) *Features {
 	return &Features{
 		Light: light.NewSimulation(t.Lights),
+		Keys:  keys.NewSimulation(t.Keys, model),
 	}
 }

@@ -13,14 +13,9 @@ type Feature struct {
 
 // New creates keys feature instance.
 func New(handle hid.Handler, model string) *Feature {
-	var template *layout.Template
-	val, exists := layout.Templates[model]
-	if exists {
-		template = &val
-	}
 	return &Feature{
 		handle:   handle,
-		template: template,
+		template: layout.GetTemplate(model),
 	}
 }
 
