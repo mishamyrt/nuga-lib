@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.4.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.4.0) - 2024-02-23
+### Features
+- add keyboard layout map support
+- provide keys capability for Halo75
+- add raw keys support
+
+### Testing
+- add keymap tests
+
+
+## [v0.3.1](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.3.1) - 2024-01-05
+### Bug Fixes
+- use correct offset for mac os color change
+
+### Refactoring
+- use constants
+
+
+## [v0.3.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.3.0) - 2024-01-03
+
 ## [v0.2.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.2.0) - 2024-01-03
 ### Features
 - add `describe` example
@@ -29,5 +49,8 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.4.0...HEAD
+[v0.4.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.3.1...v0.4.0
+[v0.3.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.3.0...v0.3.1
+[v0.3.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.2.0...v0.3.0
 [v0.2.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.1.0...v0.2.0
