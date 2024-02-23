@@ -944,8 +944,24 @@
         "meta": false
       }
     },
-    "f5": { "key": "fn_f5" },
-    "f6": { "key": "fn_f6" },
+    "f5": {
+      "key": "f5",
+      "modifiers": {
+        "ctrl": false,
+        "shift": false,
+        "alt": false,
+        "meta": false
+      }
+    },
+    "f6": {
+      "key": "f6",
+      "modifiers": {
+        "ctrl": false,
+        "shift": false,
+        "alt": false,
+        "meta": false
+      }
+    },
     "f7": {
       "key": "f7",
       "modifiers": {
@@ -975,51 +991,11 @@
     },
     "fn": { "key": "fn" },
     "fn_down": { "key": "backlight_brightness_down" },
-    "fn_f1": {
-      "key": "f1",
-      "modifiers": {
-        "ctrl": false,
-        "shift": false,
-        "alt": false,
-        "meta": false
-      }
-    },
-    "fn_f10": {
-      "key": "f10",
-      "modifiers": {
-        "ctrl": false,
-        "shift": false,
-        "alt": false,
-        "meta": false
-      }
-    },
-    "fn_f11": {
-      "key": "f11",
-      "modifiers": {
-        "ctrl": false,
-        "shift": false,
-        "alt": false,
-        "meta": false
-      }
-    },
-    "fn_f12": {
-      "key": "f12",
-      "modifiers": {
-        "ctrl": false,
-        "shift": false,
-        "alt": false,
-        "meta": false
-      }
-    },
-    "fn_f2": {
-      "key": "f2",
-      "modifiers": {
-        "ctrl": false,
-        "shift": false,
-        "alt": false,
-        "meta": false
-      }
-    },
+    "fn_f1": { "key": "fn_f2" },
+    "fn_f10": { "key": "fn_f10" },
+    "fn_f11": { "key": "fn_f11" },
+    "fn_f12": { "key": "fn_f12" },
+    "fn_f2": { "key": "fn_f1" },
     "fn_f3": {
       "key": "f3",
       "modifiers": {
@@ -1056,33 +1032,9 @@
         "meta": false
       }
     },
-    "fn_f7": {
-      "key": "f7",
-      "modifiers": {
-        "ctrl": false,
-        "shift": false,
-        "alt": false,
-        "meta": false
-      }
-    },
-    "fn_f8": {
-      "key": "f8",
-      "modifiers": {
-        "ctrl": false,
-        "shift": false,
-        "alt": false,
-        "meta": false
-      }
-    },
-    "fn_f9": {
-      "key": "f9",
-      "modifiers": {
-        "ctrl": false,
-        "shift": false,
-        "alt": false,
-        "meta": false
-      }
-    },
+    "fn_f7": { "key": "fn_f7" },
+    "fn_f8": { "key": "fn_f8" },
+    "fn_f9": { "key": "fn_f9" },
     "fn_left": { "key": "backlight_effect_next" },
     "fn_right": { "key": "backlight_color_next" },
     "fn_up": { "key": "backlight_brightness_up" },
@@ -1176,7 +1128,7 @@
         "meta": false
       }
     },
-    "lalt": { "key": "lalt" },
+    "lalt": { "key": "lmeta_alias" },
     "lbracket": {
       "key": "lbracket",
       "modifiers": {
@@ -1187,7 +1139,7 @@
       }
     },
     "lctrl": { "key": "lctrl" },
-    "lmeta": { "key": "lmeta" },
+    "lmeta": { "key": "lalt" },
     "lshift": { "key": "lshift" },
     "m": {
       "key": "m",
@@ -1388,7 +1340,7 @@
       }
     },
     "rctrl": { "key": "rctrl" },
-    "rmeta": { "key": "rmeta" },
+    "rmeta": { "key": "ralt" },
     "rshift": { "key": "rshift" },
     "s": {
       "key": "s",
@@ -1399,7 +1351,15 @@
         "meta": false
       }
     },
-    "screenshot": { "key": "screenshot" },
+    "screenshot": {
+      "key": "print_screen",
+      "modifiers": {
+        "ctrl": false,
+        "shift": false,
+        "alt": false,
+        "meta": false
+      }
+    },
     "semicolon": {
       "key": "semicolon",
       "modifiers": {
