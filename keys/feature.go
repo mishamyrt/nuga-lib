@@ -2,52 +2,69 @@ package keys
 
 import (
 	"github.com/mishamyrt/nuga-lib/hid"
+	"github.com/mishamyrt/nuga-lib/keys/layout"
 )
 
 // Feature represents keyboard keys feature
 type Feature struct {
-	handle hid.Handler
+	handle   hid.Handler
+	template *layout.Template
 }
 
 // New creates keys feature instance.
-func New(handle hid.Handler) *Feature {
-	return &Feature{
-		handle: handle,
+func New(handle hid.Handler, model string) *Feature {
+	var template *layout.Template
+	val, exists := layout.Templates[model]
+	if exists {
+		template = &val
 	}
-}
-
-// GetMac returns mac keyboard keys
-func (f *Feature) GetMac() ([]uint32, error) {
-	return f.getKeys(cmdGetMacKeys)
+	return &Feature{
+		handle:   handle,
+		template: template,
+	}
 }
 
 // GetWin returns win keyboard keys
-func (f *Feature) GetWin() ([]uint32, error) {
+func (f *Feature) GetWin() (*layout.KeyMap, error) {
 	return f.getKeys(cmdGetWinKeys)
 }
 
-// SetMac sets mac keyboard keys
-func (f *Feature) SetMac(keys []uint32) error {
-	return f.setKeys(cmdSetMacKeys, keys)
+// GetMac returns mac keyboard keys
+func (f *Feature) GetMac() (*layout.KeyMap, error) {
+	return f.getKeys(cmdGetMacKeys)
 }
 
 // SetWin sets win keyboard keys
-func (f *Feature) SetWin(keys []uint32) error {
-	return f.setKeys(cmdSetWinKeys, keys)
+func (f *Feature) SetWin(keyMap *layout.KeyMap) error {
+	return f.setKeys(cmdGetWinKeys, cmdSetWinKeys, keyMap)
 }
 
-func (f *Feature) setKeys(cmd []byte, keys []uint32) error {
-	request := make([]byte, len(cmd)+len(keys)*4)
-	copy(request, cmd)
-	for i := 0; i < len(keys); i++ {
-		offset := len(cmd) + (i * 4)
-		unpackBytes(keys[i], request[offset:offset+4])
-	}
-
-	return f.handle.Send(request)
+// SetMac sets mac keyboard keys
+func (f *Feature) SetMac(keyMap *layout.KeyMap) error {
+	return f.setKeys(cmdGetMacKeys, cmdSetMacKeys, keyMap)
 }
 
-func (f *Feature) getKeys(cmd []byte) ([]uint32, error) {
+// GetMacCodes returns mac keyboard key codes
+func (f *Feature) GetMacCodes() ([]uint32, error) {
+	return f.getKeyCodes(cmdGetMacKeys)
+}
+
+// GetWinCodes returns win keyboard key codes
+func (f *Feature) GetWinCodes() ([]uint32, error) {
+	return f.getKeyCodes(cmdGetWinKeys)
+}
+
+// SetMacCodes sets mac keyboard key codes
+func (f *Feature) SetMacCodes(keys []uint32) error {
+	return f.setKeyCodes(cmdSetMacKeys, keys)
+}
+
+// SetWinCodes sets win keyboard key codes
+func (f *Feature) SetWinCodes(keys []uint32) error {
+	return f.setKeyCodes(cmdSetWinKeys, keys)
+}
+
+func (f *Feature) getKeyCodes(cmd []byte) ([]uint32, error) {
 	response, err := f.handle.Request(cmd, 1035)
 	if err != nil {
 		return nil, err
@@ -58,4 +75,45 @@ func (f *Feature) getKeys(cmd []byte) ([]uint32, error) {
 		values[i] = packBytes(response[offset : offset+4])
 	}
 	return values, nil
+}
+
+func (f *Feature) getKeys(cmd []byte) (*layout.KeyMap, error) {
+	if f.template == nil {
+		return nil, ErrNoTemplate
+	}
+	codes, err := f.getKeyCodes(cmd)
+	if err != nil {
+		return nil, err
+	}
+	keys, err := layout.Parse(codes, f.template)
+	if err != nil {
+		return nil, err
+	}
+	return keys, nil
+}
+
+func (f *Feature) setKeyCodes(cmd []byte, keys []uint32) error {
+	request := make([]byte, len(cmd)+len(keys)*4)
+	copy(request, cmd)
+	for i := 0; i < len(keys); i++ {
+		offset := len(cmd) + (i * 4)
+		unpackBytes(keys[i], request[offset:offset+4])
+	}
+
+	return f.handle.Send(request)
+}
+
+func (f *Feature) setKeys(cmdGet []byte, cmdSet []byte, keys *layout.KeyMap) error {
+	if f.template == nil {
+		return ErrNoTemplate
+	}
+	codes, err := f.getKeyCodes(cmdGet)
+	if err != nil {
+		return err
+	}
+	err = keys.Apply(codes, f.template)
+	if err != nil {
+		return err
+	}
+	return f.setKeyCodes(cmdSet, codes)
 }

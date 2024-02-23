@@ -3,6 +3,7 @@ package nuga
 import (
 	"github.com/mishamyrt/nuga-lib/hid"
 	"github.com/mishamyrt/nuga-lib/keys"
+	"github.com/mishamyrt/nuga-lib/keys/layout"
 	"github.com/mishamyrt/nuga-lib/light"
 )
 
@@ -13,10 +14,10 @@ type Features struct {
 }
 
 // NewFeaturesWith creates Features instance with handle
-func NewFeaturesWith(handle *hid.Device) *Features {
+func NewFeaturesWith(handle *hid.Device, model string) *Features {
 	return &Features{
 		Light: light.New(handle),
-		Keys:  keys.New(handle),
+		Keys:  keys.New(handle, model),
 	}
 }
 
@@ -30,8 +31,12 @@ type LightFeature interface {
 
 // KeysFeature represents keyboard keys feature
 type KeysFeature interface {
-	GetWin() ([]uint32, error)
-	GetMac() ([]uint32, error)
-	SetWin(keys []uint32) error
-	SetMac(keys []uint32) error
+	GetWinCodes() ([]uint32, error)
+	GetMacCodes() ([]uint32, error)
+	SetWinCodes(keys []uint32) error
+	SetMacCodes(keys []uint32) error
+	GetWin() (*layout.KeyMap, error)
+	GetMac() (*layout.KeyMap, error)
+	SetWin(keyMap *layout.KeyMap) error
+	SetMac(keyMap *layout.KeyMap) error
 }

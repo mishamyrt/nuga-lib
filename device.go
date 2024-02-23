@@ -41,7 +41,7 @@ func Open() (*Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	repo := NewFeaturesWith(handle)
+	repo := NewFeaturesWith(handle, handle.Info.Model)
 	return &Device{
 		Name:         handle.Info.Model,
 		Path:         handle.Info.Path,
