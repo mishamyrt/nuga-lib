@@ -11,9 +11,9 @@ func TestFindKeyName(t *testing.T) {
 		code     uint32
 		expected layout.KeyName
 	}{
-		{layout.Codes[layout.KeyA], layout.KeyA},
-		{layout.Codes[layout.KeyBacklightBrightnessDown], layout.KeyBacklightBrightnessDown},
-		{layout.Codes[layout.KeyNone], layout.KeyNone},
+		{layout.Keys[layout.KeyA].Code, layout.KeyA},
+		{layout.Keys[layout.KeyBacklightBrightnessDown].Code, layout.KeyBacklightBrightnessDown},
+		{layout.Keys[layout.KeyNone].Code, layout.KeyNone},
 	}
 
 	for _, tt := range tests {
@@ -31,9 +31,9 @@ func TestFindKeyCode(t *testing.T) {
 		name     layout.KeyName
 		expected uint32
 	}{
-		{layout.KeyA, layout.Codes[layout.KeyA]},
-		{layout.KeyB, layout.Codes[layout.KeyB]},
-		{layout.KeyNone, layout.Codes[layout.KeyNone]},
+		{layout.KeyA, layout.Keys[layout.KeyA].Code},
+		{layout.KeyB, layout.Keys[layout.KeyB].Code},
+		{layout.KeyNone, layout.Keys[layout.KeyNone].Code},
 	}
 
 	for _, tt := range tests {

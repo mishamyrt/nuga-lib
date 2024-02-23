@@ -3,6 +3,34 @@ package layout
 // KeyName represents key name
 type KeyName string
 
+// KeyDescription represents key description
+type KeyDescription struct {
+	Title string `json:"title"`
+	Code  uint32 `json:"code"`
+	Group string `json:"group"`
+}
+
+const (
+	// GroupBacklight represents backlight group
+	GroupBacklight = "Backlight"
+	// GroupMultimedia represents multimedia group
+	GroupMultimedia = "Multimedia"
+	// GroupSpecial represents special group
+	GroupSpecial = "Special"
+	// GroupSymbols represents symbols group
+	GroupSymbols = "Symbols"
+	// GroupModifiers represents modifiers group
+	GroupModifiers = "Modifiers"
+	// GroupNavigation represents navigation group
+	GroupNavigation = "Navigation"
+	// GroupFunction represents function group
+	GroupFunction = "Function"
+	// GroupNumbers represents numbers group
+	GroupNumbers = "Numbers"
+	// GroupLetters represents letters group
+	GroupLetters = "Letters"
+)
+
 //revive:disable
 const (
 	KeyNone                    KeyName = "none"
@@ -11,6 +39,8 @@ const (
 	KeyLShift                  KeyName = "lshift"
 	KeyLAlt                    KeyName = "lalt"
 	KeyLMeta                   KeyName = "lmeta"
+	KeyLMetaAlias              KeyName = "lmeta_alias"
+	KeyRAlt                    KeyName = "ralt"
 	KeyRCtrl                   KeyName = "rctrl"
 	KeyRShift                  KeyName = "rshift"
 	KeyRMeta                   KeyName = "rmeta"
@@ -74,6 +104,7 @@ const (
 	KeyComma                   KeyName = "comma"
 	KeyPeriod                  KeyName = "period"
 	KeyScreenshot              KeyName = "screenshot"
+	KeyPrintScreen             KeyName = "print_screen"
 	KeyFnUp                    KeyName = "fn_up"
 	KeyFnDown                  KeyName = "fn_down"
 	KeyFnLeft                  KeyName = "fn_left"
@@ -111,103 +142,107 @@ const (
 	KeyBacklightColorPrevious  KeyName = "backlight_color_previous"
 )
 
-var Codes = map[KeyName]uint32{
-	KeyCapsLock:                0x39000000,
-	KeyLCtrl:                   0xe0000006,
-	KeyLShift:                  0xe1000006,
-	KeyLAlt:                    0xe2000006,
-	KeyLMeta:                   0xe3000006,
-	KeyRCtrl:                   0xe4000006,
-	KeyRShift:                  0xe5000006,
-	KeyRMeta:                   0xe7000006,
-	KeyFn:                      0x00000020,
-	KeyIns:                     0x49000000,
-	KeyHome:                    0x4a000000,
-	KeyEnd:                     0x4d000000,
-	KeyPgUp:                    0x4b000000,
-	KeyPgDn:                    0x4e000000,
-	KeyEnter:                   0x28000000,
-	KeyTab:                     0x2b000000,
-	KeySpace:                   0x2c000000,
-	KeyBackspace:               0x2a000000,
-	KeyEsc:                     0x29000000,
-	KeyDel:                     0x4c000000,
-	KeyGrave:                   0x35000000,
-	KeyNum1:                    0x1e000000,
-	KeyNum2:                    0x1f000000,
-	KeyNum3:                    0x20000000,
-	KeyNum4:                    0x21000000,
-	KeyNum5:                    0x22000000,
-	KeyNum6:                    0x23000000,
-	KeyNum7:                    0x24000000,
-	KeyNum8:                    0x25000000,
-	KeyNum9:                    0x26000000,
-	KeyNum0:                    0x27000000,
-	KeyA:                       0x04000000,
-	KeyB:                       0x05000000,
-	KeyC:                       0x06000000,
-	KeyD:                       0x07000000,
-	KeyE:                       0x08000000,
-	KeyF:                       0x09000000,
-	KeyG:                       0x0a000000,
-	KeyH:                       0x0b000000,
-	KeyI:                       0x0c000000,
-	KeyJ:                       0x0d000000,
-	KeyK:                       0x0e000000,
-	KeyL:                       0x0f000000,
-	KeyM:                       0x10000000,
-	KeyN:                       0x11000000,
-	KeyO:                       0x12000000,
-	KeyP:                       0x13000000,
-	KeyQ:                       0x14000000,
-	KeyR:                       0x15000000,
-	KeyS:                       0x16000000,
-	KeyT:                       0x17000000,
-	KeyU:                       0x18000000,
-	KeyV:                       0x19000000,
-	KeyW:                       0x1a000000,
-	KeyX:                       0x1b000000,
-	KeyY:                       0x1c000000,
-	KeyZ:                       0x1d000000,
-	KeySemicolon:               0x33000000,
-	KeyMinus:                   0x2d000000,
-	KeyEqual:                   0x2e000000,
-	KeyQuote:                   0x34000000,
-	KeyLBracket:                0x2f000000,
-	KeyRBracket:                0x30000000,
-	KeyBackslash:               0x31000000,
-	KeyFwdslash:                0x38000000,
-	KeyComma:                   0x36000000,
-	KeyPeriod:                  0x37000000,
-	KeyF1:                      0x3a000000,
-	KeyF2:                      0x3b000000,
-	KeyF3:                      0x3c000000,
-	KeyF4:                      0x3d000000,
-	KeyF5:                      0x3e000000,
-	KeyF6:                      0x3f000000,
-	KeyF7:                      0x40000000,
-	KeyF8:                      0x41000000,
-	KeyF9:                      0x42000000,
-	KeyF10:                     0x43000000,
-	KeyF11:                     0x44000000,
-	KeyF12:                     0x45000000,
-	KeyBrightnessDown:          0x6f000004,
-	KeyBrightnessUp:            0x70000004,
-	KeyRewind:                  0xb6000004,
-	KeyPlayPause:               0xcd000004,
-	KeyForward:                 0xb5000004,
-	KeyMute:                    0xe2000004,
-	KeyVolumeDown:              0xea000004,
-	KeyVolumeUp:                0xe9000004,
-	KeyVoiceCommand:            0xcf000004,
-	KeySpotlight:               0x2000000e,
-	KeyBacklightEffectPrevious: 0x0002000b,
-	KeyBacklightEffectNext:     0x0003000b,
-	KeyBacklightBrightnessDown: 0x0001000c,
-	KeyBacklightBrightnessUp:   0x0002000c,
-	KeyBacklightColorPrevious:  0x00020012,
-	KeyBacklightColorNext:      0x00030012,
-	KeyScreenshot:              0x18000002,
+var Keys = map[KeyName]KeyDescription{
+	KeyNone:                    {"None", 0x00000000, GroupSpecial},
+	KeyCapsLock:                {"Caps Lock", 0x39000000, GroupSpecial},
+	KeyLCtrl:                   {"Left Control", 0xe0000006, GroupModifiers},
+	KeyLShift:                  {"Left Shift", 0xe1000006, GroupModifiers},
+	KeyLAlt:                    {"Left Alt", 0xe2000006, GroupModifiers},
+	KeyLMeta:                   {"Left Meta", 0xe3000006, GroupModifiers},
+	KeyLMetaAlias:              {"Left Meta Alias", 0x0c000002, GroupModifiers},
+	KeyRAlt:                    {"Right Alt", 0xe6000006, GroupModifiers},
+	KeyRCtrl:                   {"Right Control", 0xe4000006, GroupModifiers},
+	KeyRShift:                  {"Right Shift", 0xe5000006, GroupModifiers},
+	KeyRMeta:                   {"Right Meta", 0xe7000006, GroupModifiers},
+	KeyFn:                      {"Function", 0x00000020, GroupSpecial},
+	KeyIns:                     {"Insert", 0x49000000, GroupNavigation},
+	KeyHome:                    {"Home", 0x4a000000, GroupNavigation},
+	KeyEnd:                     {"End", 0x4d000000, GroupNavigation},
+	KeyPgUp:                    {"Page Up", 0x4b000000, GroupNavigation},
+	KeyPgDn:                    {"Page Down", 0x4e000000, GroupNavigation},
+	KeyEnter:                   {"Enter", 0x28000000, GroupSpecial},
+	KeyTab:                     {"Tab", 0x2b000000, GroupSpecial},
+	KeySpace:                   {"Space", 0x2c000000, GroupSpecial},
+	KeyBackspace:               {"Backspace", 0x2a000000, GroupSpecial},
+	KeyEsc:                     {"Escape", 0x29000000, GroupSpecial},
+	KeyDel:                     {"Delete", 0x4c000000, GroupNavigation},
+	KeyGrave:                   {"Grave Accent", 0x35000000, GroupSymbols},
+	KeyNum1:                    {"Number 1", 0x1e000000, GroupNumbers},
+	KeyNum2:                    {"Number 2", 0x1f000000, GroupNumbers},
+	KeyNum3:                    {"Number 3", 0x20000000, GroupNumbers},
+	KeyNum4:                    {"Number 4", 0x21000000, GroupNumbers},
+	KeyNum5:                    {"Number 5", 0x22000000, GroupNumbers},
+	KeyNum6:                    {"Number 6", 0x23000000, GroupNumbers},
+	KeyNum7:                    {"Number 7", 0x24000000, GroupNumbers},
+	KeyNum8:                    {"Number 8", 0x25000000, GroupNumbers},
+	KeyNum9:                    {"Number 9", 0x26000000, GroupNumbers},
+	KeyNum0:                    {"Number 0", 0x27000000, GroupNumbers},
+	KeyA:                       {"A", 0x04000000, GroupLetters},
+	KeyB:                       {"B", 0x05000000, GroupLetters},
+	KeyC:                       {"C", 0x06000000, GroupLetters},
+	KeyD:                       {"D", 0x07000000, GroupLetters},
+	KeyE:                       {"E", 0x08000000, GroupLetters},
+	KeyF:                       {"F", 0x09000000, GroupLetters},
+	KeyG:                       {"G", 0x0a000000, GroupLetters},
+	KeyH:                       {"H", 0x0b000000, GroupLetters},
+	KeyI:                       {"I", 0x0c000000, GroupLetters},
+	KeyJ:                       {"J", 0x0d000000, GroupLetters},
+	KeyK:                       {"K", 0x0e000000, GroupLetters},
+	KeyL:                       {"L", 0x0f000000, GroupLetters},
+	KeyM:                       {"M", 0x10000000, GroupLetters},
+	KeyN:                       {"N", 0x11000000, GroupLetters},
+	KeyO:                       {"O", 0x12000000, GroupLetters},
+	KeyP:                       {"P", 0x13000000, GroupLetters},
+	KeyQ:                       {"Q", 0x14000000, GroupLetters},
+	KeyR:                       {"R", 0x15000000, GroupLetters},
+	KeyS:                       {"S", 0x16000000, GroupLetters},
+	KeyT:                       {"T", 0x17000000, GroupLetters},
+	KeyU:                       {"U", 0x18000000, GroupLetters},
+	KeyV:                       {"V", 0x19000000, GroupLetters},
+	KeyW:                       {"W", 0x1a000000, GroupLetters},
+	KeyX:                       {"X", 0x1b000000, GroupLetters},
+	KeyY:                       {"Y", 0x1c000000, GroupLetters},
+	KeyZ:                       {"Z", 0x1d000000, GroupLetters},
+	KeySemicolon:               {"Semicolon", 0x33000000, GroupSymbols},
+	KeyMinus:                   {"Minus", 0x2d000000, GroupSymbols},
+	KeyEqual:                   {"Equal", 0x2e000000, GroupSymbols},
+	KeyQuote:                   {"Quote", 0x34000000, GroupSymbols},
+	KeyLBracket:                {"Left Bracket", 0x2f000000, GroupSymbols},
+	KeyRBracket:                {"Right Bracket", 0x30000000, GroupSymbols},
+	KeyBackslash:               {"Backslash", 0x31000000, GroupSymbols},
+	KeyFwdslash:                {"Forward Slash", 0x38000000, GroupSymbols},
+	KeyComma:                   {"Comma", 0x36000000, GroupSymbols},
+	KeyPeriod:                  {"Period", 0x37000000, GroupSymbols},
+	KeyF1:                      {"F1", 0x3a000000, GroupFunction},
+	KeyF2:                      {"F2", 0x3b000000, GroupFunction},
+	KeyF3:                      {"F3", 0x3c000000, GroupFunction},
+	KeyF4:                      {"F4", 0x3d000000, GroupFunction},
+	KeyF5:                      {"F5", 0x3e000000, GroupFunction},
+	KeyF6:                      {"F6", 0x3f000000, GroupFunction},
+	KeyF7:                      {"F7", 0x40000000, GroupFunction},
+	KeyF8:                      {"F8", 0x41000000, GroupFunction},
+	KeyF9:                      {"F9", 0x42000000, GroupFunction},
+	KeyF10:                     {"F10", 0x43000000, GroupFunction},
+	KeyF11:                     {"F11", 0x44000000, GroupFunction},
+	KeyF12:                     {"F12", 0x45000000, GroupFunction},
+	KeyBrightnessDown:          {"Brightness Down", 0x6f000004, GroupBacklight},
+	KeyBrightnessUp:            {"Brightness Up", 0x70000004, GroupBacklight},
+	KeyRewind:                  {"Rewind", 0xb6000004, GroupBacklight},
+	KeyPlayPause:               {"Play/Pause", 0xcd000004, GroupBacklight},
+	KeyForward:                 {"Forward", 0xb5000004, GroupBacklight},
+	KeyMute:                    {"Mute", 0xe2000004, GroupBacklight},
+	KeyVolumeDown:              {"Volume Down", 0xea000004, GroupBacklight},
+	KeyVolumeUp:                {"Volume Up", 0xe9000004, GroupBacklight},
+	KeyVoiceCommand:            {"Voice Command", 0xcf000004, GroupSpecial},
+	KeySpotlight:               {"Spotlight", 0x2000000e, GroupSpecial},
+	KeyBacklightEffectPrevious: {"Backlight Effect Previous", 0x0002000b, GroupBacklight},
+	KeyBacklightEffectNext:     {"Backlight Effect Next", 0x0003000b, GroupBacklight},
+	KeyBacklightBrightnessDown: {"Backlight Brightness Down", 0x0001000c, GroupBacklight},
+	KeyBacklightBrightnessUp:   {"Backlight Brightness Up", 0x0002000c, GroupBacklight},
+	KeyBacklightColorPrevious:  {"Backlight Color Previous", 0x00020012, GroupBacklight},
+	KeyBacklightColorNext:      {"Backlight Color Next", 0x00030012, GroupBacklight},
+	KeyScreenshot:              {"Screenshot", 0x18000002, GroupSpecial},
+	KeyPrintScreen:             {"Print Screen", 0x46000000, GroupSpecial},
 }
 
 //revive:enable

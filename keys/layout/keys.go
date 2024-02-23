@@ -2,8 +2,8 @@ package layout
 
 // FindKeyName finds key name by code
 func FindKeyName(code uint32) KeyName {
-	for k, v := range Codes {
-		if v == code {
+	for k, v := range Keys {
+		if v.Code == code {
 			return k
 		}
 	}
@@ -12,11 +12,11 @@ func FindKeyName(code uint32) KeyName {
 
 // FindKeyCode finds key code by name
 func FindKeyCode(name KeyName) uint32 {
-	val, ok := Codes[name]
+	val, ok := Keys[name]
 	if !ok {
 		return 0
 	}
-	return val
+	return val.Code
 }
 
 // IsRegularKey checks if code is regular

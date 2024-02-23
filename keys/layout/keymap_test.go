@@ -23,9 +23,9 @@ func TestApply(t *testing.T) {
 		expected layout.KeyName
 		code     uint32
 	}{
-		{layout.KeyM, layout.ApplyModifiers(layout.Codes[layout.KeyM], testKeyMap[layout.KeyM].Modifiers)},
-		{layout.KeyK, layout.Codes[layout.KeyK]},
-		{layout.KeyBrightnessUp, layout.Codes[layout.KeyBrightnessUp]},
+		{layout.KeyM, layout.ApplyModifiers(layout.Keys[layout.KeyM].Code, testKeyMap[layout.KeyM].Modifiers)},
+		{layout.KeyK, layout.Keys[layout.KeyK].Code},
+		{layout.KeyBrightnessUp, layout.Keys[layout.KeyBrightnessUp].Code},
 	}
 	source := make([]uint32, len(tests))
 	err := testKeyMap.Apply(source, &testTemplate)
@@ -44,9 +44,9 @@ func TestApply(t *testing.T) {
 
 func TestParse(t *testing.T) {
 	values := []uint32{
-		layout.ApplyModifiers(layout.Codes[layout.KeyM], &layout.Modifiers{Ctrl: true}),
-		layout.Codes[layout.KeyK],
-		layout.Codes[layout.KeyBrightnessUp],
+		layout.ApplyModifiers(layout.Keys[layout.KeyM].Code, &layout.Modifiers{Ctrl: true}),
+		layout.Keys[layout.KeyK].Code,
+		layout.Keys[layout.KeyBrightnessUp].Code,
 	}
 	keyMap, err := layout.Parse(values, &testTemplate)
 	if err != nil {
