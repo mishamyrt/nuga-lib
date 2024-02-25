@@ -30,6 +30,16 @@ build:
 	$(call build_app,dump)
 	$(call build_app,describe)
 
+.PHONY: clean
+clean:
+	rm -rf build
+
+.PHONY: check
+check:
+	make lint
+	make test
+	make build
+
 .PHONY: changelog
 changelog:
 	git-chglog -o CHANGELOG.md
