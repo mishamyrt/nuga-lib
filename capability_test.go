@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/mishamyrt/nuga-lib"
+	"github.com/mishamyrt/nuga-lib/device"
 )
 
 func TestCapabilityHas(t *testing.T) {
@@ -32,9 +33,9 @@ func TestCapabilityHas(t *testing.T) {
 func TestGetCapabilities(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
-		name        string
-		model       string
-		expectError bool
+		name      string
+		model     device.Model
+		expectNil bool
 	}{
 		{"SupportedModel", "Halo96", false},
 		{"UnsupportedModel", "NotSupportedModel", true},
@@ -42,18 +43,14 @@ func TestGetCapabilities(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			capabilities, err := nuga.GetCapabilities(tt.model)
+			capabilities := nuga.GetCapabilities(tt.model)
 
-			if tt.expectError && err == nil {
-				t.Errorf("Expected error, got nil")
+			if tt.expectNil && capabilities != nil {
+				t.Errorf("Expected nil, got pointer")
 			}
 
-			if !tt.expectError && err != nil {
-				t.Errorf("Unexpected error: %v", err)
-			}
-
-			if capabilities != nil && *capabilities == 0 {
-				t.Errorf("Expected non-zero capabilities, got zero")
+			if !tt.expectNil && capabilities == nil {
+				t.Errorf("Unexpected nil")
 			}
 		})
 	}

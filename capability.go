@@ -1,8 +1,7 @@
 package nuga
 
 import (
-	"errors"
-
+	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/internal/bit"
 )
 
@@ -27,20 +26,17 @@ const (
 
 const haloSeriesCapabilities = BacklightCapability | SidelightCapability | HalolightCapability
 
-var supportedModels = map[string]Capability{
-	"Halo96": haloSeriesCapabilities,
-	"Halo75": haloSeriesCapabilities | KeysCapability,
-	"Halo65": haloSeriesCapabilities,
+var modelCapabilities = map[device.Model]Capability{
+	device.Halo65: haloSeriesCapabilities,
+	device.Halo75: haloSeriesCapabilities | KeysCapability,
+	device.Halo96: haloSeriesCapabilities,
 }
 
-// ErrNotSupported is returned when you try to open a keyboard that is not supported by the application
-var ErrNotSupported = errors.New("device is not supported")
-
-// GetCapabilities returns keyboard model capabilities.
-// If keyboard is not supported, returns ErrNotSupported.
-func GetCapabilities(model string) (*Capability, error) {
-	if supports, ok := supportedModels[model]; ok {
-		return &supports, nil
+// GetCapabilities returns keyboard model capabilities pointer.
+// If keyboard is not supported, returns nil.
+func GetCapabilities(model device.Model) *Capability {
+	if supports, ok := modelCapabilities[model]; ok {
+		return &supports
 	}
-	return nil, ErrNotSupported
+	return nil
 }

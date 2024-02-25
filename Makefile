@@ -27,7 +27,7 @@ test:
 
 .PHONY: build
 build:
-	$(call build_app,simulation)
+	$(call build_app,dump)
 	$(call build_app,describe)
 
 .PHONY: changelog

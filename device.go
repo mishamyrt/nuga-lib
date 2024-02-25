@@ -4,22 +4,21 @@ package nuga
 import (
 	"errors"
 
+	"github.com/mishamyrt/nuga-lib/device"
+	"github.com/mishamyrt/nuga-lib/features"
 	"github.com/mishamyrt/nuga-lib/hid"
 )
 
-// VendorPrefix represents NuPhy HID name prefix
-const VendorPrefix = "NuPhy "
-
-// ErrWrongVendor is returned when you try to open a keyboard not from NuPhy
-var ErrWrongVendor = errors.New("device vendor is not NuPhy")
+// ErrNotSupported is returned when you try to open a keyboard that is not supported by the application
+var ErrNotSupported = errors.New("device is not supported")
 
 // Device represents keyboard with its controls
 type Device struct {
-	Name         string
+	Name         device.Model
 	Path         string
 	Firmware     string
 	Capabilities *Capability
-	Features     *Features
+	Features     *features.Features
 	handle       hid.Handler
 }
 
@@ -37,16 +36,17 @@ func Open() (*Device, error) {
 	if err != nil {
 		return nil, err
 	}
-	capabilities, err := GetCapabilities(handle.Info.Model)
-	if err != nil {
-		return nil, err
+	if !device.IsSupported(handle.Info.Model) {
+		return nil, ErrNotSupported
 	}
-	repo := NewFeaturesWith(handle, handle.Info.Model)
+	model := device.Model(handle.Info.Model)
+	capabilities := GetCapabilities(model)
+	featuresRepo := features.New(handle, model)
 	return &Device{
-		Name:         handle.Info.Model,
+		Name:         model,
 		Path:         handle.Info.Path,
 		Firmware:     handle.Info.Firmware,
-		Features:     repo,
+		Features:     featuresRepo,
 		Capabilities: capabilities,
 		handle:       handle,
 	}, nil
