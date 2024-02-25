@@ -64,6 +64,10 @@ func (f *Feature) SetWinCodes(keys []uint32) error {
 	return f.setKeyCodes(cmdSetWinKeys, keys)
 }
 
+func (f *Feature) Parse(keys []uint32) (*layout.KeyMap, error) {
+	return layout.Parse(keys, f.template)
+}
+
 func (f *Feature) getKeyCodes(cmd []byte) ([]uint32, error) {
 	response, err := f.handle.Request(cmd, 1035)
 	if err != nil {
