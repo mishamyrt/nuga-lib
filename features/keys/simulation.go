@@ -13,8 +13,9 @@ type State struct {
 
 // FeatureSimulation represents simulated keys feature.
 type FeatureSimulation struct {
-	data     *State
-	template *layout.Template
+	defaultState State
+	data         *State
+	template     *layout.Template
 }
 
 // NewSimulation creates simulated keys from template.
@@ -24,8 +25,9 @@ func NewSimulation(t *State, model *device.Model) *FeatureSimulation {
 		template = layout.GetTemplate(*model)
 	}
 	return &FeatureSimulation{
-		data:     t,
-		template: template,
+		data:         t,
+		defaultState: *t,
+		template:     template,
 	}
 }
 
@@ -69,4 +71,9 @@ func (f *FeatureSimulation) SetWin(keyMap *layout.KeyMap) error {
 // SetMac sets mac keyboard keys
 func (f *FeatureSimulation) SetMac(keyMap *layout.KeyMap) error {
 	return keyMap.Apply(f.data.Mac, f.template)
+}
+
+// Parse raw keys
+func (f *FeatureSimulation) Parse(keys []uint32) (*layout.KeyMap, error) {
+	return layout.Parse(keys, f.template)
 }

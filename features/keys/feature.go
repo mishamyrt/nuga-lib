@@ -64,6 +64,7 @@ func (f *Feature) SetWinCodes(keys []uint32) error {
 	return f.setKeyCodes(cmdSetWinKeys, keys)
 }
 
+// Parse raw keys
 func (f *Feature) Parse(keys []uint32) (*layout.KeyMap, error) {
 	return layout.Parse(keys, f.template)
 }
