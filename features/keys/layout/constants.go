@@ -10,28 +10,20 @@ type KeyDescription struct {
 	Group string `json:"group"`
 }
 
+//revive:disable
 const (
-	// GroupBacklight represents backlight group
-	GroupBacklight = "Backlight"
-	// GroupMultimedia represents multimedia group
+	GroupBacklight  = "Backlight"
 	GroupMultimedia = "Multimedia"
-	// GroupSpecial represents special group
-	GroupSpecial = "Special"
-	// GroupSymbols represents symbols group
-	GroupSymbols = "Symbols"
-	// GroupModifiers represents modifiers group
-	GroupModifiers = "Modifiers"
-	// GroupNavigation represents navigation group
+	GroupSpecial    = "Special"
+	GroupSymbols    = "Symbols"
+	GroupModifiers  = "Modifiers"
 	GroupNavigation = "Navigation"
-	// GroupFunction represents function group
-	GroupFunction = "Function"
-	// GroupNumbers represents numbers group
-	GroupNumbers = "Numbers"
-	// GroupLetters represents letters group
-	GroupLetters = "Letters"
+	GroupNumPad     = "NumPad"
+	GroupFunction   = "Function"
+	GroupNumbers    = "Numbers"
+	GroupLetters    = "Letters"
 )
 
-//revive:disable
 const (
 	KeyNone                    KeyName = "none"
 	KeyCapsLock                KeyName = "capslock"
@@ -103,8 +95,31 @@ const (
 	KeyFwdslash                KeyName = "fwdslash"
 	KeyComma                   KeyName = "comma"
 	KeyPeriod                  KeyName = "period"
+	ScrollLock                 KeyName = "scrolllock"
+	NumLock                    KeyName = "numlock"
+	NumPadDivide               KeyName = "numpad_div"
+	NumPadMultiply             KeyName = "numpad_mul"
+	NumPadSubtract             KeyName = "numpad_sub"
+	NumPadAdd                  KeyName = "numpad_add"
+	NumPadEnter                KeyName = "numpad_enter"
+	NumPadDot                  KeyName = "numpad_dot"
+	NumPadComma                KeyName = "numpad_comma"
+	NumPad1                    KeyName = "numpad1"
+	NumPad2                    KeyName = "numpad2"
+	NumPad3                    KeyName = "numpad3"
+	NumPad4                    KeyName = "numpad4"
+	NumPad5                    KeyName = "numpad5"
+	NumPad6                    KeyName = "numpad6"
+	NumPad7                    KeyName = "numpad7"
+	NumPad8                    KeyName = "numpad8"
+	NumPad9                    KeyName = "numpad9"
+	NumPad0                    KeyName = "numpad0"
 	KeyScreenshot              KeyName = "screenshot"
 	KeyPrintScreen             KeyName = "print_screen"
+	KeyUp                      KeyName = "up"
+	KeyDown                    KeyName = "down"
+	KeyLeft                    KeyName = "left"
+	KeyRight                   KeyName = "right"
 	KeyFnUp                    KeyName = "fn_up"
 	KeyFnDown                  KeyName = "fn_down"
 	KeyFnLeft                  KeyName = "fn_left"
@@ -243,6 +258,29 @@ var Keys = map[KeyName]KeyDescription{
 	KeyBacklightColorNext:      {"Backlight Color Next", 0x00030012, GroupBacklight},
 	KeyScreenshot:              {"Screenshot", 0x18000002, GroupSpecial},
 	KeyPrintScreen:             {"Print Screen", 0x46000000, GroupSpecial},
+	KeyUp:                      {"Up", 0x52000000, GroupNavigation},
+	KeyDown:                    {"Down", 0x51000000, GroupNavigation},
+	KeyLeft:                    {"Left", 0x50000000, GroupNavigation},
+	KeyRight:                   {"Right", 0x4f000000, GroupNavigation},
+	ScrollLock:                 {"Scroll Lock", 0x47000000, GroupSpecial},
+	NumLock:                    {"Num Lock", 0x53000000, GroupSpecial},
+	NumPadDivide:               {"NumPad Divide", 0x54000000, GroupNumPad},
+	NumPadMultiply:             {"NumPad Multiply", 0x55000000, GroupNumPad},
+	NumPadSubtract:             {"NumPad Subtract", 0x56000000, GroupNumPad},
+	NumPadAdd:                  {"NumPad Add", 0x57000000, GroupNumPad},
+	NumPadEnter:                {"NumPad Enter", 0x58000000, GroupNumPad},
+	NumPadDot:                  {"NumPad Dot", 0x63000000, GroupNumPad},
+	NumPadComma:                {"NumPad Comma", 0x85000000, GroupNumPad},
+	NumPad1:                    {"NumPad 1", 0x59000000, GroupNumPad},
+	NumPad2:                    {"NumPad 2", 0x5a000000, GroupNumPad},
+	NumPad3:                    {"NumPad 3", 0x5b000000, GroupNumPad},
+	NumPad4:                    {"NumPad 4", 0x5c000000, GroupNumPad},
+	NumPad5:                    {"NumPad 5", 0x5d000000, GroupNumPad},
+	NumPad6:                    {"NumPad 6", 0x5e000000, GroupNumPad},
+	NumPad7:                    {"NumPad 7", 0x5f000000, GroupNumPad},
+	NumPad8:                    {"NumPad 8", 0x60000000, GroupNumPad},
+	NumPad9:                    {"NumPad 9", 0x61000000, GroupNumPad},
+	NumPad0:                    {"NumPad 0", 0x62000000, GroupNumPad},
 }
 
 //revive:enable
