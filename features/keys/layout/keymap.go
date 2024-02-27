@@ -1,7 +1,5 @@
 package layout
 
-import "fmt"
-
 // Key represents layout key
 type Key struct {
 	Name      KeyName    `json:"key"`
@@ -28,7 +26,6 @@ func Parse(values []uint32, tpl *Template) (*KeyMap, error) {
 	keys := make(KeyMap)
 	for key, position := range *tpl {
 		code := values[position]
-		fmt.Printf("%s 0x%08x\n", key, code)
 		var modifiers *Modifiers
 		if IsRegularKey(code) {
 			modifiers = ParseModifiers(code)
