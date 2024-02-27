@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.5.4](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.4) - 2024-02-27
+### Features
+- add missing codes
+
+
+## [v0.5.3](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.3) - 2024-02-25
+### Bug Fixes
+- implement parse in keys simulation
+
+
+## [v0.5.2](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.2) - 2024-02-25
+### Bug Fixes
+- add parse to interface
+
+
+## [v0.5.1](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.1) - 2024-02-25
+### Features
+- add keys parsing utility
+
+
 ## [v0.5.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.0) - 2024-02-25
 ### Features
 - provide dump handler, rework dump format
@@ -67,7 +87,11 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.4...HEAD
+[v0.5.4]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.3...v0.5.4
+[v0.5.3]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.2...v0.5.3
+[v0.5.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.1...v0.5.2
+[v0.5.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.0...v0.5.1
 [v0.5.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.4.2...v0.5.0
 [v0.4.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.4.1...v0.4.2
 [v0.4.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.4.0...v0.4.1
