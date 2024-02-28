@@ -7,20 +7,20 @@ import (
 )
 
 // Restore device state
-func Restore(handle *hid.Device, s *State) error {
-	err := restoreLights(handle, s.Lights)
+func Restore(h hid.Handler, s *State) error {
+	err := restoreLights(h, s.Lights)
 	if err != nil {
 		return err
 	}
-	err = restoreKeys(handle, s.Keys)
+	err = restoreKeys(h, s.Keys)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func restoreLights(handle *hid.Device, s light.State) error {
-	f := light.New(handle)
+func restoreLights(h hid.Handler, s light.State) error {
+	f := light.New(h)
 	colors := light.ParseColorsState(s.Colors)
 	effects := light.ParseParamsState(s.Params)
 	err := f.SetEffects(effects)
@@ -34,8 +34,8 @@ func restoreLights(handle *hid.Device, s light.State) error {
 	return nil
 }
 
-func restoreKeys(handle *hid.Device, s keys.State) error {
-	f := keys.New(handle, nil)
+func restoreKeys(h hid.Handler, s keys.State) error {
+	f := keys.New(h, nil)
 	err := f.SetMacCodes(s.Mac)
 	if err != nil {
 		return err

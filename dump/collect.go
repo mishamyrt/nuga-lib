@@ -10,27 +10,28 @@ import (
 )
 
 // Collect device state
-func Collect(handle *hid.Device) (State, error) {
-	lightsState, err := collectLights(handle)
+func Collect(h hid.Handler) (State, error) {
+	lightsState, err := collectLights(h)
 	if err != nil {
 		return State{}, err
 	}
-	keysState, err := collectKeys(handle)
+	keysState, err := collectKeys(h)
 	if err != nil {
 		return State{}, err
 	}
+	info := h.GetInfo()
 	return State{
-		Name:     device.Model(handle.Info.Model),
-		Firmware: handle.Info.Firmware,
+		Name:     device.Model(info.Model),
+		Firmware: info.Firmware,
 		Lights:   lightsState,
 		Keys:     keysState,
 	}, nil
 }
 
-func collectLights(handle *hid.Device) (light.State, error) {
+func collectLights(h hid.Handler) (light.State, error) {
 	var state light.State
 	var err error
-	lightsFeature := light.New(handle)
+	lightsFeature := light.New(h)
 	params, err := lightsFeature.GetRawEffects()
 	if err != nil {
 		return state, err
@@ -44,10 +45,10 @@ func collectLights(handle *hid.Device) (light.State, error) {
 	return state, nil
 }
 
-func collectKeys(handle *hid.Device) (keys.State, error) {
+func collectKeys(h hid.Handler) (keys.State, error) {
 	var state keys.State
 	var err error
-	keysFeature := keys.New(handle, nil)
+	keysFeature := keys.New(h, nil)
 	state.Mac, err = keysFeature.GetMacCodes()
 	if err != nil {
 		return state, err
