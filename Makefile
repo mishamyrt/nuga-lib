@@ -1,5 +1,5 @@
-GOLANGCI_LINT_VERSION = v1.55.2
-REVIVE_VERSION = v1.3.4
+GOLANGCI_LINT_VERSION = v1.56.2
+REVIVE_VERSION = v1.3.7
 GIT_CHGLOG_VERSION = v0.15.4
 GO_BIN_PATH := $(shell go env GOPATH)/bin
 TEST_MODULES := $(shell go list ./... | grep -v /cmd/)
