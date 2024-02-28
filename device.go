@@ -19,15 +19,15 @@ type Device struct {
 	Firmware     string
 	Capabilities *Capability
 	Features     *features.Features
-	handle       hid.Handler
+	Handle       hid.Handler
 }
 
 // Close connection with hid device
 func (d *Device) Close() error {
-	if d.handle == nil {
+	if d.Handle == nil {
 		return nil
 	}
-	return d.handle.Close()
+	return d.Handle.Close()
 }
 
 // Open real keyboard USB handle
@@ -48,6 +48,6 @@ func Open() (*Device, error) {
 		Firmware:     handle.Info.Firmware,
 		Features:     featuresRepo,
 		Capabilities: capabilities,
-		handle:       handle,
+		Handle:       handle,
 	}, nil
 }
