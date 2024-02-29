@@ -70,7 +70,7 @@ func (f *Feature) Parse(keys []uint32) (*layout.KeyMap, error) {
 }
 
 func (f *Feature) getKeyCodes(cmd []byte) ([]uint32, error) {
-	response, err := f.handle.Request(cmd, 1035)
+	response, err := f.handle.Request(cmd, 1032)
 	if err != nil {
 		return nil, err
 	}
