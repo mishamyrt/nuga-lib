@@ -6,6 +6,34 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.5.8](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.8) - 2024-03-01
+### Bug Fixes
+- use original state write order
+- update default Halo75 state
+- set correct keys request length
+
+### Refactoring
+- make hex printers more testable
+
+### Testing
+- add hex
+
+
+## [v0.5.7](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.7) - 2024-02-29
+### Bug Fixes
+- use interface for dumps
+
+
+## [v0.5.6](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.6) - 2024-02-29
+### Features
+- export handle
+
+
+## [v0.5.5](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.5) - 2024-02-28
+### Bug Fixes
+- remove extra logging
+
+
 ## [v0.5.4](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.4) - 2024-02-27
 ### Features
 - add missing codes
@@ -87,7 +115,11 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.4...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.8...HEAD
+[v0.5.8]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.7...v0.5.8
+[v0.5.7]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.6...v0.5.7
+[v0.5.6]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.5...v0.5.6
+[v0.5.5]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.4...v0.5.5
 [v0.5.4]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.3...v0.5.4
 [v0.5.3]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.2...v0.5.3
 [v0.5.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.1...v0.5.2
