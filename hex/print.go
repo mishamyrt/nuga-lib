@@ -1,9 +1,19 @@
+// Package hex provides functions for formatting hex strings
 package hex
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+	"os"
+)
 
+// Out is target for printing
+var Out io.Writer = os.Stdout
+
+// PrintBytes prints byte array in hex format
 func PrintBytes(b []byte) {
 	if len(b) == 0 {
+		fmt.Fprint(Out, "[]\n")
 		return
 	}
 	result := FromByte(b[0])
@@ -13,6 +23,5 @@ func PrintBytes(b []byte) {
 			result += ", " + FromByte(v)
 		}
 	}
-	result = "[" + result + "]"
-	fmt.Println(result)
+	fmt.Fprintf(Out, "[%s]\n", result)
 }
