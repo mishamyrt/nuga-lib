@@ -144,6 +144,7 @@ var Halo65 = Template{
 	KeyTab:            2,
 	KeySpace:          35,
 	KeyBackspace:      79,
+	KeyDel:            91,
 	KeyEsc:            0,
 	KeyNum1:           164,
 	KeyNum2:           165,
