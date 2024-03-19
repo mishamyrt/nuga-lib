@@ -27,7 +27,7 @@ const (
 const haloSeriesCapabilities = BacklightCapability | SidelightCapability | HalolightCapability
 
 var modelCapabilities = map[device.Model]Capability{
-	device.Halo65: haloSeriesCapabilities,
+	device.Halo65: haloSeriesCapabilities | KeysCapability,
 	device.Halo75: haloSeriesCapabilities | KeysCapability,
 	device.Halo96: haloSeriesCapabilities,
 }
