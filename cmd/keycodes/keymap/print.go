@@ -34,7 +34,7 @@ func sortKeys(keys []string) {
 }
 
 // Print keymap
-func Print(values []uint32, tpl *layout.Template) {
+func Print(values []uint32, tpl *layout.Template, onlyMissing bool) {
 	keys := make([]string, 0, len(*tpl))
 	for key := range *tpl {
 		keys = append(keys, string(key))
@@ -43,8 +43,11 @@ func Print(values []uint32, tpl *layout.Template) {
 	lines := make([]string, 0, len(*tpl))
 	for _, key := range keys {
 		position := tpl.GetPosition(layout.KeyName(key))
-		line := fmt.Sprintf("%-15s %-5d 0x%08x", key, position+1, values[position])
-		lines = append(lines, line)
+		name := layout.FindKeyName(values[position])
+		line := fmt.Sprintf("%-15s %-5d %s", key, position+1, name)
+		if !onlyMissing || (key != string(name) && !strings.HasPrefix(key, "fn")) {
+			lines = append(lines, line)
+		}
 	}
 
 	fmt.Println(strings.Join(lines, "\n"))

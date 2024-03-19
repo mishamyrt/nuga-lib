@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.6.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.6.0) - 2024-03-19
+### Features
+- add Halo65 keys support
+
+
 ## [v0.5.8](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.5.8) - 2024-03-01
 ### Bug Fixes
 - use original state write order
@@ -115,7 +120,8 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.8...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.0...HEAD
+[v0.6.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.8...v0.6.0
 [v0.5.8]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.7...v0.5.8
 [v0.5.7]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.6...v0.5.7
 [v0.5.6]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.5...v0.5.6
