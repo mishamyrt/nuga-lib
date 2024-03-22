@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.6.3](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.6.3) - 2024-03-22
+### Bug Fixes
+- correctly assign media keys group
+
+
+## [v0.6.2](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.6.2) - 2024-03-21
+### Bug Fixes
+- remove fn_f keys from Halo65 layout
+
+
 ## [v0.6.1](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.6.1) - 2024-03-19
 ### Bug Fixes
 - add missing Halo65 del key
@@ -125,7 +135,9 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.1...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.3...HEAD
+[v0.6.3]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.2...v0.6.3
+[v0.6.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.1...v0.6.2
 [v0.6.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.0...v0.6.1
 [v0.6.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.8...v0.6.0
 [v0.5.8]: https://github.com/mishamyrt/nuga-lib/compare/v0.5.7...v0.5.8
