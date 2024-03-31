@@ -64,6 +64,14 @@ func (f *Feature) SetWinCodes(keys []uint32) error {
 	return f.setKeyCodes(cmdSetWinKeys, keys)
 }
 
+func (f *Feature) GetMacros() ([]Macro, error) {
+	resp, err := f.handle.Request(cmdGetMacro, 1032)
+	if err != nil {
+		return nil, err
+	}
+	return ParseMacro(resp)
+}
+
 // Parse raw keys
 func (f *Feature) Parse(keys []uint32) (*layout.KeyMap, error) {
 	return layout.Parse(keys, f.template)

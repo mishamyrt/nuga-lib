@@ -19,6 +19,14 @@ func FindKeyCode(name KeyName) uint32 {
 	return val.Code
 }
 
+func FromShortKeyCode(code byte) uint32 {
+	fullCode := uint32(code)
+	for i := 0; i < 6; i++ {
+		fullCode <<= 4
+	}
+	return fullCode
+}
+
 // IsRegularKey checks if code is regular
 func IsRegularKey(code uint32) bool {
 	return byte(code&0xFF) == 0x00
