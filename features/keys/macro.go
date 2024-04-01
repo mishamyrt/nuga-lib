@@ -1,7 +1,6 @@
 package keys
 
 import (
-	"fmt"
 	"math"
 
 	"github.com/mishamyrt/nuga-lib/features/keys/layout"
@@ -85,7 +84,6 @@ func (m Macros) Bytes() ([]byte, error) {
 		p = append(p, bytes...)
 		p = append(p, make([]byte, padding)...)
 		b = append(b, p...)
-		fmt.Println("Part len", len(p))
 	}
 	if len(b) < 1024 {
 		b = append(b, make([]byte, 1024-len(b))...)

@@ -1,8 +1,6 @@
 package keys
 
 import (
-	"fmt"
-
 	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/features/keys/layout"
 	"github.com/mishamyrt/nuga-lib/hid"
@@ -72,7 +70,6 @@ func (f *Feature) GetMacros() (Macros, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(resp)
 	return ParseMacros(resp)
 }
 
