@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.7.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.7.0) - 2024-04-01
+### Features
+- add macro simulation
+- add macro writing support
+- add macro reading and parsing
+
+
 ## [v0.6.3](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.6.3) - 2024-03-22
 ### Bug Fixes
 - correctly assign media keys group
@@ -135,7 +142,8 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.3...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.0...HEAD
+[v0.7.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.3...v0.7.0
 [v0.6.3]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.2...v0.6.3
 [v0.6.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.1...v0.6.2
 [v0.6.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.0...v0.6.1
