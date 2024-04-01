@@ -7,8 +7,9 @@ import (
 
 // State represents simulation data.
 type State struct {
-	Mac []uint32 `json:"mac"`
-	Win []uint32 `json:"win"`
+	Mac    []uint32 `json:"mac"`
+	Win    []uint32 `json:"win"`
+	Macros []uint8  `json:"macros,omitempty"`
 }
 
 // FeatureSimulation represents simulated keys feature.
@@ -23,6 +24,9 @@ func NewSimulation(t *State, model *device.Model) *FeatureSimulation {
 	var template *layout.Template
 	if model != nil {
 		template = layout.GetTemplate(*model)
+	}
+	if t.Macros == nil {
+		t.Macros = make([]uint8, 0)
 	}
 	return &FeatureSimulation{
 		data:         t,
@@ -65,11 +69,22 @@ func (f *FeatureSimulation) GetMac() (*layout.KeyMap, error) {
 
 // GetMacros returns keyboard macros
 func (f *FeatureSimulation) GetMacros() (Macros, error) {
-	return make([]Macro, 0), nil
+	if len(f.data.Macros) > 0 {
+		res := make([]uint8, len(f.data.Macros), 1032)
+		res[0] = codeMacroHeader
+		copy(res[7:], f.data.Macros)
+		return ParseMacros(res)
+	}
+	return nil, nil
 }
 
 // SetMacros sets keyboard macros
-func (f *FeatureSimulation) SetMacros(_ Macros) error {
+func (f *FeatureSimulation) SetMacros(m Macros) error {
+	res, err := m.Bytes()
+	if err != nil {
+		return err
+	}
+	f.data.Macros = res
 	return nil
 }
 
