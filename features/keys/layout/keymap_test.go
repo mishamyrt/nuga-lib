@@ -13,9 +13,26 @@ var testTemplate = layout.Template{
 }
 
 var testKeyMap = layout.KeyMap{
-	layout.KeyM:            {Name: layout.KeyM, Modifiers: &layout.Modifiers{Ctrl: true}},
-	layout.KeyK:            {Name: layout.KeyK, Modifiers: &layout.Modifiers{}},
-	layout.KeyBrightnessUp: {Name: layout.KeyBrightnessUp},
+	layout.KeyM: {
+		Type: layout.ActionKeystroke,
+		Keystroke: &layout.KeystrokeParams{
+			Name:      layout.KeyM,
+			Modifiers: &layout.Modifiers{Ctrl: true},
+		},
+	},
+	layout.KeyK: {
+		Type: layout.ActionKeystroke,
+		Keystroke: &layout.KeystrokeParams{
+			Name:      layout.KeyK,
+			Modifiers: &layout.Modifiers{},
+		},
+	},
+	layout.KeyBrightnessUp: {
+		Type: layout.ActionKeystroke,
+		Keystroke: &layout.KeystrokeParams{
+			Name: layout.KeyBrightnessUp,
+		},
+	},
 }
 
 func TestApply(t *testing.T) {
@@ -23,7 +40,10 @@ func TestApply(t *testing.T) {
 		expected layout.KeyName
 		code     uint32
 	}{
-		{layout.KeyM, layout.ApplyModifiers(layout.Keys[layout.KeyM].Code, testKeyMap[layout.KeyM].Modifiers)},
+		{layout.KeyM, layout.ApplyModifiers(
+			layout.Keys[layout.KeyM].Code,
+			testKeyMap[layout.KeyM].Keystroke.Modifiers,
+		)},
 		{layout.KeyK, layout.Keys[layout.KeyK].Code},
 		{layout.KeyBrightnessUp, layout.Keys[layout.KeyBrightnessUp].Code},
 	}
@@ -58,20 +78,29 @@ func TestParse(t *testing.T) {
 	}
 
 	for k, v := range testKeyMap {
-		if (*keyMap)[k].Name != v.Name {
-			t.Errorf("Expected keyMap[%s].Name to be %#v, got %#v", k, v.Name, (*keyMap)[k].Name)
+		if (*keyMap)[k].Keystroke.Name != v.Keystroke.Name {
+			t.Errorf("Expected keyMap[%s].Name to be %#v, got %#v", k, v.Keystroke.Name, (*keyMap)[k].Keystroke.Name)
 		}
-		if v.Modifiers == nil || (*keyMap)[k].Modifiers == nil {
-			if v.Modifiers == nil && (*keyMap)[k].Modifiers == nil {
+		if v.Keystroke.Modifiers == nil || (*keyMap)[k].Keystroke.Modifiers == nil {
+			if v.Keystroke.Modifiers == nil && (*keyMap)[k].Keystroke.Modifiers == nil {
 				continue
 			} else {
-				t.Errorf("Unexpected one modifier to be nil: %v, %v", v.Modifiers, (*keyMap)[k].Modifiers)
+				t.Errorf(
+					"Unexpected one modifier to be nil: %v, %v",
+					v.Keystroke.Modifiers,
+					(*keyMap)[k].Keystroke.Modifiers,
+				)
 			}
 		}
-		expectedModifiers := *v.Modifiers
-		gotModifiers := *((*keyMap)[k].Modifiers)
-		if expectedModifiers != gotModifiers {
-			t.Errorf("Expected keyMap[%s].Modifiers to be %#v, got %#v", k, expectedModifiers, gotModifiers)
+		if v.Keystroke.Modifiers == nil && (*keyMap)[k].Keystroke.Modifiers != nil {
+			t.Errorf("Expected keyMap[%s].Modifiers to be nil, got %#v", k, (*keyMap)[k].Keystroke.Modifiers)
+		} else {
+			expectedModifiers := *v.Keystroke.Modifiers
+			gotModifiers := *((*keyMap)[k].Keystroke.Modifiers)
+			if expectedModifiers != gotModifiers {
+				t.Errorf("Expected keyMap[%s].Modifiers to be %#v, got %#v", k, expectedModifiers, gotModifiers)
+			}
 		}
+
 	}
 }

@@ -8,8 +8,8 @@ var ErrNoTemplate = errors.New("connected keyboard template is not ready yet")
 // ErrWrongKeyCode is returned when key code is wrong
 var ErrWrongKeyCode = errors.New("wrong key code")
 
-// ErrWrong delay is returned when delay is wrong
+// ErrWrongDelay is returned when delay is wrong
 var ErrWrongDelay = errors.New("wrong delay value. It must be more or equal 3")
 
-// ErrWrongHeader is returned when macro header is wrong
+// ErrWrongMacroHeader is returned when macro header is wrong
 var ErrWrongMacroHeader = errors.New("wrong macro header. Must be 0x85")

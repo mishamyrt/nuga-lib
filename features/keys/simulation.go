@@ -63,6 +63,16 @@ func (f *FeatureSimulation) GetMac() (*layout.KeyMap, error) {
 	return layout.Parse(f.data.Mac, f.template)
 }
 
+// GetMacros returns keyboard macros
+func (f *FeatureSimulation) GetMacros() (Macros, error) {
+	return make([]Macro, 0), nil
+}
+
+// SetMacros sets keyboard macros
+func (f *FeatureSimulation) SetMacros(_ Macros) error {
+	return nil
+}
+
 // SetWin sets win keyboard keys
 func (f *FeatureSimulation) SetWin(keyMap *layout.KeyMap) error {
 	return keyMap.Apply(f.data.Win, f.template)

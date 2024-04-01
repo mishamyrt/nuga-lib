@@ -1,6 +1,8 @@
 package keys
 
 import (
+	"fmt"
+
 	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/features/keys/layout"
 	"github.com/mishamyrt/nuga-lib/hid"
@@ -64,12 +66,26 @@ func (f *Feature) SetWinCodes(keys []uint32) error {
 	return f.setKeyCodes(cmdSetWinKeys, keys)
 }
 
-func (f *Feature) GetMacros() ([]Macro, error) {
+// GetMacros returns macros
+func (f *Feature) GetMacros() (Macros, error) {
 	resp, err := f.handle.Request(cmdGetMacro, 1032)
 	if err != nil {
 		return nil, err
 	}
-	return ParseMacro(resp)
+	fmt.Println(resp)
+	return ParseMacros(resp)
+}
+
+// SetMacros sets macros
+func (f *Feature) SetMacros(macros Macros) error {
+	request := make([]byte, 0, 1032)
+	request = append(request, cmdSetMacro...)
+	data, err := macros.Bytes()
+	if err != nil {
+		return err
+	}
+	request = append(request, data...)
+	return f.handle.Send(request)
 }
 
 // Parse raw keys

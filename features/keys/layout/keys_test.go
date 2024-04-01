@@ -67,3 +67,24 @@ func TestIsRegularKey(t *testing.T) {
 		})
 	}
 }
+
+func TestExtractMacroIndex(t *testing.T) {
+	tests := []struct {
+		name     string
+		code     uint32
+		expected uint8
+	}{
+		{"Empty", 0x00010010, 0},
+		{"1", 0x01010010, 1},
+		{"2", 0x02010010, 2},
+		{"3", 0x03010010, 3},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := layout.ExtractMacroIndex(tt.code)
+			if result != tt.expected {
+				t.Errorf("ExtractMacroIndex(%#x): expected %d, got %d", tt.code, tt.expected, result)
+			}
+		})
+	}
+}

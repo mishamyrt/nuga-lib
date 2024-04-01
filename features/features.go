@@ -42,4 +42,6 @@ type KeysFeature interface {
 	SetWin(keyMap *layout.KeyMap) error
 	SetMac(keyMap *layout.KeyMap) error
 	Parse(keys []uint32) (*layout.KeyMap, error)
+	GetMacros() (keys.Macros, error)
+	SetMacros(macros keys.Macros) error
 }
