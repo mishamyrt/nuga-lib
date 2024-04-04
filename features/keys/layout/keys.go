@@ -46,7 +46,7 @@ func IndexToMacro(index uint8) uint32 {
 	result <<= 8
 	result |= 0x01
 	result <<= 8
-	result |= 0x01
+	result |= 0x00
 	result <<= 8
 	result |= 0x10
 	return result

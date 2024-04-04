@@ -88,3 +88,47 @@ func TestExtractMacroIndex(t *testing.T) {
 		})
 	}
 }
+
+func TestIsMacroKey(t *testing.T) {
+	tests := []struct {
+		name     string
+		code     uint32
+		expected bool
+	}{
+		{"Empty  ", 0x00000000, false},
+		{"Regular", 0x01000000, false},
+		{"0", 0x00010010, true},
+		{"1", 0x01010010, true},
+		{"2", 0x02010010, true},
+		{"3", 0x03010010, true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := layout.IsMacroKey(tt.code)
+			if result != tt.expected {
+				t.Errorf("IsMacroKey(%#x): expected %t, got %t", tt.code, tt.expected, result)
+			}
+		})
+	}
+}
+
+func TestIndexToMacro(t *testing.T) {
+	tests := []struct {
+		name     string
+		index    uint8
+		expected uint32
+	}{
+		{"0", 0, 0x00010010},
+		{"1", 1, 0x01010010},
+		{"2", 2, 0x02010010},
+		{"3", 3, 0x03010010},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := layout.IndexToMacro(tt.index)
+			if result != tt.expected {
+				t.Errorf("IndexToMacro(%d): expected %#x, got %#x", tt.index, tt.expected, result)
+			}
+		})
+	}
+}
