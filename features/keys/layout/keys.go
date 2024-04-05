@@ -21,7 +21,12 @@ func FindKeyCode(name KeyName) uint32 {
 
 // FindKeyNameByShortCode finds key name by short code
 func FindKeyNameByShortCode(code byte) KeyName {
-	return FindKeyName(FromShortKeyCode(code))
+	for k, v := range Keys {
+		if ToShortKeyCode(v.Code) == code {
+			return k
+		}
+	}
+	return KeyNone
 }
 
 // FindShortKeyCode finds key short code by name
