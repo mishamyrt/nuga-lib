@@ -16,6 +16,14 @@ func Restore(h hid.Handler, s *State) error {
 	if err != nil {
 		return err
 	}
+	macros, err := keys.ParseHeadlessMacros(s.Keys.Macros)
+	if err != nil {
+		return err
+	}
+	err = k.SetMacros(macros)
+	if err != nil {
+		return err
+	}
 	err = k.SetMacCodes(s.Keys.Mac)
 	if err != nil {
 		return err

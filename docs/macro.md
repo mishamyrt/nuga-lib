@@ -39,6 +39,8 @@ MID
 
 Formula is (25600 * HIGH) + (MID * 100) + LOW
 
-If the LOW is 3, then it should be taken as 0 in calculations.
+If LOW is more then 128, it means key up event is sent. So subtract 128 from LOW.
+
+If the LOW rest is 3, then it should be taken as 0 in calculations. 
 
 

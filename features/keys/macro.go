@@ -91,18 +91,23 @@ func (m Macros) Bytes() ([]byte, error) {
 	return b, nil
 }
 
-// ParseMacros parses macros payload
+// ParseMacros parses macros payload with header
 func ParseMacros(payload []byte) (Macros, error) {
 	if payload[0] != codeMacroHeader {
 		return nil, ErrWrongMacroHeader
 	}
+	return ParseHeadlessMacros(payload[7:])
+
+}
+
+// ParseHeadlessMacros parses macros payload without header
+func ParseHeadlessMacros(payload []byte) (Macros, error) {
 	macros := make([]Macro, 0)
-	data := payload[7:]
-	for i := 0; i < len(data); i += 128 {
-		if i+128 > len(data) {
+	for i := 0; i < len(payload); i += 128 {
+		if i+128 > len(payload) {
 			break
 		}
-		macroData := data[i : i+128]
+		macroData := payload[i : i+128]
 		length := countMacro(macroData)
 		if length == 0 {
 			break

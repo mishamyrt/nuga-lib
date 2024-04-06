@@ -57,5 +57,14 @@ func collectKeys(h hid.Handler) (keys.State, error) {
 	if err != nil {
 		return state, err
 	}
+	macros, err := keysFeature.GetMacros()
+	if err != nil {
+		return state, err
+	}
+	macrosData, err := macros.Bytes()
+	if err != nil {
+		return state, err
+	}
+	state.Macros = macrosData
 	return state, nil
 }
