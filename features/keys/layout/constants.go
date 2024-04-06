@@ -15,6 +15,7 @@ const (
 	GroupBacklight  = "Backlight"
 	GroupMultimedia = "Multimedia"
 	GroupSpecial    = "Special"
+	GroupSystem     = "System"
 	GroupSymbols    = "Symbols"
 	GroupModifiers  = "Modifiers"
 	GroupNavigation = "Navigation"
@@ -181,7 +182,7 @@ var Keys = map[KeyName]KeyDescription{
 	KeyRCtrl:                   {"Right Control", 0xe4000006, GroupModifiers},
 	KeyRShift:                  {"Right Shift", 0xe5000006, GroupModifiers},
 	KeyRMeta:                   {"Right Meta", 0xe7000006, GroupModifiers},
-	KeyFn:                      {"Function", 0x00000020, GroupSpecial},
+	KeyFn:                      {"Function", 0x00000020, GroupSystem},
 	KeyIns:                     {"Insert", 0x49000000, GroupNavigation},
 	KeyHome:                    {"Home", 0x4a000000, GroupNavigation},
 	KeyEnd:                     {"End", 0x4d000000, GroupNavigation},
@@ -252,8 +253,8 @@ var Keys = map[KeyName]KeyDescription{
 	KeyF10:                     {"F10", 0x43000000, GroupFunction},
 	KeyF11:                     {"F11", 0x44000000, GroupFunction},
 	KeyF12:                     {"F12", 0x45000000, GroupFunction},
-	KeyBrightnessDown:          {"Brightness Down", 0x6f000004, GroupBacklight},
-	KeyBrightnessUp:            {"Brightness Up", 0x70000004, GroupBacklight},
+	KeyBrightnessDown:          {"Brightness Down", 0x6f000004, GroupSpecial},
+	KeyBrightnessUp:            {"Brightness Up", 0x70000004, GroupSpecial},
 	KeyRewind:                  {"Rewind", 0xb6000004, GroupMultimedia},
 	KeyPlayPause:               {"Play/Pause", 0xcd000004, GroupMultimedia},
 	KeyForward:                 {"Forward", 0xb5000004, GroupMultimedia},
