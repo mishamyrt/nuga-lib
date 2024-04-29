@@ -95,10 +95,9 @@ func (f *Feature) SetEffects(p *Effects) error {
 	if err != nil {
 		return err
 	}
-	paramsRequest := make([]byte, 0)
+	paramsRequest := make([]byte, 1032)
 	paramsRequest = append(paramsRequest, CmdSetParams...)
 	paramsRequest = append(paramsRequest, p.Bytes()...)
 	paramsRequest = append(paramsRequest, currentParams...)
-	paramsRequest = append(paramsRequest, make([]byte, 770)...)
 	return f.handle.Send(paramsRequest)
 }
