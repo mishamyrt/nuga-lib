@@ -36,7 +36,7 @@ func (b *BacklightColors) GetWin() [][]RGB {
 
 // Bytes converts color state to raw byte slice.
 func (b *BacklightColors) Bytes() []byte {
-	var buf = make([]byte, 0)
+	var buf = make([]byte, 0, 1024)
 	var c RGB
 	for effect := range b {
 		for i := range b[effect] {
