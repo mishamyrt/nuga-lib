@@ -19,12 +19,19 @@ type Effects struct {
 	Backlight BacklightEffect `json:"backlight"`
 	Sidelight MiscEffect      `json:"sidelight"`
 	Halo      MiscEffect      `json:"halo"`
+	// Debounce represents key press debounce time in milliseconds.
+	// This parameter has nothing to do with backlight,
+	// A NuPhy representative explained it as follows:
+	// Putting it in the lighting setting is a matter of design, for the sake of beauty.
+	Debounce uint8 `json:"debounce"`
 }
 
 // Bytes returns effects as a raw byte slice.
 func (b *Effects) Bytes() []byte {
 	buf := make([]byte, 0)
 	buf = append(buf, ParamsHeader...)
+	buf = append(buf, b.Debounce)
+	buf = append(buf, ParamsBacklightHeader...)
 	buf = append(buf, b.Backlight.Mode.Code)
 	buf = append(buf, ParamsMiscHeader...)
 	buf = append(
@@ -53,6 +60,7 @@ func (b *Effects) Bytes() []byte {
 // ParseEffects parses raw bytes to effects struct.
 func ParseEffects(data []byte) *Effects {
 	result := &Effects{}
+	result.Debounce = data[2]
 	result.Sidelight = MiscEffect{
 		Mode: SidelightDomain.Find(data[12]),
 		EffectParams: EffectParams{

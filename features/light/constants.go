@@ -41,7 +41,9 @@ var (
 // Command parts
 var (
 	// ParamsHeader represents keyboard params header.
-	ParamsHeader = []byte{0x03, 0x03, 0x03, 0x00, 0x00}
+	ParamsHeader = []byte{0x03, 0x03}
+	// ParamsBacklightHeader represents keyboard backlight params header.
+	ParamsBacklightHeader = []byte{0x00, 0x00}
 	// ParamsMiscHeader represents keyboard misc params header.
 	ParamsMiscHeader = []byte{0x20, 0x00, 0x00, 0x00, 0x00, 0x00}
 	// ParamsSuffix represents keyboard params suffix.
