@@ -27,6 +27,7 @@ test:
 
 .PHONY: build
 build:
+	$(call build_app,custom-effect)
 	$(call build_app,dump)
 	$(call build_app,describe)
 
