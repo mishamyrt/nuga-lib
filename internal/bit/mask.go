@@ -2,7 +2,7 @@
 package bit
 
 // Mask represents bit mask entity
-type Mask byte
+type Mask uint32
 
 type predicate func(f Mask) bool
 

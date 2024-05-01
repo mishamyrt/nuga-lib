@@ -2,21 +2,21 @@ package keys
 
 import (
 	"github.com/mishamyrt/nuga-lib/device"
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
 	"github.com/mishamyrt/nuga-lib/hid"
+	"github.com/mishamyrt/nuga-lib/layout"
 )
 
 // Feature represents keyboard keys feature
 type Feature struct {
 	handle   hid.Handler
-	template *layout.Template
+	template *layout.KeystrokeTemplate
 }
 
 // New creates keys feature instance.
 func New(handle hid.Handler, model *device.Model) *Feature {
-	var template *layout.Template
+	var template *layout.KeystrokeTemplate
 	if model != nil {
-		template = layout.GetTemplate(*model)
+		template = layout.GetKeystrokeTemplate(*model)
 	}
 	return &Feature{
 		handle:   handle,
@@ -25,22 +25,22 @@ func New(handle hid.Handler, model *device.Model) *Feature {
 }
 
 // GetWin returns win keyboard keys
-func (f *Feature) GetWin() (*layout.KeyMap, error) {
+func (f *Feature) GetWin() (*KeyMap, error) {
 	return f.getKeys(cmdGetWinKeys)
 }
 
 // GetMac returns mac keyboard keys
-func (f *Feature) GetMac() (*layout.KeyMap, error) {
+func (f *Feature) GetMac() (*KeyMap, error) {
 	return f.getKeys(cmdGetMacKeys)
 }
 
 // SetWin sets win keyboard keys
-func (f *Feature) SetWin(keyMap *layout.KeyMap) error {
+func (f *Feature) SetWin(keyMap *KeyMap) error {
 	return f.setKeys(cmdGetWinKeys, cmdSetWinKeys, keyMap)
 }
 
 // SetMac sets mac keyboard keys
-func (f *Feature) SetMac(keyMap *layout.KeyMap) error {
+func (f *Feature) SetMac(keyMap *KeyMap) error {
 	return f.setKeys(cmdGetMacKeys, cmdSetMacKeys, keyMap)
 }
 
@@ -86,8 +86,8 @@ func (f *Feature) SetMacros(macros Macros) error {
 }
 
 // Parse raw keys
-func (f *Feature) Parse(keys []uint32) (*layout.KeyMap, error) {
-	return layout.Parse(keys, f.template)
+func (f *Feature) Parse(keys []uint32) (*KeyMap, error) {
+	return ParseKeyMap(keys, f.template)
 }
 
 func (f *Feature) getKeyCodes(cmd []byte) ([]uint32, error) {
@@ -103,7 +103,7 @@ func (f *Feature) getKeyCodes(cmd []byte) ([]uint32, error) {
 	return values, nil
 }
 
-func (f *Feature) getKeys(cmd []byte) (*layout.KeyMap, error) {
+func (f *Feature) getKeys(cmd []byte) (*KeyMap, error) {
 	if f.template == nil {
 		return nil, ErrNoTemplate
 	}
@@ -111,7 +111,7 @@ func (f *Feature) getKeys(cmd []byte) (*layout.KeyMap, error) {
 	if err != nil {
 		return nil, err
 	}
-	keys, err := layout.Parse(codes, f.template)
+	keys, err := ParseKeyMap(codes, f.template)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +129,7 @@ func (f *Feature) setKeyCodes(cmd []byte, keys []uint32) error {
 	return f.handle.Send(request)
 }
 
-func (f *Feature) setKeys(cmdGet []byte, cmdSet []byte, keys *layout.KeyMap) error {
+func (f *Feature) setKeys(cmdGet []byte, cmdSet []byte, keys *KeyMap) error {
 	if f.template == nil {
 		return ErrNoTemplate
 	}

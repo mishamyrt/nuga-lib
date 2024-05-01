@@ -3,17 +3,17 @@ package layout
 
 import "github.com/mishamyrt/nuga-lib/device"
 
-// Template represents keyboard layout template
-type Template map[KeyName]uint32
+// KeystrokeTemplate represents keyboard layout template
+type KeystrokeTemplate map[KeyName]uint32
 
 // GetPosition returns key position
-func (l Template) GetPosition(key KeyName) uint32 {
-	return l[key]
+func (k KeystrokeTemplate) GetPosition(key KeyName) uint32 {
+	return k[key]
 }
 
 // GetKey returns key name by position
-func (l Template) GetKey(position uint32) KeyName {
-	for k, v := range l {
+func (k KeystrokeTemplate) GetKey(position uint32) KeyName {
+	for k, v := range k {
 		if v == position {
 			return k
 		}
@@ -21,8 +21,7 @@ func (l Template) GetKey(position uint32) KeyName {
 	return ""
 }
 
-// Halo75 represents Halo 75 keyboard template
-var Halo75 = Template{
+var halo75Keystroke = KeystrokeTemplate{
 	KeyCapsLock:       3,
 	KeyLCtrl:          5,
 	KeyLShift:         4,
@@ -87,7 +86,7 @@ var Halo75 = Template{
 	KeyLBracket:       178,
 	KeyRBracket:       179,
 	KeyBackslash:      177,
-	KeyFwdslash:       173,
+	KeyForwardSlash:   173,
 	KeyComma:          171,
 	KeyPeriod:         172,
 	KeyScreenshot:     78,
@@ -125,104 +124,102 @@ var Halo75 = Template{
 	KeyVolumeUp:       191,
 }
 
-// Halo65 represents Halo 65 keyboard template
-var Halo65 = Template{
-	KeyCapsLock:  3,
-	KeyLCtrl:     5,
-	KeyLShift:    4,
-	KeyLAlt:      11,
-	KeyLMeta:     17,
-	KeyRCtrl:     65,
-	KeyRShift:    82,
-	KeyRMeta:     53,
-	KeyFn:        59,
-	KeyHome:      90,
-	KeyEnd:       94,
-	KeyPgUp:      92,
-	KeyPgDn:      93,
-	KeyEnter:     81,
-	KeyTab:       2,
-	KeySpace:     35,
-	KeyBackspace: 79,
-	KeyDel:       91,
-	KeyEsc:       0,
-	KeyNum1:      164,
-	KeyNum2:      165,
-	KeyNum3:      166,
-	KeyNum4:      167,
-	KeyNum5:      168,
-	KeyNum6:      169,
-	KeyNum7:      170,
-	KeyNum8:      171,
-	KeyNum9:      172,
-	KeyNum0:      173,
-	KenFNNum1:    6,
-	KenFNNum2:    12,
-	KenFNNum3:    18,
-	KenFNNum4:    24,
-	KenFNNum5:    30,
-	KenFNNum6:    36,
-	KenFNNum7:    42,
-	KenFNNum8:    48,
-	KenFNNum9:    54,
-	KenFNNum0:    60,
-	KeyFNMinus:   66,
-	KeyFNEqual:   72,
-	KeyA:         154,
-	KeyB:         136,
-	KeyC:         162,
-	KeyD:         21,
-	KeyE:         159,
-	KeyF:         176,
-	KeyG:         145,
-	KeyH:         137,
-	KeyI:         50,
-	KeyJ:         45,
-	KeyK:         51,
-	KeyL:         57,
-	KeyM:         46,
-	KeyN:         138,
-	KeyO:         56,
-	KeyP:         62,
-	KeyQ:         157,
-	KeyR:         160,
-	KeyS:         153,
-	KeyT:         32,
-	KeyU:         44,
-	KeyV:         163,
-	KeyW:         152,
-	KeyX:         161,
-	KeyY:         38,
-	KeyZ:         10,
-	KeySemicolon: 63,
-	KeyMinus:     174,
-	KeyEqual:     175,
-	KeyQuote:     69,
-	KeyLBracket:  178,
-	KeyRBracket:  179,
-	KeyBackslash: 177,
-	KeyFwdslash:  135,
-	KeyComma:     133,
-	KeyPeriod:    134,
-	KeyUp:        148,
-	KeyDown:      149,
-	KeyLeft:      150,
-	KeyRight:     151,
-	KeyFnUp:      197,
-	KeyFnDown:    196,
-	KeyFnLeft:    198,
-	KeyFnRight:   199,
+var halo65Keystroke = KeystrokeTemplate{
+	KeyCapsLock:     3,
+	KeyLCtrl:        5,
+	KeyLShift:       4,
+	KeyLAlt:         11,
+	KeyLMeta:        17,
+	KeyRCtrl:        65,
+	KeyRShift:       82,
+	KeyRMeta:        53,
+	KeyFn:           59,
+	KeyHome:         90,
+	KeyEnd:          94,
+	KeyPgUp:         92,
+	KeyPgDn:         93,
+	KeyEnter:        81,
+	KeyTab:          2,
+	KeySpace:        35,
+	KeyBackspace:    79,
+	KeyDel:          91,
+	KeyEsc:          0,
+	KeyNum1:         164,
+	KeyNum2:         165,
+	KeyNum3:         166,
+	KeyNum4:         167,
+	KeyNum5:         168,
+	KeyNum6:         169,
+	KeyNum7:         170,
+	KeyNum8:         171,
+	KeyNum9:         172,
+	KeyNum0:         173,
+	KenFNNum1:       6,
+	KenFNNum2:       12,
+	KenFNNum3:       18,
+	KenFNNum4:       24,
+	KenFNNum5:       30,
+	KenFNNum6:       36,
+	KenFNNum7:       42,
+	KenFNNum8:       48,
+	KenFNNum9:       54,
+	KenFNNum0:       60,
+	KeyFNMinus:      66,
+	KeyFNEqual:      72,
+	KeyA:            154,
+	KeyB:            136,
+	KeyC:            162,
+	KeyD:            21,
+	KeyE:            159,
+	KeyF:            176,
+	KeyG:            145,
+	KeyH:            137,
+	KeyI:            50,
+	KeyJ:            45,
+	KeyK:            51,
+	KeyL:            57,
+	KeyM:            46,
+	KeyN:            138,
+	KeyO:            56,
+	KeyP:            62,
+	KeyQ:            157,
+	KeyR:            160,
+	KeyS:            153,
+	KeyT:            32,
+	KeyU:            44,
+	KeyV:            163,
+	KeyW:            152,
+	KeyX:            161,
+	KeyY:            38,
+	KeyZ:            10,
+	KeySemicolon:    63,
+	KeyMinus:        174,
+	KeyEqual:        175,
+	KeyQuote:        69,
+	KeyLBracket:     178,
+	KeyRBracket:     179,
+	KeyBackslash:    177,
+	KeyForwardSlash: 135,
+	KeyComma:        133,
+	KeyPeriod:       134,
+	KeyUp:           148,
+	KeyDown:         149,
+	KeyLeft:         150,
+	KeyRight:        151,
+	KeyFnUp:         197,
+	KeyFnDown:       196,
+	KeyFnLeft:       198,
+	KeyFnRight:      199,
 }
 
-// Templates contains all keyboard templates
-var templates = map[device.Model]Template{
-	device.Halo75: Halo75,
-	device.Halo65: Halo65,
+var keystrokeTemplates = map[device.Model]KeystrokeTemplate{
+	device.Halo75: halo75Keystroke,
+	device.Halo65: halo65Keystroke,
 }
 
-// GetTemplate returns template by model
-func GetTemplate(name device.Model) *Template {
-	if t, ok := templates[name]; ok {
+// GetKeystrokeTemplate returns keystroke template by model
+func GetKeystrokeTemplate(name device.Model) *KeystrokeTemplate {
+	if t, ok := keystrokeTemplates[name]; ok {
 		return &t
 	}
 	return nil

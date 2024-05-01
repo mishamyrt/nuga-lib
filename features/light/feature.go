@@ -1,18 +1,26 @@
 package light
 
 import (
+	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/hid"
+	"github.com/mishamyrt/nuga-lib/layout"
 )
 
 // Feature represents keyboard light feature
 type Feature struct {
-	handle hid.Handler
+	handle   hid.Handler
+	template *layout.BacklightTemplate
 }
 
 // New creates light feature instance.
-func New(handle hid.Handler) *Feature {
+func New(handle hid.Handler, model *device.Model) *Feature {
+	var template *layout.BacklightTemplate
+	if model != nil {
+		template = layout.GetBacklightTemplate(*model)
+	}
 	return &Feature{
-		handle: handle,
+		handle:   handle,
+		template: template,
 	}
 }
 
@@ -100,4 +108,28 @@ func (f *Feature) SetEffects(p *Effects) error {
 	paramsRequest = append(paramsRequest, p.Bytes()...)
 	paramsRequest = append(paramsRequest, currentParams...)
 	return f.handle.Send(paramsRequest)
+}
+
+// GetCustomEffectColors returns current custom effect colors.
+func (f *Feature) GetCustomEffectColors() (*CustomBacklightMap, error) {
+	if f.template == nil {
+		return nil, ErrNoCustomColorsTemplate
+	}
+	raw, err := f.handle.Request(CmdGetCustomFirstPage, 1050)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCustomBacklight(raw, f.template)
+}
+
+// SetCustomEffectColors sets current custom effect colors.
+func (f *Feature) SetCustomEffectColors(colors *CustomBacklightMap) error {
+	if f.template == nil {
+		return ErrNoCustomColorsTemplate
+	}
+	payload := colors.Bytes(f.template)
+	req := make([]byte, 0, len(CmdSetCustomFirstPage)+len(payload))
+	req = append(req, CmdSetCustomFirstPage...)
+	req = append(req, payload...)
+	return f.handle.Send(req)
 }

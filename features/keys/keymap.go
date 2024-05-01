@@ -1,4 +1,6 @@
-package layout
+package keys
+
+import "github.com/mishamyrt/nuga-lib/layout"
 
 // ActionType represents action type
 type ActionType string
@@ -14,8 +16,8 @@ const (
 
 // KeystrokeParams represents keystroke params
 type KeystrokeParams struct {
-	Name      KeyName    `json:"key"`
-	Modifiers *Modifiers `json:"modifiers,omitempty"`
+	Name      layout.KeyName `json:"key"`
+	Modifiers *Modifiers     `json:"modifiers,omitempty"`
 }
 
 // Key represents layout key
@@ -26,15 +28,15 @@ type Key struct {
 }
 
 // KeyMap represents keyboard layout
-type KeyMap map[KeyName]Key
+type KeyMap map[layout.KeyName]Key
 
 // Apply layout to key slice
-func (k KeyMap) Apply(source []uint32, tpl *Template) error {
+func (k KeyMap) Apply(source []uint32, tpl *layout.KeystrokeTemplate) error {
 	for keyName, v := range k {
 		position := tpl.GetPosition(keyName)
 		switch v.Type {
 		case ActionKeystroke:
-			source[position] = FindKeyCode(v.Keystroke.Name)
+			source[position] = layout.FindKeyCode(v.Keystroke.Name)
 			if IsRegularKey(source[position]) && v.Keystroke.Modifiers != nil {
 				source[position] = ApplyModifiers(source[position], v.Keystroke.Modifiers)
 			}
@@ -48,8 +50,8 @@ func (k KeyMap) Apply(source []uint32, tpl *Template) error {
 	return nil
 }
 
-// Parse key map from values
-func Parse(values []uint32, tpl *Template) (*KeyMap, error) {
+// ParseKeyMap key map from values
+func ParseKeyMap(values []uint32, tpl *layout.KeystrokeTemplate) (*KeyMap, error) {
 	keys := make(KeyMap)
 	for key, position := range *tpl {
 		code := values[position]
@@ -66,12 +68,12 @@ func Parse(values []uint32, tpl *Template) (*KeyMap, error) {
 			code = ClearModifiers(code)
 			actionType = ActionKeystroke
 			keystroke = &KeystrokeParams{
-				Name:      FindKeyName(code),
+				Name:      layout.FindKeyName(code),
 				Modifiers: modifiers,
 			}
 		} else {
-			name := FindKeyName(code)
-			if name != KeyNone {
+			name := layout.FindKeyName(code)
+			if name != layout.KeyNone {
 				actionType = ActionKeystroke
 				keystroke = &KeystrokeParams{
 					Name:      name,

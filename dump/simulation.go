@@ -22,7 +22,7 @@ func OpenSimulation(s *State) (*nuga.Device, error) {
 
 func simulateFeatures(s *State) *features.Features {
 	return &features.Features{
-		Light: light.NewSimulation(&s.Lights),
+		Light: light.NewSimulation(&s.Lights, &s.Name),
 		Keys:  keys.NewSimulation(&s.Keys, &s.Name),
 	}
 }

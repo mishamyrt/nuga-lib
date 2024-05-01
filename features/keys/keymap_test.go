@@ -1,35 +1,36 @@
-package layout_test
+package keys_test
 
 import (
 	"testing"
 
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
+	"github.com/mishamyrt/nuga-lib/features/keys"
+	"github.com/mishamyrt/nuga-lib/layout"
 )
 
-var testTemplate = layout.Template{
+var testTemplate = layout.KeystrokeTemplate{
 	layout.KeyM:            0,
 	layout.KeyK:            1,
 	layout.KeyBrightnessUp: 2,
 }
 
-var testKeyMap = layout.KeyMap{
+var testKeyMap = keys.KeyMap{
 	layout.KeyM: {
-		Type: layout.ActionKeystroke,
-		Keystroke: &layout.KeystrokeParams{
+		Type: keys.ActionKeystroke,
+		Keystroke: &keys.KeystrokeParams{
 			Name:      layout.KeyM,
-			Modifiers: &layout.Modifiers{Ctrl: true},
+			Modifiers: &keys.Modifiers{Ctrl: true},
 		},
 	},
 	layout.KeyK: {
-		Type: layout.ActionKeystroke,
-		Keystroke: &layout.KeystrokeParams{
+		Type: keys.ActionKeystroke,
+		Keystroke: &keys.KeystrokeParams{
 			Name:      layout.KeyK,
-			Modifiers: &layout.Modifiers{},
+			Modifiers: &keys.Modifiers{},
 		},
 	},
 	layout.KeyBrightnessUp: {
-		Type: layout.ActionKeystroke,
-		Keystroke: &layout.KeystrokeParams{
+		Type: keys.ActionKeystroke,
+		Keystroke: &keys.KeystrokeParams{
 			Name: layout.KeyBrightnessUp,
 		},
 	},
@@ -40,7 +41,7 @@ func TestApply(t *testing.T) {
 		expected layout.KeyName
 		code     uint32
 	}{
-		{layout.KeyM, layout.ApplyModifiers(
+		{layout.KeyM, keys.ApplyModifiers(
 			layout.Keys[layout.KeyM].Code,
 			testKeyMap[layout.KeyM].Keystroke.Modifiers,
 		)},
@@ -62,13 +63,13 @@ func TestApply(t *testing.T) {
 	}
 }
 
-func TestParse(t *testing.T) {
+func TestParseKeyMap(t *testing.T) {
 	values := []uint32{
-		layout.ApplyModifiers(layout.Keys[layout.KeyM].Code, &layout.Modifiers{Ctrl: true}),
+		keys.ApplyModifiers(layout.Keys[layout.KeyM].Code, &keys.Modifiers{Ctrl: true}),
 		layout.Keys[layout.KeyK].Code,
 		layout.Keys[layout.KeyBrightnessUp].Code,
 	}
-	keyMap, err := layout.Parse(values, &testTemplate)
+	keyMap, err := keys.ParseKeyMap(values, &testTemplate)
 	if err != nil {
 		t.Fatalf("Parse returned an error: %v", err)
 	}

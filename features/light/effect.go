@@ -31,7 +31,12 @@ func (b *Effects) Bytes() []byte {
 	buf := make([]byte, 0, 123)
 	buf = append(buf, ParamsHeader...)
 	buf = append(buf, b.Debounce)
-	buf = append(buf, ParamsBacklightHeader...)
+	buf = append(buf, 0x00)
+	if b.Backlight.Mode.Code == BacklightCustom.Code {
+		buf = append(buf, 0x01)
+	} else {
+		buf = append(buf, 0x00)
+	}
 	buf = append(buf, b.Backlight.Mode.Code)
 	buf = append(buf, ParamsMiscHeader...)
 	buf = append(

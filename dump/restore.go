@@ -9,7 +9,7 @@ import (
 // Restore device state
 func Restore(h hid.Handler, s *State) error {
 	k := keys.New(h, nil)
-	l := light.New(h)
+	l := light.New(h, nil)
 	colors := light.ParseColorsState(s.Lights.Colors)
 	effects := light.ParseParamsState(s.Lights.Params)
 	err := l.SetBacklightColors(colors)

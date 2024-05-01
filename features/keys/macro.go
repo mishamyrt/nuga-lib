@@ -3,8 +3,8 @@ package keys
 import (
 	"math"
 
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
 	"github.com/mishamyrt/nuga-lib/internal/bit"
+	"github.com/mishamyrt/nuga-lib/layout"
 )
 
 // MacroEvent represents macro event
@@ -37,7 +37,7 @@ func (m *Macro) Bytes() ([]byte, error) {
 	b = append(b, high, low)
 	for _, a := range m.Actions {
 		delay := a.Delay
-		keyCode := layout.FindShortKeyCode(a.Key)
+		keyCode := FindShortKeyCode(a.Key)
 		if delay >= 128 {
 			high := byte(math.Floor(float64(a.Delay) / offsetHigh))
 			rest := a.Delay - (offsetHigh * uint16(high))
@@ -97,7 +97,6 @@ func ParseMacros(payload []byte) (Macros, error) {
 		return nil, ErrWrongMacroHeader
 	}
 	return ParseHeadlessMacros(payload[7:])
-
 }
 
 // ParseHeadlessMacros parses macros payload without header
@@ -136,7 +135,7 @@ func parseMacroPart(payload []byte) (*Macro, error) {
 
 	for i := 0; i < len(rest); i += 2 {
 		var low byte
-		name := layout.FindKeyNameByShortCode(rest[i+1])
+		name := FindKeyNameByShortCode(rest[i+1])
 		if name == layout.KeyNone {
 			return nil, ErrWrongKeyCode
 		}
