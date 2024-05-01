@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
+	"github.com/mishamyrt/nuga-lib/layout"
 )
 
 // Print keycodes with known actions
-func Print(values []uint32, tpl *layout.Template) {
+func Print(values []uint32, tpl *layout.KeystrokeTemplate) {
 	lines := make([]string, 0, len(*tpl))
 	for i, value := range values {
 		keyName := layout.FindKeyName(value)

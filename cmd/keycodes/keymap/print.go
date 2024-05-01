@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
+	"github.com/mishamyrt/nuga-lib/layout"
 )
 
 // Custom comparison logic for sorting
@@ -34,7 +34,7 @@ func sortKeys(keys []string) {
 }
 
 // Print keymap
-func Print(values []uint32, tpl *layout.Template, onlyMissing bool) {
+func Print(values []uint32, tpl *layout.KeystrokeTemplate, onlyMissing bool) {
 	keys := make([]string, 0, len(*tpl))
 	for key := range *tpl {
 		keys = append(keys, string(key))
