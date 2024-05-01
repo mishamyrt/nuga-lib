@@ -6,6 +6,47 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.8.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.8.0) - 2024-05-02
+### Bug Fixes
+- declare custom header type
+
+### Features
+- add custom effect support
+- add debounce support
+
+### Performance Improvements
+- preallocate known buffers
+
+### Testing
+- add model support test
+- add parse and serialize tests for custom backlight
+
+
+## [v0.7.5](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.7.5) - 2024-04-06
+### Bug Fixes
+- update system keys groups
+
+
+## [v0.7.4](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.7.4) - 2024-04-06
+### Features
+- add macro to dump
+
+
+## [v0.7.3](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.7.3) - 2024-04-05
+### Bug Fixes
+- correctly find short codes
+
+
+## [v0.7.2](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.7.2) - 2024-04-04
+### Bug Fixes
+- use correct macro suffix
+
+
+## [v0.7.1](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.7.1) - 2024-04-01
+### Bug Fixes
+- remove extra logging
+
+
 ## [v0.7.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.7.0) - 2024-04-01
 ### Features
 - add macro simulation
@@ -142,7 +183,13 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.0...HEAD
+[v0.8.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.5...v0.8.0
+[v0.7.5]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.4...v0.7.5
+[v0.7.4]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.3...v0.7.4
+[v0.7.3]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.2...v0.7.3
+[v0.7.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.1...v0.7.2
+[v0.7.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.0...v0.7.1
 [v0.7.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.3...v0.7.0
 [v0.6.3]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.2...v0.6.3
 [v0.6.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.6.1...v0.6.2
