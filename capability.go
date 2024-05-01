@@ -22,13 +22,15 @@ const (
 	HalolightCapability Capability = 4 << iota
 	// KeysCapability represents that keyboard supports key mapping control
 	KeysCapability Capability = 8 << iota
+	// CustomBacklightCapability represents that keyboard supports custom backlight control
+	CustomBacklightCapability Capability = 16 << iota
 )
 
 const haloSeriesCapabilities = BacklightCapability | SidelightCapability | HalolightCapability
 
 var modelCapabilities = map[device.Model]Capability{
 	device.Halo65: haloSeriesCapabilities | KeysCapability,
-	device.Halo75: haloSeriesCapabilities | KeysCapability,
+	device.Halo75: haloSeriesCapabilities | KeysCapability | CustomBacklightCapability,
 	device.Halo96: haloSeriesCapabilities,
 }
 

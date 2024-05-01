@@ -1,28 +1,28 @@
-package layout_test
+package keys_test
 
 import (
 	"testing"
 
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
+	"github.com/mishamyrt/nuga-lib/features/keys"
 )
 
 func TestParseModifiers(t *testing.T) {
 	tests := []struct {
 		name     string
 		input    uint32
-		expected layout.Modifiers
+		expected keys.Modifiers
 	}{
-		{"None", 0, layout.Modifiers{}},
-		{"Ctrl", layout.ModifierCtrl, layout.Modifiers{Ctrl: true}},
-		{"Shift", layout.ModifierShift, layout.Modifiers{Shift: true}},
-		{"Alt", layout.ModifierAlt, layout.Modifiers{Alt: true}},
-		{"Meta", layout.ModifierMeta, layout.Modifiers{Meta: true}},
-		{"CtrlShift", layout.ModifierCtrl | layout.ModifierShift, layout.Modifiers{Ctrl: true, Shift: true}},
+		{"None", 0, keys.Modifiers{}},
+		{"Ctrl", keys.ModifierCtrl, keys.Modifiers{Ctrl: true}},
+		{"Shift", keys.ModifierShift, keys.Modifiers{Shift: true}},
+		{"Alt", keys.ModifierAlt, keys.Modifiers{Alt: true}},
+		{"Meta", keys.ModifierMeta, keys.Modifiers{Meta: true}},
+		{"CtrlShift", keys.ModifierCtrl | keys.ModifierShift, keys.Modifiers{Ctrl: true, Shift: true}},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := layout.ParseModifiers(tt.input)
+			result := keys.ParseModifiers(tt.input)
 			if *result != tt.expected {
 				t.Errorf("ParseModifiers(%d): expected %v, got %v", tt.input, tt.expected, *result)
 			}
@@ -34,22 +34,22 @@ func TestApplyModifiers(t *testing.T) {
 	tests := []struct {
 		name     string
 		initial  uint32
-		modifier layout.Modifiers
+		modifier keys.Modifiers
 		expected uint32
 	}{
-		{"AddCtrl", 0, layout.Modifiers{Ctrl: true}, layout.ModifierCtrl},
+		{"AddCtrl", 0, keys.Modifiers{Ctrl: true}, keys.ModifierCtrl},
 		{
 			"AddShiftToCtrl",
-			layout.ModifierCtrl,
-			layout.Modifiers{Shift: true},
-			layout.ModifierCtrl | layout.ModifierShift,
+			keys.ModifierCtrl,
+			keys.Modifiers{Shift: true},
+			keys.ModifierCtrl | keys.ModifierShift,
 		},
 		// Add more cases as needed
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := layout.ApplyModifiers(tt.initial, &tt.modifier)
+			result := keys.ApplyModifiers(tt.initial, &tt.modifier)
 			if result != tt.expected {
 				t.Errorf("%s: expected %d, got %d", tt.name, tt.expected, result)
 			}
@@ -74,7 +74,7 @@ func TestClearModifiers(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := layout.ClearModifiers(tt.value)
+			result := keys.ClearModifiers(tt.value)
 			if result != tt.expected {
 				t.Errorf("%s: expected %#x, got %#x", tt.name, tt.expected, result)
 			}

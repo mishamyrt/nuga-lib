@@ -105,7 +105,7 @@ const (
 	KeyLBracket                KeyName = "lbracket"
 	KeyRBracket                KeyName = "rbracket"
 	KeyBackslash               KeyName = "backslash"
-	KeyFwdslash                KeyName = "fwdslash"
+	KeyForwardSlash            KeyName = "fwdslash"
 	KeyComma                   KeyName = "comma"
 	KeyPeriod                  KeyName = "period"
 	ScrollLock                 KeyName = "scrolllock"
@@ -238,7 +238,7 @@ var Keys = map[KeyName]KeyDescription{
 	KeyLBracket:                {"Left Bracket", 0x2f000000, GroupSymbols},
 	KeyRBracket:                {"Right Bracket", 0x30000000, GroupSymbols},
 	KeyBackslash:               {"Backslash", 0x31000000, GroupSymbols},
-	KeyFwdslash:                {"Forward Slash", 0x38000000, GroupSymbols},
+	KeyForwardSlash:            {"Forward Slash", 0x38000000, GroupSymbols},
 	KeyComma:                   {"Comma", 0x36000000, GroupSymbols},
 	KeyPeriod:                  {"Period", 0x37000000, GroupSymbols},
 	KeyF1:                      {"F1", 0x3a000000, GroupFunction},

@@ -3,7 +3,7 @@ package hex_test
 import (
 	"testing"
 
-	"github.com/mishamyrt/nuga-lib/hex"
+	"github.com/mishamyrt/nuga-lib/internal/hex"
 )
 
 func TestFromByte(t *testing.T) {

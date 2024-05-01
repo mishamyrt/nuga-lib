@@ -31,7 +31,7 @@ func Collect(h hid.Handler) (State, error) {
 func collectLights(h hid.Handler) (light.State, error) {
 	var state light.State
 	var err error
-	lightsFeature := light.New(h)
+	lightsFeature := light.New(h, nil)
 	params, err := lightsFeature.GetRawEffects()
 	if err != nil {
 		return state, err

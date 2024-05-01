@@ -2,7 +2,7 @@ package keys
 
 import (
 	"github.com/mishamyrt/nuga-lib/device"
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
+	"github.com/mishamyrt/nuga-lib/layout"
 )
 
 // State represents simulation data.
@@ -16,14 +16,14 @@ type State struct {
 type FeatureSimulation struct {
 	defaultState State
 	data         *State
-	template     *layout.Template
+	template     *layout.KeystrokeTemplate
 }
 
 // NewSimulation creates simulated keys from template.
 func NewSimulation(t *State, model *device.Model) *FeatureSimulation {
-	var template *layout.Template
+	var template *layout.KeystrokeTemplate
 	if model != nil {
-		template = layout.GetTemplate(*model)
+		template = layout.GetKeystrokeTemplate(*model)
 	}
 	if t.Macros == nil {
 		t.Macros = make([]uint8, 0)
@@ -58,13 +58,13 @@ func (f *FeatureSimulation) SetMacCodes(keys []uint32) error {
 }
 
 // GetWin returns win keyboard keys
-func (f *FeatureSimulation) GetWin() (*layout.KeyMap, error) {
-	return layout.Parse(f.data.Win, f.template)
+func (f *FeatureSimulation) GetWin() (*KeyMap, error) {
+	return ParseKeyMap(f.data.Win, f.template)
 }
 
 // GetMac returns mac keyboard keys
-func (f *FeatureSimulation) GetMac() (*layout.KeyMap, error) {
-	return layout.Parse(f.data.Mac, f.template)
+func (f *FeatureSimulation) GetMac() (*KeyMap, error) {
+	return ParseKeyMap(f.data.Mac, f.template)
 }
 
 // GetMacros returns keyboard macros
@@ -89,16 +89,16 @@ func (f *FeatureSimulation) SetMacros(m Macros) error {
 }
 
 // SetWin sets win keyboard keys
-func (f *FeatureSimulation) SetWin(keyMap *layout.KeyMap) error {
+func (f *FeatureSimulation) SetWin(keyMap *KeyMap) error {
 	return keyMap.Apply(f.data.Win, f.template)
 }
 
 // SetMac sets mac keyboard keys
-func (f *FeatureSimulation) SetMac(keyMap *layout.KeyMap) error {
+func (f *FeatureSimulation) SetMac(keyMap *KeyMap) error {
 	return keyMap.Apply(f.data.Mac, f.template)
 }
 
 // Parse raw keys
-func (f *FeatureSimulation) Parse(keys []uint32) (*layout.KeyMap, error) {
-	return layout.Parse(keys, f.template)
+func (f *FeatureSimulation) Parse(keys []uint32) (*KeyMap, error) {
+	return ParseKeyMap(keys, f.template)
 }

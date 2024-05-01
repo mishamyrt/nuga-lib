@@ -4,7 +4,6 @@ package features
 import (
 	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/features/keys"
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
 	"github.com/mishamyrt/nuga-lib/features/light"
 	"github.com/mishamyrt/nuga-lib/hid"
 )
@@ -18,7 +17,7 @@ type Features struct {
 // New creates Features instance with handle
 func New(handle *hid.Device, model device.Model) *Features {
 	return &Features{
-		Light: light.New(handle),
+		Light: light.New(handle, &model),
 		Keys:  keys.New(handle, &model),
 	}
 }
@@ -27,8 +26,10 @@ func New(handle *hid.Device, model device.Model) *Features {
 type LightFeature interface {
 	GetEffects() (*light.Effects, error)
 	SetEffects(p *light.Effects) error
-	SetBacklightColors(colors *light.BacklightColors) error
 	GetBacklightColors() (*light.BacklightColors, error)
+	SetBacklightColors(colors *light.BacklightColors) error
+	GetCustomEffectColors() (*light.CustomBacklightMap, error)
+	SetCustomEffectColors(colors *light.CustomBacklightMap) error
 }
 
 // KeysFeature represents keyboard keys feature
@@ -37,11 +38,11 @@ type KeysFeature interface {
 	GetMacCodes() ([]uint32, error)
 	SetWinCodes(keys []uint32) error
 	SetMacCodes(keys []uint32) error
-	GetWin() (*layout.KeyMap, error)
-	GetMac() (*layout.KeyMap, error)
-	SetWin(keyMap *layout.KeyMap) error
-	SetMac(keyMap *layout.KeyMap) error
-	Parse(keys []uint32) (*layout.KeyMap, error)
+	GetWin() (*keys.KeyMap, error)
+	GetMac() (*keys.KeyMap, error)
+	SetWin(keyMap *keys.KeyMap) error
+	SetMac(keyMap *keys.KeyMap) error
+	Parse(keys []uint32) (*keys.KeyMap, error)
 	GetMacros() (keys.Macros, error)
 	SetMacros(macros keys.Macros) error
 }

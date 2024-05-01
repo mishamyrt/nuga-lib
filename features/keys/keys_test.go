@@ -1,9 +1,10 @@
-package layout_test
+package keys_test
 
 import (
 	"testing"
 
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
+	"github.com/mishamyrt/nuga-lib/features/keys"
+	"github.com/mishamyrt/nuga-lib/layout"
 )
 
 func TestFindKeyName(t *testing.T) {
@@ -60,7 +61,7 @@ func TestIsRegularKey(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := layout.IsRegularKey(tt.code)
+			result := keys.IsRegularKey(tt.code)
 			if result != tt.expected {
 				t.Errorf("IsRegularKey(%#x): expected %t, got %t", tt.code, tt.expected, result)
 			}
@@ -81,7 +82,7 @@ func TestExtractMacroIndex(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := layout.ExtractMacroIndex(tt.code)
+			result := keys.ExtractMacroIndex(tt.code)
 			if result != tt.expected {
 				t.Errorf("ExtractMacroIndex(%#x): expected %d, got %d", tt.code, tt.expected, result)
 			}
@@ -104,7 +105,7 @@ func TestIsMacroKey(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := layout.IsMacroKey(tt.code)
+			result := keys.IsMacroKey(tt.code)
 			if result != tt.expected {
 				t.Errorf("IsMacroKey(%#x): expected %t, got %t", tt.code, tt.expected, result)
 			}
@@ -125,7 +126,7 @@ func TestIndexToMacro(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := layout.IndexToMacro(tt.index)
+			result := keys.IndexToMacro(tt.index)
 			if result != tt.expected {
 				t.Errorf("IndexToMacro(%d): expected %#x, got %#x", tt.index, tt.expected, result)
 			}

@@ -1,10 +1,10 @@
-package layout_test
+package keys_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
+	"github.com/mishamyrt/nuga-lib/features/keys"
 )
 
 func TestFromShortKeyCode(t *testing.T) {
@@ -20,7 +20,7 @@ func TestFromShortKeyCode(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("%#x", tt.code), func(t *testing.T) {
-			result := layout.FromShortKeyCode(tt.code)
+			result := keys.FromShortKeyCode(tt.code)
 			if result != tt.expected {
 				t.Errorf("FromShortKeyCode(%#x): expected %#x, got %#x", tt.code, tt.expected, result)
 			}
@@ -41,7 +41,7 @@ func TestToShortKeyCode(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("%#x", tt.code), func(t *testing.T) {
-			result := layout.ToShortKeyCode(tt.code)
+			result := keys.ToShortKeyCode(tt.code)
 			if result != tt.expected {
 				t.Errorf("ToShortKeyCode(%#x): expected %#x, got %#x", tt.code, tt.expected, result)
 			}
