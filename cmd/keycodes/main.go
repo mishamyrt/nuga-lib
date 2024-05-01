@@ -9,7 +9,7 @@ import (
 	"github.com/mishamyrt/nuga-lib/cmd/keycodes/annotation"
 	"github.com/mishamyrt/nuga-lib/cmd/keycodes/keymap"
 	"github.com/mishamyrt/nuga-lib/dump"
-	"github.com/mishamyrt/nuga-lib/features/keys/layout"
+	"github.com/mishamyrt/nuga-lib/layout"
 )
 
 func main() {
@@ -31,12 +31,12 @@ func main() {
 	}
 	switch cmd {
 	case "keymap":
-		keymap.Print(state.Keys.Mac, layout.GetTemplate(state.Name), false)
+		keymap.Print(state.Keys.Mac, layout.GetKeystrokeTemplate(state.Name), false)
 	case "annotation":
 		fmt.Println("Mac:")
-		annotation.Print(state.Keys.Mac, layout.GetTemplate(state.Name))
+		annotation.Print(state.Keys.Mac, layout.GetKeystrokeTemplate(state.Name))
 		fmt.Println("Win:")
-		annotation.Print(state.Keys.Win, layout.GetTemplate(state.Name))
+		annotation.Print(state.Keys.Win, layout.GetKeystrokeTemplate(state.Name))
 	}
 
 }
