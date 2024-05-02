@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.8.1](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.8.1) - 2024-05-02
+### Bug Fixes
+- use correct length for set effects request
+
+
 ## [v0.8.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.8.0) - 2024-05-02
 ### Bug Fixes
 - declare custom header type
@@ -183,7 +188,8 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.1...HEAD
+[v0.8.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.0...v0.8.1
 [v0.8.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.5...v0.8.0
 [v0.7.5]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.4...v0.7.5
 [v0.7.4]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.3...v0.7.4
