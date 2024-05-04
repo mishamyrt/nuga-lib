@@ -14,6 +14,7 @@ func TestFindKeyName(t *testing.T) {
 		{layout.Keys[layout.KeyA].Code, layout.KeyA},
 		{layout.Keys[layout.KeyBacklightBrightnessDown].Code, layout.KeyBacklightBrightnessDown},
 		{layout.Keys[layout.KeyNone].Code, layout.KeyNone},
+		{0x666666, layout.KeyNone},
 	}
 
 	for _, tt := range tests {
@@ -34,6 +35,7 @@ func TestFindKeyCode(t *testing.T) {
 		{layout.KeyA, layout.Keys[layout.KeyA].Code},
 		{layout.KeyB, layout.Keys[layout.KeyB].Code},
 		{layout.KeyNone, layout.Keys[layout.KeyNone].Code},
+		{layout.KeyName("wrong"), layout.Keys[layout.KeyNone].Code},
 	}
 
 	for _, tt := range tests {
