@@ -53,7 +53,7 @@ func TestIsRegularKey(t *testing.T) {
 		code     uint32
 		expected bool
 	}{
-		{"Empty", 0x0000, true},
+		{"None", 0x0000, false},
 		{"Regular large value", 0x9900, true},
 		{"Empty not regular", 0x0001, false},
 		{"Large not regular", 0x101b, false},

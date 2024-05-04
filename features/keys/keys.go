@@ -7,7 +7,7 @@ func IsMacroKey(code uint32) bool {
 
 // IsRegularKey checks if code is regular
 func IsRegularKey(code uint32) bool {
-	return byte(code&0xFF) == 0x00
+	return code != 0 && byte(code&0xFF) == 0x00
 }
 
 // IndexToMacro converts index to macro
