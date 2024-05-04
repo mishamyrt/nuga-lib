@@ -23,7 +23,14 @@ lint:
 
 .PHONY: test
 test:
-	go test -cover $(TEST_MODULES)
+	go test $(TEST_MODULES)
+
+.PHONY: coverage
+coverage:
+	mkdir -p coverage
+	go test -coverprofile=coverage/cover.out $(TEST_MODULES)
+	go tool cover -html coverage/cover.out -o coverage/cover.html
+	open coverage/cover.html
 
 .PHONY: build
 build:
