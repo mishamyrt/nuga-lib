@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.8.2](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.8.2) - 2024-05-05
+### Bug Fixes
+- correctly set none action type
+
+### Refactoring
+- commonize templates
+- rework key bytes packing/unpacking
+
+### Testing
+- add missing short code tests
+- add missing modifiers cases
+- add hid error coverage
+- add missing find tests
+
+
 ## [v0.8.1](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.8.1) - 2024-05-02
 ### Bug Fixes
 - use correct length for set effects request
@@ -188,7 +203,8 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.1...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.2...HEAD
+[v0.8.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.1...v0.8.2
 [v0.8.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.0...v0.8.1
 [v0.8.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.5...v0.8.0
 [v0.7.5]: https://github.com/mishamyrt/nuga-lib/compare/v0.7.4...v0.7.5
