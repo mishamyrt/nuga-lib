@@ -1,3 +1,4 @@
+// Package keys contains utilities for working with keyboard layout
 package keys
 
 var (

@@ -13,3 +13,6 @@ var ErrWrongDelay = errors.New("wrong delay value. It must be more or equal 3")
 
 // ErrWrongMacroHeader is returned when macro header is wrong
 var ErrWrongMacroHeader = errors.New("wrong macro header. Must be 0x85")
+
+// ErrWrongLength is returned when slice length is wrong
+var ErrWrongLength = errors.New("slice should be of length 4")

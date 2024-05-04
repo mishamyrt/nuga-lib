@@ -95,12 +95,7 @@ func (f *Feature) getKeyCodes(cmd []byte) ([]uint32, error) {
 	if err != nil {
 		return nil, err
 	}
-	values := make([]uint32, 256)
-	for i := 0; i < 256; i++ {
-		offset := 7 + (i * 4)
-		values[i] = packBytes(response[offset : offset+4])
-	}
-	return values, nil
+	return PackKeyCodes(response[7:]), nil
 }
 
 func (f *Feature) getKeys(cmd []byte) (*KeyMap, error) {
@@ -119,13 +114,9 @@ func (f *Feature) getKeys(cmd []byte) (*KeyMap, error) {
 }
 
 func (f *Feature) setKeyCodes(cmd []byte, keys []uint32) error {
-	request := make([]byte, len(cmd)+len(keys)*4)
-	copy(request, cmd)
-	for i := 0; i < len(keys); i++ {
-		offset := len(cmd) + (i * 4)
-		unpackBytes(keys[i], request[offset:offset+4])
-	}
-
+	request := make([]byte, 0, 1032)
+	request = append(request, cmd...)
+	request = append(request, UnpackKeyCodes(keys)...)
 	return f.handle.Send(request)
 }
 
