@@ -34,8 +34,8 @@ import (
 )
 
 func main() {
-    // Setup HID
-    nuga.Init()
+	// Setup HID
+	nuga.Init()
 	defer nuga.Exit()
 	// Open connection with keyboard
 	device, _ := nuga.Open()
@@ -43,6 +43,8 @@ func main() {
 	effects, _ := device.Features.Light.GetEffects()
 	// Set brightness to 50%
 	effects.Backlight.SetBrightness(2)
+	// Write effects
+	_ = device.Features.Light.SetEffects(effects)
 }
 ```
 
