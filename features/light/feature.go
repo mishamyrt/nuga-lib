@@ -9,12 +9,12 @@ import (
 // Feature represents keyboard light feature
 type Feature struct {
 	handle   hid.Handler
-	template *layout.BacklightTemplate
+	template *layout.Template
 }
 
 // New creates light feature instance.
 func New(handle hid.Handler, model *device.Model) *Feature {
-	var template *layout.BacklightTemplate
+	var template *layout.Template
 	if model != nil {
 		template = layout.GetBacklightTemplate(*model)
 	}

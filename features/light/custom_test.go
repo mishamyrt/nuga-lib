@@ -7,7 +7,7 @@ import (
 	"github.com/mishamyrt/nuga-lib/layout"
 )
 
-var tpl = layout.BacklightTemplate{
+var tpl = layout.Template{
 	layout.KeyM: 0,
 	layout.KeyY: 1,
 	layout.KeyR: 2,

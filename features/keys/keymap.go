@@ -31,7 +31,7 @@ type Key struct {
 type KeyMap map[layout.KeyName]Key
 
 // Apply layout to key slice
-func (k KeyMap) Apply(source []uint32, tpl *layout.KeystrokeTemplate) error {
+func (k KeyMap) Apply(source []uint32, tpl *layout.Template) error {
 	for keyName, v := range k {
 		position := tpl.GetPosition(keyName)
 		switch v.Type {
@@ -51,7 +51,7 @@ func (k KeyMap) Apply(source []uint32, tpl *layout.KeystrokeTemplate) error {
 }
 
 // ParseKeyMap key map from values
-func ParseKeyMap(values []uint32, tpl *layout.KeystrokeTemplate) (*KeyMap, error) {
+func ParseKeyMap(values []uint32, tpl *layout.Template) (*KeyMap, error) {
 	keys := make(KeyMap)
 	for key, position := range *tpl {
 		code := values[position]

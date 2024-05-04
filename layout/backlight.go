@@ -2,25 +2,7 @@ package layout
 
 import "github.com/mishamyrt/nuga-lib/device"
 
-// BacklightTemplate represents custom backlight template
-type BacklightTemplate map[KeyName]uint32
-
-// GetPosition returns key position
-func (k BacklightTemplate) GetPosition(key KeyName) uint32 {
-	return k[key]
-}
-
-// GetKey returns key name by position
-func (k BacklightTemplate) GetKey(position uint32) KeyName {
-	for k, v := range k {
-		if v == position {
-			return k
-		}
-	}
-	return ""
-}
-
-var halo75Backlight = BacklightTemplate{
+var halo75Backlight = Template{
 	KeyEsc:          0,
 	KeyF1:           1,
 	KeyF2:           2,
@@ -106,12 +88,12 @@ var halo75Backlight = BacklightTemplate{
 	KeyRight:        120,
 }
 
-var backlightTemplates = map[device.Model]BacklightTemplate{
+var backlightTemplates = map[device.Model]Template{
 	device.Halo75: halo75Backlight,
 }
 
 // GetBacklightTemplate returns backlight template by model
-func GetBacklightTemplate(name device.Model) *BacklightTemplate {
+func GetBacklightTemplate(name device.Model) *Template {
 	if t, ok := backlightTemplates[name]; ok {
 		return &t
 	}

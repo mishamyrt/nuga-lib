@@ -13,7 +13,7 @@ type Wizard struct {
 	initialState *light.Effects
 	dev          *nuga.Device
 	activeIndex  uint32
-	Keys         layout.BacklightTemplate
+	Keys         layout.Template
 }
 
 // New creates Wizard instance
@@ -25,7 +25,7 @@ func New(dev *nuga.Device) (*Wizard, error) {
 	w := &Wizard{
 		dev:          dev,
 		initialState: state,
-		Keys:         make(layout.BacklightTemplate),
+		Keys:         make(layout.Template),
 		activeIndex:  0,
 	}
 	return w, nil

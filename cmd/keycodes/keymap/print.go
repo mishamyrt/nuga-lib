@@ -34,7 +34,7 @@ func sortKeys(keys []string) {
 }
 
 // Print keymap
-func Print(values []uint32, tpl *layout.KeystrokeTemplate, onlyMissing bool) {
+func Print(values []uint32, tpl *layout.Template, onlyMissing bool) {
 	keys := make([]string, 0, len(*tpl))
 	for key := range *tpl {
 		keys = append(keys, string(key))

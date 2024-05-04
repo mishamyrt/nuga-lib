@@ -9,12 +9,12 @@ import (
 // Feature represents keyboard keys feature
 type Feature struct {
 	handle   hid.Handler
-	template *layout.KeystrokeTemplate
+	template *layout.Template
 }
 
 // New creates keys feature instance.
 func New(handle hid.Handler, model *device.Model) *Feature {
-	var template *layout.KeystrokeTemplate
+	var template *layout.Template
 	if model != nil {
 		template = layout.GetKeystrokeTemplate(*model)
 	}

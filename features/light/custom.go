@@ -6,7 +6,7 @@ import "github.com/mishamyrt/nuga-lib/layout"
 type CustomBacklightMap map[layout.KeyName]RGB
 
 // Bytes returns custom colors bytes
-func (c CustomBacklightMap) Bytes(tpl *layout.BacklightTemplate) []byte {
+func (c CustomBacklightMap) Bytes(tpl *layout.Template) []byte {
 	payload := make([]byte, 1024)
 	for keyName, color := range c {
 		position := tpl.GetPosition(keyName)
@@ -18,7 +18,7 @@ func (c CustomBacklightMap) Bytes(tpl *layout.BacklightTemplate) []byte {
 }
 
 // ParseCustomBacklight parses custom colors
-func ParseCustomBacklight(payload []byte, tpl *layout.BacklightTemplate) (*CustomBacklightMap, error) {
+func ParseCustomBacklight(payload []byte, tpl *layout.Template) (*CustomBacklightMap, error) {
 	if payload[0] != byte(codeCustomEffectHeader) {
 		return nil, ErrWrongCustomColorsHeader
 	}

@@ -16,12 +16,12 @@ type State struct {
 type FeatureSimulation struct {
 	defaultState State
 	data         *State
-	template     *layout.KeystrokeTemplate
+	template     *layout.Template
 }
 
 // NewSimulation creates simulated keys from template.
 func NewSimulation(t *State, model *device.Model) *FeatureSimulation {
-	var template *layout.KeystrokeTemplate
+	var template *layout.Template
 	if model != nil {
 		template = layout.GetKeystrokeTemplate(*model)
 	}

@@ -17,7 +17,7 @@ type State struct {
 type FeatureSimulation struct {
 	effects      *Effects
 	colors       *BacklightColors
-	template     *layout.BacklightTemplate
+	template     *layout.Template
 	customEffect []byte
 }
 
@@ -35,7 +35,7 @@ func ParseParamsState(s []int) *Effects {
 
 // NewSimulation creates simulated light from template.
 func NewSimulation(t *State, model *device.Model) *FeatureSimulation {
-	var template *layout.BacklightTemplate
+	var template *layout.Template
 	if model != nil {
 		template = layout.GetBacklightTemplate(*model)
 	}

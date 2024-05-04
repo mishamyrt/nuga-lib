@@ -7,7 +7,7 @@ import (
 	"github.com/mishamyrt/nuga-lib/layout"
 )
 
-var testTemplate = layout.KeystrokeTemplate{
+var testTemplate = layout.Template{
 	layout.KeyM:            0,
 	layout.KeyK:            1,
 	layout.KeyBrightnessUp: 2,

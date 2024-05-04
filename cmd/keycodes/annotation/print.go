@@ -9,7 +9,7 @@ import (
 )
 
 // Print keycodes with known actions
-func Print(values []uint32, tpl *layout.KeystrokeTemplate) {
+func Print(values []uint32, tpl *layout.Template) {
 	lines := make([]string, 0, len(*tpl))
 	for i, value := range values {
 		keyName := layout.FindKeyName(value)

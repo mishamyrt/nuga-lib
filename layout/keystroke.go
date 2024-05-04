@@ -3,25 +3,7 @@ package layout
 
 import "github.com/mishamyrt/nuga-lib/device"
 
-// KeystrokeTemplate represents keyboard layout template
-type KeystrokeTemplate map[KeyName]uint32
-
-// GetPosition returns key position
-func (k KeystrokeTemplate) GetPosition(key KeyName) uint32 {
-	return k[key]
-}
-
-// GetKey returns key name by position
-func (k KeystrokeTemplate) GetKey(position uint32) KeyName {
-	for k, v := range k {
-		if v == position {
-			return k
-		}
-	}
-	return ""
-}
-
-var halo75Keystroke = KeystrokeTemplate{
+var halo75Keystroke = Template{
 	KeyCapsLock:       3,
 	KeyLCtrl:          5,
 	KeyLShift:         4,
@@ -124,7 +106,7 @@ var halo75Keystroke = KeystrokeTemplate{
 	KeyVolumeUp:       191,
 }
 
-var halo65Keystroke = KeystrokeTemplate{
+var halo65Keystroke = Template{
 	KeyCapsLock:     3,
 	KeyLCtrl:        5,
 	KeyLShift:       4,
@@ -212,13 +194,13 @@ var halo65Keystroke = KeystrokeTemplate{
 	KeyFnRight:      199,
 }
 
-var keystrokeTemplates = map[device.Model]KeystrokeTemplate{
+var keystrokeTemplates = map[device.Model]Template{
 	device.Halo75: halo75Keystroke,
 	device.Halo65: halo65Keystroke,
 }
 
 // GetKeystrokeTemplate returns keystroke template by model
-func GetKeystrokeTemplate(name device.Model) *KeystrokeTemplate {
+func GetKeystrokeTemplate(name device.Model) *Template {
 	if t, ok := keystrokeTemplates[name]; ok {
 		return &t
 	}
