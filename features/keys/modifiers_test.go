@@ -44,7 +44,8 @@ func TestApplyModifiers(t *testing.T) {
 			keys.Modifiers{Shift: true},
 			keys.ModifierCtrl | keys.ModifierShift,
 		},
-		// Add more cases as needed
+		{"AddAlt", 0, keys.Modifiers{Alt: true}, keys.ModifierAlt},
+		{"AddMeta", 0, keys.Modifiers{Meta: true}, keys.ModifierMeta},
 	}
 
 	for _, tt := range tests {
