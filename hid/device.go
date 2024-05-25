@@ -77,7 +77,6 @@ func (d *Device) Read(count int) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	packet := buf[1:]
 	if d.debug {
 		if length > 0 {
 			log.Printf("Read %v", buf)
@@ -86,7 +85,7 @@ func (d *Device) Read(count int) ([]byte, error) {
 		}
 	}
 	d.waitSync()
-	return packet, nil
+	return buf[1:], nil
 }
 
 // Request sends a request to the device.
@@ -137,7 +136,15 @@ func (d *Device) tryRequest(payload []byte, count int) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	return d.Read(count)
+	resp, err := d.Read(count)
+	if err != nil {
+		return nil, err
+	}
+	// The first element is feature report id, it is truncated
+	if len(resp) != count-1 {
+		return nil, NewErrCountMismatch(count-1, len(resp))
+	}
+	return resp, nil
 }
 
 func (d *Device) waitSync() {
