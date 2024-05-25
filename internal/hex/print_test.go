@@ -15,7 +15,7 @@ func TestPrintBytes(t *testing.T) {
 	}{
 		{"empty", []byte{}, "[]\n"},
 		{"single", []byte{0x00}, "[00]\n"},
-		{"multiple", []byte{0x00, 0x01, 0xFF}, "[00, 01, ff]\n"},
+		{"multiple", []byte{0x00, 0x01, 0xFF}, "[00, 01, FF]\n"},
 	}
 
 	out := bytes.NewBuffer([]byte{})
