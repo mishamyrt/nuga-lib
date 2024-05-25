@@ -16,3 +16,6 @@ var ErrNoTemplate = errors.New("keyboard is not supports custom colors yet")
 
 // ErrInvalidColorFormat is returned when hex color string format is unexpected
 var ErrInvalidColorFormat = errors.New("invalid hex color string format")
+
+// ErrOutOfBounds is returned when position is out of bounds
+var ErrOutOfBounds = errors.New("position out of bounds")
