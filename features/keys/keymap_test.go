@@ -67,6 +67,10 @@ func TestBytes(t *testing.T) {
 	raw := testKeyMap.Bytes(&testTemplate)
 	codes := keys.PackKeyCodes(raw)
 
+	if len(codes) < len(testTemplate) {
+		t.Errorf("Expected codes length to be more or equal %d, got %d", len(testTemplate), len(codes))
+	}
+
 	for i, tt := range tests {
 		t.Run(string(tt.expected), func(t *testing.T) {
 			if codes[i] != tt.code {
