@@ -12,19 +12,17 @@ type FeatureSimulation struct {
 }
 
 // NewSimulation creates simulated keys from template.
-func NewSimulation(s *StateData, model device.Model) *FeatureSimulation {
-	template := layout.GetKeystrokeTemplate(model)
-	state, err := s.Parse(template)
-	if err != nil || template == nil {
-		return &FeatureSimulation{
-			state:    nil,
-			template: nil,
-		}
+func NewSimulation(s *StateData, model device.Model) (*FeatureSimulation, error) {
+	var (
+		f   FeatureSimulation
+		err error
+	)
+	f.template = layout.GetKeystrokeTemplate(model)
+	f.state, err = s.Parse(f.template)
+	if err != nil {
+		return nil, err
 	}
-	return &FeatureSimulation{
-		state:    state,
-		template: template,
-	}
+	return &f, nil
 }
 
 // GetMac returns mac keyboard keys

@@ -81,7 +81,7 @@ func (f *Feature) GetBacklightColors() (*BacklightColors, error) {
 	if err != nil {
 		return nil, err
 	}
-	return ParseBacklightColors(raw), nil
+	return ParseBacklightColors(raw)
 }
 
 // SetBacklightColors sets keyboard backlight color state.
