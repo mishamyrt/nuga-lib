@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mishamyrt/nuga-lib/cmd/keycodes/annotation"
-	"github.com/mishamyrt/nuga-lib/cmd/keycodes/keymap"
 	"github.com/mishamyrt/nuga-lib/dump"
+	"github.com/mishamyrt/nuga-lib/examples/keycodes/annotation"
+	"github.com/mishamyrt/nuga-lib/examples/keycodes/keymap"
 	"github.com/mishamyrt/nuga-lib/features/keys"
 	"github.com/mishamyrt/nuga-lib/layout"
 )

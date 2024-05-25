@@ -8,8 +8,8 @@ import (
 	"syscall"
 
 	"github.com/mishamyrt/nuga-lib"
-	"github.com/mishamyrt/nuga-lib/cmd/custom-effect/gostdin"
-	"github.com/mishamyrt/nuga-lib/cmd/custom-effect/wizard"
+	"github.com/mishamyrt/nuga-lib/examples/custom-effect/gostdin"
+	"github.com/mishamyrt/nuga-lib/examples/custom-effect/wizard"
 	"github.com/mishamyrt/nuga-lib/features/light"
 )
 
