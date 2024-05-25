@@ -29,7 +29,10 @@ func TestParseCustomBacklight(t *testing.T) {
 		payload[position+126] = colorMap[keyName].Green()
 		payload[position+252] = colorMap[keyName].Blue()
 	}
-	customMap := light.ParseCustomEffect(payload, &tpl)
+	customMap, err := light.ParseCustomEffect(payload, &tpl)
+	if err != nil {
+		t.Fatalf("unexpected error on custom effect parsing: %v", err)
+	}
 	if len(*customMap) != 4 {
 		t.Fatalf("expected 4 colors, got %d", len(*customMap))
 	}
@@ -42,7 +45,10 @@ func TestParseCustomBacklight(t *testing.T) {
 
 func TestCustomBacklightToBytes(t *testing.T) {
 	t.Parallel()
-	payload := colorMap.Bytes(&tpl)
+	payload, err := colorMap.Bytes(&tpl)
+	if err != nil {
+		t.Fatalf("unexpected error on color map serialization: %v", err)
+	}
 	if len(payload) != 1024 {
 		t.Fatalf("expected 1024 bytes, got %d", len(payload))
 	}

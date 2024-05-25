@@ -13,7 +13,10 @@ type State struct {
 func (s *State) Data(tpl *layout.Template) *StateData {
 	var customEffect []byte
 	if tpl != nil {
-		customEffect = s.CustomEffect.Bytes(tpl)
+		custom, err := s.CustomEffect.Bytes(tpl)
+		if err == nil {
+			customEffect = custom
+		}
 	}
 	return &StateData{
 		Colors:       s.Colors.Bytes(),
@@ -35,7 +38,10 @@ func (s *StateData) Parse(tpl *layout.Template) *State {
 	effects := ParseEffects(s.Params)
 	var customEffect *CustomEffectMap
 	if tpl != nil {
-		customEffect = ParseCustomEffect(s.CustomEffect, tpl)
+		custom, err := ParseCustomEffect(s.CustomEffect, tpl)
+		if err == nil {
+			customEffect = custom
+		}
 	}
 	return &State{
 		Colors:       colors,

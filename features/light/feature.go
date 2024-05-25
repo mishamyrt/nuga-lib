@@ -115,7 +115,7 @@ func (f *Feature) GetCustomEffect() (*CustomEffectMap, error) {
 	if err != nil {
 		return nil, err
 	}
-	return ParseCustomEffect(raw, f.template), nil
+	return ParseCustomEffect(raw, f.template)
 }
 
 // SetCustomEffect sets current custom effect colors.
@@ -123,7 +123,10 @@ func (f *Feature) SetCustomEffect(colors *CustomEffectMap) error {
 	if f.template == nil {
 		return ErrNoTemplate
 	}
-	payload := colors.Bytes(f.template)
+	payload, err := colors.Bytes(f.template)
+	if err != nil {
+		return err
+	}
 	return f.SetRawCustomEffect(payload)
 }
 
