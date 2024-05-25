@@ -16,7 +16,6 @@ func TestGetDefaults(t *testing.T) {
 		{device.Halo75, false},
 		{device.Halo65, false},
 		{"WrongModel", true},
-		// Add more test cases as needed
 	}
 
 	// Run tests
@@ -31,8 +30,8 @@ func TestGetDefaults(t *testing.T) {
 				return
 			}
 
-			if state.Name != test.model {
-				t.Errorf("Unexpected device name '%v'. Expected '%v'", state.Name, test.model)
+			if state.Model != test.model {
+				t.Errorf("Unexpected device name '%v'. Expected '%v'", state.Model, test.model)
 			}
 
 		})

@@ -13,7 +13,7 @@ var defaults embed.FS
 
 // GetDefaults returns default state for given model
 func GetDefaults(model device.Model) (*State, error) {
-	filePath := fmt.Sprintf("defaults/%v.json", string(model))
+	filePath := fmt.Sprintf("defaults/%v.nugafile", string(model))
 	data, err := defaults.ReadFile(filePath)
 	if err != nil {
 		return nil, err
