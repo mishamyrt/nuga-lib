@@ -5,6 +5,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/mishamyrt/nuga-lib/internal/assert"
 	"github.com/sstallion/go-hid"
 )
 
@@ -89,16 +90,19 @@ func (d *Device) Read(count int) ([]byte, error) {
 }
 
 // Request sends a request to the device.
-func (d *Device) Request(payload []byte, count int) ([]byte, error) {
-	var resp []byte
-	var err error
+func (d *Device) Request(request []byte, count int) ([]byte, error) {
+	var (
+		resp []byte
+		err  error
+	)
 	for i := 0; i < requestRetries; i++ {
 		if d.debug {
 			log.Println("Read attempt", i+1)
 		}
-		resp, err = d.tryRequest(payload, count)
+		resp, err = d.tryRequest(request, count)
 		if len(resp) > 0 && resp[0] != 0 {
-			return resp, nil
+			err = assert.SliceValue(resp, 0, request[1])
+			return resp, err
 		}
 	}
 	if err != nil {
