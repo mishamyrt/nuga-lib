@@ -85,7 +85,7 @@ func ParseEffects(data []byte) *Effects {
 	result.Backlight.Mode = BacklightDomain.Find(data[5])
 	result.Backlight.Params = make([]EffectParams, 29)
 	for i := range result.Backlight.Params {
-		offset := ColorParamsOffset + (i * 2)
+		offset := colorParamsOffset + (i * 2)
 		value := data[offset+1]
 		result.Backlight.Params[i] = EffectParams{
 			Color:      data[offset],

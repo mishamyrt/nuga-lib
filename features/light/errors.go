@@ -11,8 +11,8 @@ var ErrNotSupported = errors.New("current light mode does not support changing t
 // ErrOutOfRange is returned when the value transmitted by the user is outside the permitted limit.
 var ErrOutOfRange = errors.New("passed value is outside the permitted limits")
 
-// ErrWrongCustomColorsHeader is returned when custom colors header is wrong
-var ErrWrongCustomColorsHeader = errors.New("wrong custom colors header. Must be 0x89")
+// ErrNoTemplate is returned when template is not ready
+var ErrNoTemplate = errors.New("keyboard is not supports custom colors yet")
 
-// ErrNoCustomColorsTemplate is returned when template is not ready
-var ErrNoCustomColorsTemplate = errors.New("keyboard is not supports custom colors yet")
+// ErrInvalidColorFormat is returned when hex color string format is unexpected
+var ErrInvalidColorFormat = errors.New("invalid hex color string format")

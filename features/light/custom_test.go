@@ -14,26 +14,22 @@ var tpl = layout.Template{
 	layout.KeyT: 3,
 }
 
-var colorMap = light.CustomBacklightMap{
-	layout.KeyM: {R: 0xFF, G: 0x00, B: 0x00},
-	layout.KeyY: {R: 0x00, G: 0xFF, B: 0x00},
-	layout.KeyR: {R: 0x00, G: 0x00, B: 0xFF},
-	layout.KeyT: {R: 0xFF, G: 0xFF, B: 0xFF},
+var colorMap = light.CustomEffectMap{
+	layout.KeyM: 0xFF0000,
+	layout.KeyY: 0x00FF00,
+	layout.KeyR: 0x0000FF,
+	layout.KeyT: 0xFFFFFF,
 }
 
 func TestParseCustomBacklight(t *testing.T) {
 	t.Parallel()
-	payload := make([]byte, 1050)
-	payload[0] = 0x89
+	payload := make([]byte, 1043)
 	for keyName, position := range tpl {
-		payload[7+position] = colorMap[keyName].R
-		payload[7+position+126] = colorMap[keyName].G
-		payload[7+position+252] = colorMap[keyName].B
+		payload[position] = colorMap[keyName].Red()
+		payload[position+126] = colorMap[keyName].Green()
+		payload[position+252] = colorMap[keyName].Blue()
 	}
-	customMap, err := light.ParseCustomBacklight(payload, &tpl)
-	if err != nil {
-		t.Fatal("unexpected error:", err)
-	}
+	customMap := light.ParseCustomEffect(payload, &tpl)
 	if len(*customMap) != 4 {
 		t.Fatalf("expected 4 colors, got %d", len(*customMap))
 	}
@@ -54,14 +50,14 @@ func TestCustomBacklightToBytes(t *testing.T) {
 		r := payload[position]
 		g := payload[position+126]
 		b := payload[position+252]
-		if r != colorMap[keyName].R {
-			t.Fatalf("expected R value %v for key %v, got %v", colorMap[keyName].R, keyName, r)
+		if r != colorMap[keyName].Red() {
+			t.Fatalf("expected R value %v for key %v, got %v", colorMap[keyName].Red(), keyName, r)
 		}
-		if g != colorMap[keyName].G {
-			t.Fatalf("expected G value %v for key %v, got %v", colorMap[keyName].G, keyName, g)
+		if g != colorMap[keyName].Green() {
+			t.Fatalf("expected G value %v for key %v, got %v", colorMap[keyName].Green(), keyName, g)
 		}
-		if b != colorMap[keyName].B {
-			t.Fatalf("expected B value %v for key %v, got %v", colorMap[keyName].B, keyName, b)
+		if b != colorMap[keyName].Blue() {
+			t.Fatalf("expected B value %v for key %v, got %v", colorMap[keyName].Blue(), keyName, b)
 		}
 	}
 }

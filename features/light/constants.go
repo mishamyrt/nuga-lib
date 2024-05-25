@@ -10,17 +10,13 @@ const (
 )
 
 const (
-	// ParamsLength represents Halo75 params count.
-	ParamsLength = 123
-	// EffectsOffset represents effect start offset.
-	EffectsOffset = 15
+	effectsLength = 123
+	effectsOffset = 15
 
-	// ColorParamsOffset represents Halo75 color start offset.
-	ColorParamsOffset = 22
-	// ColorsStartOffset represents start offset of colors response.
-	ColorsStartOffset = 7
-	// ColorEndOffset represents end offset of colors response.
-	ColorEndOffset = 18
+	lightsStartOffset = 7
+	lightsEndOffset   = 18
+
+	colorParamsOffset = 22
 )
 
 // Commands
@@ -62,5 +58,4 @@ var (
 		0x90, 0x0E, 0xBF, 0xEF, 0xF0, 0xC2, 0x05, 0xE4, 0xA3, 0xF0,
 		0xE4, 0x90, 0x0E, 0xC1, 0xF0, 0x90,
 	}
-	codeCustomEffectHeader byte = 0x89
 )

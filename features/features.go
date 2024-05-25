@@ -14,35 +14,34 @@ type Features struct {
 	Keys  KeysFeature
 }
 
-// New creates Features instance with handle
-func New(handle *hid.Device, model device.Model) *Features {
-	return &Features{
-		Light: light.New(handle, &model),
-		Keys:  keys.New(handle, &model),
-	}
-}
-
 // LightFeature represents keyboard light feature
 type LightFeature interface {
 	GetEffects() (*light.Effects, error)
-	SetEffects(p *light.Effects) error
+	SetEffects(*light.Effects) error
 	GetBacklightColors() (*light.BacklightColors, error)
-	SetBacklightColors(colors *light.BacklightColors) error
-	GetCustomEffectColors() (*light.CustomBacklightMap, error)
-	SetCustomEffectColors(colors *light.CustomBacklightMap) error
+	SetBacklightColors(*light.BacklightColors) error
+	GetCustomEffect() (*light.CustomEffectMap, error)
+	SetCustomEffect(*light.CustomEffectMap) error
+	GetStateData() (*light.StateData, error)
+	SetStateData(*light.StateData) error
 }
 
 // KeysFeature represents keyboard keys feature
 type KeysFeature interface {
-	GetWinCodes() ([]uint32, error)
-	GetMacCodes() ([]uint32, error)
-	SetWinCodes(keys []uint32) error
-	SetMacCodes(keys []uint32) error
 	GetWin() (*keys.KeyMap, error)
-	GetMac() (*keys.KeyMap, error)
 	SetWin(keyMap *keys.KeyMap) error
+	GetMac() (*keys.KeyMap, error)
 	SetMac(keyMap *keys.KeyMap) error
-	Parse(keys []uint32) (*keys.KeyMap, error)
 	GetMacros() (keys.Macros, error)
 	SetMacros(macros keys.Macros) error
+	GetStateData() (*keys.StateData, error)
+	SetStateData(*keys.StateData) error
+}
+
+// New creates Features instance with handle
+func New(dev hid.Handler, model device.Model) *Features {
+	return &Features{
+		Light: light.New(dev, model),
+		Keys:  keys.New(dev, model),
+	}
 }

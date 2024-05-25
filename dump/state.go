@@ -2,14 +2,12 @@ package dump
 
 import (
 	"github.com/mishamyrt/nuga-lib/device"
-	"github.com/mishamyrt/nuga-lib/features/keys"
-	"github.com/mishamyrt/nuga-lib/features/light"
+	"github.com/mishamyrt/nuga-lib/features"
 )
 
-// State represents device state. It contains data of all supported features
+// State represents raw device state. It contains data of all supported features
 type State struct {
-	Name     device.Model `json:"name"`
-	Firmware string       `json:"firmware"`
-	Lights   light.State  `json:"lights"`
-	Keys     keys.State   `json:"keys"`
+	Model    device.Model       `json:"model"`
+	Firmware string             `json:"firmware"`
+	Data     features.StateData `json:"state"`
 }

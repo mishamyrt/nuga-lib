@@ -2,39 +2,30 @@ package light
 
 import "github.com/mishamyrt/nuga-lib/layout"
 
-// CustomBacklightMap represents custom backlight colors
-type CustomBacklightMap map[layout.KeyName]RGB
+// CustomEffectMap represents custom backlight colors
+type CustomEffectMap map[layout.KeyName]Color
 
 // Bytes returns custom colors bytes
-func (c CustomBacklightMap) Bytes(tpl *layout.Template) []byte {
+func (c CustomEffectMap) Bytes(tpl *layout.Template) []byte {
 	payload := make([]byte, 1024)
 	for keyName, color := range c {
 		position := tpl.GetPosition(keyName)
-		payload[position] = color.R
-		payload[position+126] = color.G
-		payload[position+252] = color.B
+		payload[position] = color.Red()
+		payload[position+126] = color.Green()
+		payload[position+252] = color.Blue()
 	}
 	return payload
 }
 
-// ParseCustomBacklight parses custom colors
-func ParseCustomBacklight(payload []byte, tpl *layout.Template) (*CustomBacklightMap, error) {
-	if payload[0] != byte(codeCustomEffectHeader) {
-		return nil, ErrWrongCustomColorsHeader
-	}
-	raw := payload[7:]
-	backlightMap := make(CustomBacklightMap)
-	var color RGB
+// ParseCustomEffect parses custom effect color map
+func ParseCustomEffect(payload []byte, tpl *layout.Template) *CustomEffectMap {
+	backlightMap := make(CustomEffectMap)
 	for keyName, position := range *tpl {
-		color = RGB{
-			R: raw[position],
-			G: raw[position+126],
-			B: raw[position+252],
-		}
-		if color.R == 0 && color.G == 0 && color.B == 0 {
-			continue
-		}
-		backlightMap[keyName] = color
+		backlightMap[keyName] = FromRGB(
+			payload[position],
+			payload[position+126],
+			payload[position+252],
+		)
 	}
-	return &backlightMap, nil
+	return &backlightMap
 }
