@@ -100,8 +100,11 @@ func (d *Device) Request(request []byte, count int) ([]byte, error) {
 			log.Println("Read attempt", i+1)
 		}
 		resp, err = d.tryRequest(request, count)
-		if len(resp) > 0 && resp[0] != 0 {
+		if len(resp) > 0 {
 			err = assert.SliceValue(resp, 0, request[1])
+			if err != nil {
+				return nil, err
+			}
 			return resp, err
 		}
 	}
