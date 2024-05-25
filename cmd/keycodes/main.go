@@ -9,6 +9,7 @@ import (
 	"github.com/mishamyrt/nuga-lib/cmd/keycodes/annotation"
 	"github.com/mishamyrt/nuga-lib/cmd/keycodes/keymap"
 	"github.com/mishamyrt/nuga-lib/dump"
+	"github.com/mishamyrt/nuga-lib/features/keys"
 	"github.com/mishamyrt/nuga-lib/layout"
 )
 
@@ -29,14 +30,17 @@ func main() {
 	if err != nil {
 		die("Error unmarshalling: %v", err)
 	}
+	macCodes := keys.PackKeyCodes(state.Data.Keys.Mac)
+	winCodes := keys.PackKeyCodes(state.Data.Keys.Win)
+	tpl := layout.GetKeystrokeTemplate(state.Model)
 	switch cmd {
 	case "keymap":
-		keymap.Print(state.Keys.Mac, layout.GetKeystrokeTemplate(state.Name), false)
+		keymap.Print(macCodes, tpl, false)
 	case "annotation":
 		fmt.Println("Mac:")
-		annotation.Print(state.Keys.Mac, layout.GetKeystrokeTemplate(state.Name))
+		annotation.Print(macCodes, tpl)
 		fmt.Println("Win:")
-		annotation.Print(state.Keys.Win, layout.GetKeystrokeTemplate(state.Name))
+		annotation.Print(winCodes, tpl)
 	}
 
 }
