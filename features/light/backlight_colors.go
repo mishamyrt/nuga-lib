@@ -64,16 +64,21 @@ func (b *BacklightColors) toSlice(modes [][7]Color) [][]Color {
 }
 
 // ParseBacklightColors parses the raw byte slice into BacklightColors.
-func ParseBacklightColors(data []byte) *BacklightColors {
-	var colors BacklightColors
-	var offset int
+func ParseBacklightColors(data []byte) (*BacklightColors, error) {
+	if len(data) < (ModesCount * 21) {
+		return nil, ErrOutOfBounds
+	}
+	var (
+		colors BacklightColors
+		offset int
+	)
 	for effect := 0; effect < ModesCount; effect++ {
 		for i := 0; i < ModeColorsCount; i++ {
-			offset = (effect * 21) + (i * 3)
+			offset = (effect * (ModeColorsCount * 3)) + (i * 3)
 			colors[effect][i] = FromRGB(data[offset], data[offset+1], data[offset+2])
 		}
 	}
-	return &colors
+	return &colors, nil
 }
 
 // BacklightColorsFromSlice loads color state from colors slice
