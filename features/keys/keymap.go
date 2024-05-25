@@ -30,31 +30,32 @@ type Key struct {
 // KeyMap represents keyboard layout
 type KeyMap map[layout.KeyName]Key
 
-// Apply layout to key slice
-func (k KeyMap) Apply(source []uint32, tpl *layout.Template) error {
+// Bytes returns key map as bytes
+func (k KeyMap) Bytes(tpl *layout.Template) []byte {
+	codes := make([]uint32, 256)
 	for keyName, v := range k {
 		position := tpl.GetPosition(keyName)
 		switch v.Type {
 		case ActionKeystroke:
-			source[position] = layout.FindKeyCode(v.Keystroke.Name)
-			if IsRegularKey(source[position]) && v.Keystroke.Modifiers != nil {
-				source[position] = ApplyModifiers(source[position], v.Keystroke.Modifiers)
+			codes[position] = layout.FindKeyCode(v.Keystroke.Name)
+			if IsRegularKey(codes[position]) && v.Keystroke.Modifiers != nil {
+				codes[position] = ApplyModifiers(codes[position], v.Keystroke.Modifiers)
 			}
 		case ActionMacro:
-			source[position] = IndexToMacro(*v.MacroIndex)
+			codes[position] = IndexToMacro(*v.MacroIndex)
 		case ActionNone:
-			source[position] = 0
+			codes[position] = 0
 		}
-
 	}
-	return nil
+	return UnpackKeyCodes(codes)
 }
 
 // ParseKeyMap key map from values
-func ParseKeyMap(values []uint32, tpl *layout.Template) (*KeyMap, error) {
+func ParseKeyMap(payload []byte, tpl *layout.Template) (*KeyMap, error) {
+	codes := PackKeyCodes(payload)
 	keys := make(KeyMap)
 	for key, position := range *tpl {
-		code := values[position]
+		code := codes[position]
 		var actionType ActionType
 		var keystroke *KeystrokeParams
 		var macroIndex *uint8

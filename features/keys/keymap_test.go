@@ -50,7 +50,7 @@ var testKeyMap = keys.KeyMap{
 	},
 }
 
-func TestApply(t *testing.T) {
+func TestBytes(t *testing.T) {
 	tests := []struct {
 		expected layout.KeyName
 		code     uint32
@@ -64,29 +64,26 @@ func TestApply(t *testing.T) {
 		{layout.KeyY, keys.IndexToMacro(1)},
 		{layout.KeyR, layout.Keys[layout.KeyNone].Code},
 	}
-	source := make([]uint32, len(tests))
-	err := testKeyMap.Apply(source, &testTemplate)
-	if err != nil {
-		t.Fatalf("Apply returned an error: %v", err)
-	}
+	raw := testKeyMap.Bytes(&testTemplate)
+	codes := keys.PackKeyCodes(raw)
 
 	for i, tt := range tests {
 		t.Run(string(tt.expected), func(t *testing.T) {
-			if source[i] != tt.code {
-				t.Errorf("Expected source[%d] to be %#x, got %#x", i, tt.code, source[i])
+			if codes[i] != tt.code {
+				t.Errorf("Expected source[%d] to be %#x, got %#x", i, tt.code, codes[i])
 			}
 		})
 	}
 }
 
 func TestParseKeyMap(t *testing.T) {
-	values := []uint32{
+	values := keys.UnpackKeyCodes([]uint32{
 		keys.ApplyModifiers(layout.Keys[layout.KeyM].Code, &keys.Modifiers{Ctrl: true}),
 		layout.Keys[layout.KeyK].Code,
 		layout.Keys[layout.KeyBrightnessUp].Code,
 		keys.IndexToMacro(1),
 		layout.Keys[layout.KeyNone].Code,
-	}
+	})
 	keyMap, err := keys.ParseKeyMap(values, &testTemplate)
 	if err != nil {
 		t.Fatalf("Parse returned an error: %v", err)
