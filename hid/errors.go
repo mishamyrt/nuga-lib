@@ -9,8 +9,8 @@ import (
 // ErrNotFound is returned when the device wasn't found
 var ErrNotFound = errors.New("keyboard is not found")
 
-// ErrCountMismatch is returned when transmitted number of bytes is not expected
-var ErrCountMismatch = errors.New("transmitted number of bytes is not expected")
+// ErrCountMismatch is returned when number of bytes is not expected
+var ErrCountMismatch = errors.New("unexpected bytes count")
 
 // NewErrCountMismatch creates a byte count mismatch error.
 func NewErrCountMismatch(expected, actual int) error {
