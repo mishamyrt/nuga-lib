@@ -28,6 +28,7 @@ jobs:
       - name: Check code style with revive
         uses: docker://morphy/revive-action:v2
         with:
+          exclude: "./examples/..."
           config: revive.toml
           path: "./..."
   test:
