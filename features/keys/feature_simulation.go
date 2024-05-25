@@ -57,7 +57,7 @@ func (f *FeatureSimulation) SetWin(m *KeyMap) error {
 	if f.template == nil {
 		return ErrNoTemplate
 	}
-	f.state.Mac = m
+	f.state.Win = m
 	return nil
 }
 
