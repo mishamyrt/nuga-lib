@@ -65,7 +65,7 @@ func recordMap(dev *nuga.Device) {
 }
 
 func saveDump(d *nuga.Device, path string) {
-	state, err := d.Features.Light.GetCustomEffectColors()
+	state, err := d.Features.Light.GetCustomEffect()
 	if err != nil {
 		die("Error getting state: %v", err)
 	}
@@ -84,12 +84,12 @@ func restoreDump(d *nuga.Device, path string) {
 	if err != nil {
 		die("Error reading file: %v", err)
 	}
-	var state light.CustomBacklightMap
+	var state light.CustomEffectMap
 	err = json.Unmarshal(data, &state)
 	if err != nil {
 		die("Error unmarshalling: %v", err)
 	}
-	err = d.Features.Light.SetCustomEffectColors(&state)
+	err = d.Features.Light.SetCustomEffect(&state)
 	if err != nil {
 		die("Error restoring state: %v", err)
 	}
