@@ -3,6 +3,7 @@ package keys
 import (
 	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/hid"
+	"github.com/mishamyrt/nuga-lib/internal/assert"
 	"github.com/mishamyrt/nuga-lib/layout"
 )
 
@@ -13,14 +14,10 @@ type Feature struct {
 }
 
 // New creates keys feature instance.
-func New(handle hid.Handler, model *device.Model) *Feature {
-	var template *layout.Template
-	if model != nil {
-		template = layout.GetKeystrokeTemplate(*model)
-	}
+func New(handle hid.Handler, model device.Model) *Feature {
 	return &Feature{
 		handle:   handle,
-		template: template,
+		template: layout.GetKeystrokeTemplate(model),
 	}
 }
 
@@ -29,108 +26,126 @@ func (f *Feature) GetWin() (*KeyMap, error) {
 	return f.getKeys(cmdGetWinKeys)
 }
 
+// SetWin sets win keyboard keys
+func (f *Feature) SetWin(keyMap *KeyMap) error {
+	return f.setKeys(cmdSetWinKeys, keyMap)
+}
+
 // GetMac returns mac keyboard keys
 func (f *Feature) GetMac() (*KeyMap, error) {
 	return f.getKeys(cmdGetMacKeys)
 }
 
-// SetWin sets win keyboard keys
-func (f *Feature) SetWin(keyMap *KeyMap) error {
-	return f.setKeys(cmdGetWinKeys, cmdSetWinKeys, keyMap)
-}
-
 // SetMac sets mac keyboard keys
 func (f *Feature) SetMac(keyMap *KeyMap) error {
-	return f.setKeys(cmdGetMacKeys, cmdSetMacKeys, keyMap)
+	return f.setKeys(cmdSetMacKeys, keyMap)
 }
 
-// GetMacCodes returns mac keyboard key codes
-func (f *Feature) GetMacCodes() ([]uint32, error) {
-	return f.getKeyCodes(cmdGetMacKeys)
-}
-
-// GetWinCodes returns win keyboard key codes
-func (f *Feature) GetWinCodes() ([]uint32, error) {
-	return f.getKeyCodes(cmdGetWinKeys)
-}
-
-// SetMacCodes sets mac keyboard key codes
-func (f *Feature) SetMacCodes(keys []uint32) error {
-	return f.setKeyCodes(cmdSetMacKeys, keys)
-}
-
-// SetWinCodes sets win keyboard key codes
-func (f *Feature) SetWinCodes(keys []uint32) error {
-	return f.setKeyCodes(cmdSetWinKeys, keys)
-}
-
-// GetMacros returns macros
-func (f *Feature) GetMacros() (Macros, error) {
+// GetRawMacros returns raw keyboard macros
+func (f *Feature) GetRawMacros() ([]byte, error) {
 	resp, err := f.handle.Request(cmdGetMacro, 1032)
 	if err != nil {
 		return nil, err
 	}
-	return ParseMacros(resp)
+	return resp[7:], nil
 }
 
-// SetMacros sets macros
-func (f *Feature) SetMacros(macros Macros) error {
+// SetRawMacros sets raw keyboard macros
+func (f *Feature) SetRawMacros(data []byte) error {
 	request := make([]byte, 0, 1032)
 	request = append(request, cmdSetMacro...)
-	data, err := macros.Bytes()
-	if err != nil {
-		return err
-	}
 	request = append(request, data...)
 	return f.handle.Send(request)
 }
 
-// Parse raw keys
-func (f *Feature) Parse(keys []uint32) (*KeyMap, error) {
-	return ParseKeyMap(keys, f.template)
+// GetMacros returns macros
+func (f *Feature) GetMacros() (Macros, error) {
+	raw, err := f.GetRawMacros()
+	if err != nil {
+		return nil, err
+	}
+	return ParseMacros(raw)
 }
 
-func (f *Feature) getKeyCodes(cmd []byte) ([]uint32, error) {
+// SetMacros sets macros
+func (f *Feature) SetMacros(macros Macros) error {
+	data, err := macros.Bytes()
+	if err != nil {
+		return err
+	}
+	return f.SetRawMacros(data)
+}
+
+// GetStateData returns current raw keys state
+func (f *Feature) GetStateData() (*StateData, error) {
+	mac, err := f.getRawKeys(cmdGetMacKeys)
+	if err != nil {
+		return nil, err
+	}
+	win, err := f.getRawKeys(cmdGetWinKeys)
+	if err != nil {
+		return nil, err
+	}
+	macros, err := f.GetRawMacros()
+	if err != nil {
+		return nil, err
+	}
+	return &StateData{
+		Mac:    mac,
+		Win:    win,
+		Macros: macros,
+	}, nil
+}
+
+// SetStateData sets current raw keys state
+func (f *Feature) SetStateData(data *StateData) error {
+	if err := f.setRawKeys(cmdSetMacKeys, data.Mac); err != nil {
+		return err
+	}
+	if err := f.setRawKeys(cmdSetWinKeys, data.Win); err != nil {
+		return err
+	}
+	return f.SetRawMacros(data.Macros)
+}
+
+func (f *Feature) getRawKeys(cmd []byte) ([]byte, error) {
 	response, err := f.handle.Request(cmd, 1032)
 	if err != nil {
 		return nil, err
 	}
-	return PackKeyCodes(response[7:]), nil
+	err = assert.SliceValue(response, 1, cmd[2])
+	if err != nil {
+		return nil, err
+	}
+	return response[7:], nil
+}
+
+func (f *Feature) setRawKeys(cmd []byte, data []byte) error {
+	request := make([]byte, 0, 1032)
+	request = append(request, cmd...)
+	request = append(request, data...)
+	return f.handle.Send(request)
 }
 
 func (f *Feature) getKeys(cmd []byte) (*KeyMap, error) {
 	if f.template == nil {
 		return nil, ErrNoTemplate
 	}
-	codes, err := f.getKeyCodes(cmd)
+	raw, err := f.getRawKeys(cmd)
 	if err != nil {
 		return nil, err
 	}
-	keys, err := ParseKeyMap(codes, f.template)
+	keys, err := ParseKeyMap(raw, f.template)
 	if err != nil {
 		return nil, err
 	}
 	return keys, nil
 }
 
-func (f *Feature) setKeyCodes(cmd []byte, keys []uint32) error {
-	request := make([]byte, 0, 1032)
-	request = append(request, cmd...)
-	request = append(request, UnpackKeyCodes(keys)...)
-	return f.handle.Send(request)
-}
-
-func (f *Feature) setKeys(cmdGet []byte, cmdSet []byte, keys *KeyMap) error {
+func (f *Feature) setKeys(cmdSet []byte, keys *KeyMap) error {
 	if f.template == nil {
 		return ErrNoTemplate
 	}
-	codes, err := f.getKeyCodes(cmdGet)
-	if err != nil {
-		return err
-	}
-	err = keys.Apply(codes, f.template)
-	if err != nil {
-		return err
-	}
-	return f.setKeyCodes(cmdSet, codes)
+	raw := keys.Bytes(f.template)
+	return f.setRawKeys(cmdSet, raw)
 }

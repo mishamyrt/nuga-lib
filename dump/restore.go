@@ -1,40 +1,17 @@
 package dump
 
 import (
-	"github.com/mishamyrt/nuga-lib/features/keys"
-	"github.com/mishamyrt/nuga-lib/features/light"
+	"github.com/mishamyrt/nuga-lib/device"
+	"github.com/mishamyrt/nuga-lib/features"
 	"github.com/mishamyrt/nuga-lib/hid"
 )
 
 // Restore device state
-func Restore(h hid.Handler, s *State) error {
-	k := keys.New(h, nil)
-	l := light.New(h, nil)
-	colors := light.ParseColorsState(s.Lights.Colors)
-	effects := light.ParseParamsState(s.Lights.Params)
-	err := l.SetBacklightColors(colors)
-	if err != nil {
+func Restore(dev *hid.Device, s *State) error {
+	model := device.Model(dev.Info.Model)
+	f := features.New(dev, model)
+	if err := f.Light.SetStateData(s.Data.Lights); err != nil {
 		return err
 	}
-	macros, err := keys.ParseHeadlessMacros(s.Keys.Macros)
-	if err != nil {
-		return err
-	}
-	err = k.SetMacros(macros)
-	if err != nil {
-		return err
-	}
-	err = k.SetMacCodes(s.Keys.Mac)
-	if err != nil {
-		return err
-	}
-	err = k.SetWinCodes(s.Keys.Win)
-	if err != nil {
-		return err
-	}
-	err = l.SetEffects(effects)
-	if err != nil {
-		return err
-	}
-	return nil
+	return f.Keys.SetStateData(s.Data.Keys)
 }
