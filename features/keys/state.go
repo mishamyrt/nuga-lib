@@ -33,6 +33,9 @@ type StateData struct {
 
 // Parse raw state data.
 func (s *StateData) Parse(tpl *layout.Template) (*State, error) {
+	if tpl == nil {
+		return nil, ErrNoTemplate
+	}
 	mac, err := ParseKeyMap(s.Mac, tpl)
 	if err != nil {
 		return nil, err

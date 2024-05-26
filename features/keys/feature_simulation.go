@@ -18,7 +18,9 @@ func NewSimulation(s *StateData, model device.Model) (*FeatureSimulation, error)
 		err error
 	)
 	f.template = layout.GetKeystrokeTemplate(model)
-	f.state, err = s.Parse(f.template)
+	if f.template != nil {
+		f.state, err = s.Parse(f.template)
+	}
 	if err != nil {
 		return nil, err
 	}
