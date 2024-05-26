@@ -2,12 +2,14 @@ package nuga_test
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"testing"
 
 	"github.com/mishamyrt/nuga-lib"
 	"github.com/mishamyrt/nuga-lib/dump"
+	"github.com/mishamyrt/nuga-lib/features/keys"
 )
 
 func readTemplate(model string) (*dump.State, error) {
@@ -25,21 +27,37 @@ func readTemplate(model string) (*dump.State, error) {
 }
 
 func TestOpenSimulation(t *testing.T) {
-	t.Parallel()
-	model := "Halo75"
-	template, err := readTemplate(model)
-	if err != nil {
-		t.Errorf("Error while reading template: %v", err)
+	tests := []struct {
+		model           string
+		expectKeysError bool
+	}{
+		{"Halo75", false},
+		{"Halo65", false},
+		{"Halo96", true},
 	}
-	device, err := nuga.FromTemplate(template)
-	if err != nil {
-		t.Errorf("Expected error on opening simulation: %v", err)
-	}
-	if device == nil {
-		t.Error("Expected non-nil device, got nil")
-		return
-	}
-	if string(device.Name) != model {
-		t.Errorf("Unexpected device name '%v'. Expected '%v'", device.Name, model)
+	for _, tt := range tests {
+		t.Run(tt.model, func(t *testing.T) {
+			template, err := readTemplate(tt.model)
+			if err != nil {
+				t.Errorf("Error while reading template: %v", err)
+			}
+			device, err := nuga.FromTemplate(template)
+			if err != nil {
+				passError := tt.expectKeysError
+				if !passError {
+					passError = passError && errors.Is(err, keys.ErrNoTemplate)
+				}
+				if !passError {
+					t.Errorf("Unexpected error on opening simulation: %v", err)
+				}
+			}
+			if device == nil {
+				t.Error("Expected non-nil device, got nil")
+				return
+			}
+			if string(device.Name) != tt.model {
+				t.Errorf("Unexpected device name '%v'. Expected '%v'", device.Name, tt.model)
+			}
+		})
 	}
 }
