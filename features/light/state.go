@@ -41,7 +41,10 @@ func (s *StateData) Parse(tpl *layout.Template) (*State, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "colors")
 	}
-	effects := ParseEffects(s.Params)
+	effects, err := ParseEffects(s.Params)
+	if err != nil {
+		return nil, errors.Wrap(err, "effects")
+	}
 	var customEffect *CustomEffectMap
 	if tpl != nil {
 		custom, err := ParseCustomEffect(s.CustomEffect, tpl)

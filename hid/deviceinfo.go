@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/sstallion/go-hid"
 )
 
@@ -16,7 +17,7 @@ var ErrWrongVendor = errors.New("device vendor is not NuPhy")
 
 // DeviceInfo represents NuPhy keyboard HID information
 type DeviceInfo struct {
-	Model    string
+	Model    device.Model
 	Firmware string
 	Path     string
 }
@@ -36,7 +37,7 @@ func GetDeviceInfo(d *hid.Device) (*DeviceInfo, error) {
 		return nil, err
 	}
 	return &DeviceInfo{
-		Model:    model,
+		Model:    device.Model(model),
 		Path:     info.Path,
 		Firmware: FormatVersion(info.ReleaseNbr),
 	}, nil

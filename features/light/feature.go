@@ -49,7 +49,7 @@ func (f *Feature) GetEffects() (*Effects, error) {
 	if err != nil {
 		return nil, err
 	}
-	return ParseEffects(raw), err
+	return ParseEffects(raw)
 }
 
 // SetEffects sets keyboard effects.
