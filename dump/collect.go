@@ -8,8 +8,7 @@ import (
 )
 
 // Collect device state
-func Collect(dev *hid.Device) (*State, error) {
-	model := device.Model(dev.Info.Model)
+func Collect(dev hid.Handler, model device.Model) (*State, error) {
 	f := features.New(dev, model)
 	lights, err := f.Light.GetStateData()
 	if err != nil {
