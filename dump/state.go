@@ -7,7 +7,6 @@ import (
 
 // State represents raw device state. It contains data of all supported features
 type State struct {
-	Model    device.Model       `json:"model"`
-	Firmware string             `json:"firmware"`
-	Data     features.StateData `json:"state"`
+	Model device.Model       `json:"model"`
+	Data  features.StateData `json:"state"`
 }

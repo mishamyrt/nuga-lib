@@ -20,8 +20,7 @@ func Collect(dev *hid.Device) (*State, error) {
 		return nil, err
 	}
 	return &State{
-		Model:    model,
-		Firmware: dev.Info.Firmware,
+		Model: model,
 		Data: features.StateData{
 			Lights: lights,
 			Keys:   keys,

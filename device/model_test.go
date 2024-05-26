@@ -9,7 +9,7 @@ import (
 func TestIsSupported(t *testing.T) {
 	t.Parallel()
 	tests := []struct {
-		name   string
+		name   device.Model
 		expect bool
 	}{
 		{"UnknownModel", false},
@@ -19,7 +19,7 @@ func TestIsSupported(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(string(tt.name), func(t *testing.T) {
 			if device.IsSupported(tt.name) != tt.expect {
 				t.Errorf("Expected %v, got %v", tt.expect, device.IsSupported(tt.name))
 			}

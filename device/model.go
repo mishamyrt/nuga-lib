@@ -11,10 +11,11 @@ const (
 	Halo65 Model = "Halo65"
 	// Halo96 represents NuPhy Halo 96 keyboard name
 	Halo96 Model = "Halo96"
+	// Unknown represents unknown keyboard name
+	Unknown Model = ""
 )
 
 // IsSupported returns true if model is supported by Nuga library
-func IsSupported(model string) bool {
-	m := Model(model)
+func IsSupported(m Model) bool {
 	return m == Halo75 || m == Halo65 || m == Halo96
 }
