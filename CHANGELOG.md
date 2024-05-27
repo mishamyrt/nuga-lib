@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.9.1](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.9.1) - 2024-05-27
+### Bug Fixes
+- avoid non-template keyboard parsing
+
+### Features
+- improve effect parsing error handling
+- remove firmware version from dump
+
+### Refactoring
+- rework cli utilities
+- use handler by interface
+
+### Testing
+- check all simulations
+
+
 ## [v0.9.0](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.9.0) - 2024-05-26
 ### Bug Fixes
 - clarify device response check
@@ -231,7 +247,8 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.9.1...HEAD
+[v0.9.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.9.0...v0.9.1
 [v0.9.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.2...v0.9.0
 [v0.8.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.1...v0.8.2
 [v0.8.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.0...v0.8.1
