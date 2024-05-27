@@ -2,10 +2,10 @@ GOLANGCI_LINT_VERSION = v1.56.2
 REVIVE_VERSION = v1.3.7
 GIT_CHGLOG_VERSION = v0.15.4
 GO_BIN_PATH := $(shell go env GOPATH)/bin
-TEST_MODULES := $(shell go list ./... | grep -v /examples/)
+TEST_MODULES := $(shell go list ./... | grep -v -e /examples/ -e /cmd/)
 
 define build_app
-	cd "examples/$1"; go build -o "../../build/nuga-$1"
+	cd "cmd/$1"; go build -o "../../build/nuga-$1"
 endef
 
 .PHONY: setup
@@ -34,9 +34,7 @@ coverage:
 
 .PHONY: build
 build:
-	$(call build_app,custom-effect)
 	$(call build_app,dump)
-	$(call build_app,describe)
 
 .PHONY: clean
 clean:

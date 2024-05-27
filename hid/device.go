@@ -28,6 +28,11 @@ type Device struct {
 	lock   *sync.Mutex
 }
 
+// Handler returns device handler
+func (d *Device) Handler() Handler {
+	return d
+}
+
 // Send the request and re-sends it if the request fails.
 func (d *Device) Send(payload []byte) error {
 	var err error
