@@ -16,6 +16,7 @@ type EffectParams struct {
 	Brightness uint8 `json:"brightness"`
 }
 
+// NewEffectParams creates new effect parameters.
 func NewEffectParams(color uint8, speed uint8, brightness uint8) (*EffectParams, error) {
 	if color > 7 {
 		return nil, errors.Wrap(ErrOutOfRange, "color")
