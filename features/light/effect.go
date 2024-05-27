@@ -109,15 +109,15 @@ func ParseEffects(data []byte) (*Effects, error) {
 	result.Backlight.Params = make([]EffectParams, 29)
 	for i := range result.Backlight.Params {
 		offset := colorParamsOffset + (i * 2)
-
 		if data[offset] == 255 {
 			continue
 		}
 		p := effectAppearance(data[offset+1])
-		_, err := NewEffectParams(data[offset], p.Speed(), p.Brightness())
+		params, err := NewEffectParams(data[offset], p.Speed(), p.Brightness())
 		if err != nil {
 			return nil, err
 		}
+		result.Backlight.Params[i] = *params
 	}
 	return result, nil
 }
