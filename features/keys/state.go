@@ -1,6 +1,9 @@
 package keys
 
-import "github.com/mishamyrt/nuga-lib/layout"
+import (
+	"github.com/mishamyrt/nuga-lib/device"
+	"github.com/mishamyrt/nuga-lib/layout"
+)
 
 // State represents parsed keys state.
 type State struct {
@@ -10,29 +13,22 @@ type State struct {
 }
 
 // Data returns raw keys state.
-func (s *State) Data(tpl *layout.Template) (*StateData, error) {
+func (s *State) Data(tpl *layout.Template, defaults *device.KeysState) (*device.KeysState, error) {
 	macros, err := s.Macros.Bytes()
 	if err != nil {
 		return nil, err
 	}
-	mac := s.Mac.Bytes(tpl)
-	win := s.Win.Bytes(tpl)
-	return &StateData{
+	mac := s.Mac.Bytes(tpl, defaults.Mac)
+	win := s.Win.Bytes(tpl, defaults.Win)
+	return &device.KeysState{
 		Mac:    mac,
 		Win:    win,
 		Macros: macros,
 	}, nil
 }
 
-// StateData represents raw keys state.
-type StateData struct {
-	Mac    []byte `json:"mac"`
-	Win    []byte `json:"win"`
-	Macros []byte `json:"macros"`
-}
-
 // Parse raw state data.
-func (s *StateData) Parse(tpl *layout.Template) (*State, error) {
+func ParseState(s *device.KeysState, tpl *layout.Template) (*State, error) {
 	if tpl == nil {
 		return nil, ErrNoTemplate
 	}

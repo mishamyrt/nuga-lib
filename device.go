@@ -41,12 +41,15 @@ func Open() (*Device, error) {
 	}
 	model := device.Model(handle.Info.Model)
 	capabilities := GetCapabilities(model)
-	featuresRepo := features.New(handle, model)
+	repo, err := features.New(handle, model)
+	if err != nil {
+		return nil, err
+	}
 	return &Device{
 		Name:         model,
 		Path:         handle.Info.Path,
 		Firmware:     handle.Info.Firmware,
-		Features:     featuresRepo,
+		Features:     repo,
 		Capabilities: capabilities,
 		Handle:       handle,
 	}, nil

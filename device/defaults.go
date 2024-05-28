@@ -1,18 +1,16 @@
-package dump
+package device
 
 import (
 	"embed"
 	"encoding/json"
 	"fmt"
-
-	"github.com/mishamyrt/nuga-lib/device"
 )
 
 //go:embed all:defaults
 var defaults embed.FS
 
 // GetDefaults returns default state for given model
-func GetDefaults(model device.Model) (*State, error) {
+func GetDefaults(model Model) (*State, error) {
 	filePath := fmt.Sprintf("defaults/%v.nugafile", string(model))
 	data, err := defaults.ReadFile(filePath)
 	if err != nil {

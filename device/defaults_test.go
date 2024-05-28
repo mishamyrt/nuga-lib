@@ -1,10 +1,9 @@
-package dump_test
+package device_test
 
 import (
 	"testing"
 
 	"github.com/mishamyrt/nuga-lib/device"
-	"github.com/mishamyrt/nuga-lib/dump"
 )
 
 func TestGetDefaults(t *testing.T) {
@@ -21,7 +20,7 @@ func TestGetDefaults(t *testing.T) {
 	// Run tests
 	for _, test := range tests {
 		t.Run(string(test.model), func(t *testing.T) {
-			state, err := dump.GetDefaults(test.model)
+			state, err := device.GetDefaults(test.model)
 
 			if test.expectingError {
 				if err == nil {

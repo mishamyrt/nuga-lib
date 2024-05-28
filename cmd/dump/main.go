@@ -8,7 +8,6 @@ import (
 
 	"github.com/mishamyrt/nuga-lib"
 	"github.com/mishamyrt/nuga-lib/device"
-	"github.com/mishamyrt/nuga-lib/dump"
 	"github.com/mishamyrt/nuga-lib/features/keys"
 	"github.com/mishamyrt/nuga-lib/features/light"
 	"github.com/mishamyrt/nuga-lib/hid"
@@ -33,7 +32,7 @@ var (
 		Run: func(_ []string) {
 			dev, err := nuga.Open()
 			cli.Must("open device", err)
-			state, err := dump.Collect(dev.Handle, dev.Name)
+			state, err := nuga.Collect(dev.Handle, dev.Name)
 			cli.Must("collect device state", err)
 			data, err := json.Marshal(&state)
 			cli.Must("marshal device state", err)
@@ -53,7 +52,7 @@ var (
 			cli.Must("open device", err)
 			state, err := readStateDump(inputPath)
 			cli.Must("read state file", err)
-			cli.Must("restore device state", dump.Restore(d, state))
+			cli.Must("restore device state", nuga.Restore(d, state))
 		},
 	}
 
@@ -106,14 +105,14 @@ var (
 			err = json.Unmarshal(data, &originalDump)
 			cli.Must("unmarshal file", err)
 
-			var nugafile dump.State
+			var nugafile device.State
 			nugafile.Model = device.Model(originalDump.Name)
-			nugafile.Data.Lights = &light.StateData{
+			nugafile.Data.Lights = &device.LightsState{
 				Colors:       originalDump.Lights.Colors[7:1031],
 				Params:       originalDump.Lights.Params[15:138],
 				CustomEffect: make([]byte, 1024),
 			}
-			nugafile.Data.Keys = &keys.StateData{
+			nugafile.Data.Keys = &device.KeysState{
 				Mac:    keys.UnpackKeyCodes(originalDump.Keys.Mac),
 				Win:    keys.UnpackKeyCodes(originalDump.Keys.Win),
 				Macros: make([]byte, 1024),
@@ -145,8 +144,8 @@ type jsonDump struct {
 	}
 }
 
-func readStateDump(path string) (*dump.State, error) {
-	var state dump.State
+func readStateDump(path string) (*device.State, error) {
+	var state device.State
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err

@@ -1,7 +1,7 @@
 package nuga
 
 import (
-	"github.com/mishamyrt/nuga-lib/dump"
+	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/features"
 )
 
@@ -11,8 +11,8 @@ const (
 )
 
 // FromTemplate creates simulated keyboard
-func FromTemplate(t *dump.State) (*Device, error) {
-	f, err := features.NewSimulation(&t.Data, t.Model)
+func FromTemplate(t *device.State) (*Device, error) {
+	f, err := features.NewSimulation(t)
 	if err != nil {
 		return nil, err
 	}

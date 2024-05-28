@@ -1,6 +1,7 @@
 package light
 
 import (
+	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/layout"
 	"github.com/pkg/errors"
 )
@@ -13,7 +14,7 @@ type State struct {
 }
 
 // Data returns raw state data.
-func (s *State) Data(tpl *layout.Template) *StateData {
+func (s *State) Data(tpl *layout.Template) *device.LightsState {
 	var customEffect []byte
 	if tpl != nil {
 		custom, err := s.CustomEffect.Bytes(tpl)
@@ -21,22 +22,15 @@ func (s *State) Data(tpl *layout.Template) *StateData {
 			customEffect = custom
 		}
 	}
-	return &StateData{
+	return &device.LightsState{
 		Colors:       s.Colors.Bytes(),
 		Params:       s.Effects.Bytes(),
 		CustomEffect: customEffect,
 	}
 }
 
-// StateData represents raw lights state.
-type StateData struct {
-	Colors       []byte `json:"colors"`
-	Params       []byte `json:"effects"`
-	CustomEffect []byte `json:"custom_effect"`
-}
-
 // Parse raw state data.
-func (s *StateData) Parse(tpl *layout.Template) (*State, error) {
+func ParseState(s *device.LightsState, tpl *layout.Template) (*State, error) {
 	colors, err := ParseBacklightColors(s.Colors)
 	if err != nil {
 		return nil, errors.Wrap(err, "colors")

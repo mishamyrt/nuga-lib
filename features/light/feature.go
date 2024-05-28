@@ -131,7 +131,7 @@ func (f *Feature) SetCustomEffect(colors *CustomEffectMap) error {
 }
 
 // GetStateData returns current keyboard light state.
-func (f *Feature) GetStateData() (*StateData, error) {
+func (f *Feature) GetStateData() (*device.LightsState, error) {
 	colors, err := f.GetRawBacklightColors()
 	if err != nil {
 		return nil, err
@@ -144,7 +144,7 @@ func (f *Feature) GetStateData() (*StateData, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &StateData{
+	return &device.LightsState{
 		Colors:       colors,
 		Params:       params,
 		CustomEffect: customEffect,
@@ -152,7 +152,7 @@ func (f *Feature) GetStateData() (*StateData, error) {
 }
 
 // SetStateData sets keyboard light state.
-func (f *Feature) SetStateData(data *StateData) error {
+func (f *Feature) SetStateData(data *device.LightsState) error {
 	if err := f.SetRawBacklightColors(data.Colors); err != nil {
 		return err
 	}

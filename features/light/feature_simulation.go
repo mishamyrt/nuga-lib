@@ -12,9 +12,9 @@ type FeatureSimulation struct {
 }
 
 // NewSimulation creates simulated light from template.
-func NewSimulation(s *StateData, model device.Model) (*FeatureSimulation, error) {
+func NewSimulation(s *device.LightsState, model device.Model) (*FeatureSimulation, error) {
 	template := layout.GetBacklightTemplate(model)
-	state, err := s.Parse(template)
+	state, err := ParseState(s, template)
 	if err != nil {
 		return nil, err
 	}
@@ -64,13 +64,13 @@ func (f *FeatureSimulation) SetCustomEffect(c *CustomEffectMap) error {
 }
 
 // GetStateData returns current simulated state.
-func (f *FeatureSimulation) GetStateData() (*StateData, error) {
+func (f *FeatureSimulation) GetStateData() (*device.LightsState, error) {
 	return f.state.Data(f.template), nil
 }
 
 // SetStateData sets current simulated state.
-func (f *FeatureSimulation) SetStateData(s *StateData) error {
-	state, err := s.Parse(f.template)
+func (f *FeatureSimulation) SetStateData(s *device.LightsState) error {
+	state, err := ParseState(s, f.template)
 	if err != nil {
 		return err
 	}

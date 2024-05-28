@@ -8,17 +8,17 @@ import (
 	"testing"
 
 	"github.com/mishamyrt/nuga-lib"
-	"github.com/mishamyrt/nuga-lib/dump"
+	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/features/keys"
 )
 
-func readTemplate(model string) (*dump.State, error) {
-	path := fmt.Sprintf("dump/defaults/%v.nugafile", model)
+func readTemplate(model string) (*device.State, error) {
+	path := fmt.Sprintf("device/defaults/%v.nugafile", model)
 	content, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	var template dump.State
+	var template device.State
 	err = json.Unmarshal(content, &template)
 	if err != nil {
 		return nil, err

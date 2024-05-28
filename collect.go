@@ -1,5 +1,5 @@
 // Package dump provides device state collector
-package dump
+package nuga
 
 import (
 	"github.com/mishamyrt/nuga-lib/device"
@@ -8,8 +8,11 @@ import (
 )
 
 // Collect device state
-func Collect(dev hid.Handler, model device.Model) (*State, error) {
-	f := features.New(dev, model)
+func Collect(dev hid.Handler, model device.Model) (*device.State, error) {
+	f, err := features.New(dev, model)
+	if err != nil {
+		return nil, err
+	}
 	lights, err := f.Light.GetStateData()
 	if err != nil {
 		return nil, err
@@ -18,9 +21,9 @@ func Collect(dev hid.Handler, model device.Model) (*State, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &State{
+	return &device.State{
 		Model: model,
-		Data: features.StateData{
+		Data: device.StateData{
 			Lights: lights,
 			Keys:   keys,
 		},
