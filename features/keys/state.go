@@ -27,7 +27,7 @@ func (s *State) Data(tpl *layout.Template, defaults *device.KeysState) (*device.
 	}, nil
 }
 
-// Parse raw state data.
+// ParseState parses raw state data.
 func ParseState(s *device.KeysState, tpl *layout.Template) (*State, error) {
 	if tpl == nil {
 		return nil, ErrNoTemplate

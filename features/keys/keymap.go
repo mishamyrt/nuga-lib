@@ -1,6 +1,8 @@
 package keys
 
-import "github.com/mishamyrt/nuga-lib/layout"
+import (
+	"github.com/mishamyrt/nuga-lib/layout"
+)
 
 // ActionType represents action type
 type ActionType string
@@ -30,24 +32,35 @@ type Key struct {
 // KeyMap represents keyboard layout
 type KeyMap map[layout.KeyName]Key
 
+// SetKey sets key
+func (k KeyMap) SetKey(name layout.KeyName, value Key) error {
+	if _, ok := k[name]; !ok {
+		return ErrKeyNotFound
+	}
+	k[name] = value
+	return nil
+}
+
 // Bytes returns key map as bytes
-func (k KeyMap) Bytes(tpl *layout.Template) []byte {
-	codes := make([]uint32, 256)
+func (k KeyMap) Bytes(tpl *layout.Template, defaults []byte) []byte {
+	raw := make([]byte, len(defaults))
+	copy(raw, defaults)
 	for keyName, v := range k {
+		var code uint32
 		position := tpl.GetPosition(keyName)
 		switch v.Type {
 		case ActionKeystroke:
-			codes[position] = layout.FindKeyCode(v.Keystroke.Name)
-			if IsRegularKey(codes[position]) && v.Keystroke.Modifiers != nil {
-				codes[position] = ApplyModifiers(codes[position], v.Keystroke.Modifiers)
+			code = layout.FindKeyCode(v.Keystroke.Name)
+			if IsRegularKey(code) && v.Keystroke.Modifiers != nil {
+				code = ApplyModifiers(code, v.Keystroke.Modifiers)
 			}
 		case ActionMacro:
-			codes[position] = IndexToMacro(*v.MacroIndex)
-		case ActionNone:
-			codes[position] = 0
+			code = IndexToMacro(*v.MacroIndex)
 		}
+		rawPosition := position * 4
+		UnpackKeyCode(code, raw[rawPosition:rawPosition+4])
 	}
-	return UnpackKeyCodes(codes)
+	return raw
 }
 
 // ParseKeyMap key map from values

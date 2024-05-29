@@ -22,8 +22,8 @@ type LightFeature interface {
 	SetBacklightColors(*light.BacklightColors) error
 	GetCustomEffect() (*light.CustomEffectMap, error)
 	SetCustomEffect(*light.CustomEffectMap) error
-	GetStateData() (*light.StateData, error)
-	SetStateData(*light.StateData) error
+	GetStateData() (*device.LightsState, error)
+	SetStateData(*device.LightsState) error
 }
 
 // KeysFeature represents keyboard keys feature
@@ -34,14 +34,18 @@ type KeysFeature interface {
 	SetMac(keyMap *keys.KeyMap) error
 	GetMacros() (keys.Macros, error)
 	SetMacros(macros keys.Macros) error
-	GetStateData() (*keys.StateData, error)
-	SetStateData(*keys.StateData) error
+	GetStateData() (*device.KeysState, error)
+	SetStateData(*device.KeysState) error
 }
 
 // New creates Features instance with handle
-func New(dev hid.Handler, model device.Model) *Features {
+func New(dev hid.Handler, model device.Model) (*Features, error) {
+	k, err := keys.New(dev, model)
+	if err != nil {
+		return nil, err
+	}
 	return &Features{
 		Light: light.New(dev, model),
-		Keys:  keys.New(dev, model),
-	}
+		Keys:  k,
+	}, nil
 }

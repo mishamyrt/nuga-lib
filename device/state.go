@@ -7,7 +7,7 @@ type LightsState struct {
 	CustomEffect []byte `json:"custom_effect"`
 }
 
-// StateData represents raw keys state.
+// KeysState represents raw keys state.
 type KeysState struct {
 	Mac    []byte `json:"mac"`
 	Win    []byte `json:"win"`

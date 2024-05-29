@@ -1,4 +1,3 @@
-// Package dump provides device state collector
 package nuga
 
 import (

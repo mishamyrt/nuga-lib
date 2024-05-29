@@ -29,7 +29,7 @@ func (s *State) Data(tpl *layout.Template) *device.LightsState {
 	}
 }
 
-// Parse raw state data.
+// ParseState parses raw state data.
 func ParseState(s *device.LightsState, tpl *layout.Template) (*State, error) {
 	colors, err := ParseBacklightColors(s.Colors)
 	if err != nil {

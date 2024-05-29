@@ -64,7 +64,8 @@ func TestBytes(t *testing.T) {
 		{layout.KeyY, keys.IndexToMacro(1)},
 		{layout.KeyR, layout.Keys[layout.KeyNone].Code},
 	}
-	raw := testKeyMap.Bytes(&testTemplate)
+	defaultsMock := make([]byte, len(tests)*4)
+	raw := testKeyMap.Bytes(&testTemplate, defaultsMock)
 	codes := keys.PackKeyCodes(raw)
 
 	if len(codes) < len(testTemplate) {

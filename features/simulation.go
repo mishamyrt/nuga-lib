@@ -7,19 +7,13 @@ import (
 	"github.com/pkg/errors"
 )
 
-// StateData represents raw features state. It contains data of all supported features
-type StateData struct {
-	Lights *light.StateData `json:"lights"`
-	Keys   *keys.StateData  `json:"keys"`
-}
-
 // NewSimulation creates simulated features from state
-func NewSimulation(s *StateData, model device.Model) (*Features, error) {
-	l, err := light.NewSimulation(s.Lights, model)
+func NewSimulation(s *device.State) (*Features, error) {
+	l, err := light.NewSimulation(s.Data.Lights, s.Model)
 	if err != nil {
 		return nil, errors.Wrap(err, "lights")
 	}
-	k, err := keys.NewSimulation(s.Keys, model)
+	k, err := keys.NewSimulation(s.Data.Keys, s.Model)
 	if err != nil {
 		return nil, errors.Wrap(err, "keys")
 	}

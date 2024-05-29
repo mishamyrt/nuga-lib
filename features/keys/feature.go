@@ -11,24 +11,35 @@ import (
 type Feature struct {
 	handle   hid.Handler
 	template *layout.Template
+	defaults *device.KeysState
 }
 
 // New creates keys feature instance.
-func New(handle hid.Handler, model device.Model) *Feature {
+func New(handle hid.Handler, model device.Model) (*Feature, error) {
+	template := layout.GetKeystrokeTemplate(model)
+	state, err := device.GetDefaults(model)
+	if err != nil {
+		return nil, err
+	}
 	return &Feature{
 		handle:   handle,
-		template: layout.GetKeystrokeTemplate(model),
-	}
+		template: template,
+		defaults: state.Data.Keys,
+	}, nil
 }
 
 // GetWin returns win keyboard keys
 func (f *Feature) GetWin() (*KeyMap, error) {
-	return f.getKeys(cmdGetWinKeys)
+	m, err := f.getKeys(cmdGetWinKeys)
+	if err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 // SetWin sets win keyboard keys
 func (f *Feature) SetWin(keyMap *KeyMap) error {
-	return f.setKeys(cmdSetWinKeys, keyMap)
+	return f.setKeys(cmdSetWinKeys, keyMap, f.defaults.Win)
 }
 
 // GetMac returns mac keyboard keys
@@ -38,7 +49,7 @@ func (f *Feature) GetMac() (*KeyMap, error) {
 
 // SetMac sets mac keyboard keys
 func (f *Feature) SetMac(keyMap *KeyMap) error {
-	return f.setKeys(cmdSetMacKeys, keyMap)
+	return f.setKeys(cmdSetMacKeys, keyMap, f.defaults.Mac)
 }
 
 // GetRawMacros returns raw keyboard macros
@@ -77,7 +88,7 @@ func (f *Feature) SetMacros(macros Macros) error {
 }
 
 // GetStateData returns current raw keys state
-func (f *Feature) GetStateData() (*StateData, error) {
+func (f *Feature) GetStateData() (*device.KeysState, error) {
 	mac, err := f.getRawKeys(cmdGetMacKeys)
 	if err != nil {
 		return nil, err
@@ -90,7 +101,7 @@ func (f *Feature) GetStateData() (*StateData, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &StateData{
+	return &device.KeysState{
 		Mac:    mac,
 		Win:    win,
 		Macros: macros,
@@ -98,7 +109,7 @@ func (f *Feature) GetStateData() (*StateData, error) {
 }
 
 // SetStateData sets current raw keys state
-func (f *Feature) SetStateData(data *StateData) error {
+func (f *Feature) SetStateData(data *device.KeysState) error {
 	if err := f.setRawKeys(cmdSetMacKeys, data.Mac); err != nil {
 		return err
 	}
@@ -142,10 +153,10 @@ func (f *Feature) getKeys(cmd []byte) (*KeyMap, error) {
 	return keys, nil
 }
 
-func (f *Feature) setKeys(cmdSet []byte, keys *KeyMap) error {
+func (f *Feature) setKeys(cmdSet []byte, keys *KeyMap, defaults []byte) error {
 	if f.template == nil {
 		return ErrNoTemplate
 	}
-	raw := keys.Bytes(f.template)
+	raw := keys.Bytes(f.template, defaults)
 	return f.setRawKeys(cmdSet, raw)
 }

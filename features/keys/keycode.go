@@ -20,10 +20,15 @@ func UnpackKeyCodes(v []uint32) []byte {
 	var offset int
 	for i := 0; i < len(v); i++ {
 		offset = (i * 4)
-		payload[offset] = byte(v[i] & 0xFF)
-		payload[offset+1] = byte((v[i] >> 8) & 0xFF)
-		payload[offset+2] = byte((v[i] >> 16) & 0xFF)
-		payload[offset+3] = byte((v[i] >> 24) & 0xFF)
+		UnpackKeyCode(v[i], payload[offset:offset+4])
 	}
 	return payload
+}
+
+// UnpackKeyCode unpacks key code to target slice
+func UnpackKeyCode(v uint32, target []byte) {
+	target[0] = byte(v & 0xFF)
+	target[1] = byte((v >> 8) & 0xFF)
+	target[2] = byte((v >> 16) & 0xFF)
+	target[3] = byte((v >> 24) & 0xFF)
 }

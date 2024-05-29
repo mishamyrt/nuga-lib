@@ -15,7 +15,6 @@ var keyCodes = []uint32{
 func TestPackKeyCodes(t *testing.T) {
 	t.Parallel()
 	result := PackKeyCodes(rawBytes)
-	// Check some random values
 	for i, v := range keyCodes {
 		if result[i] != v {
 			t.Errorf("result[%d] = %02x, want %02x", i, result[i], v)

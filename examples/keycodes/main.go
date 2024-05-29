@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mishamyrt/nuga-lib/dump"
+	"github.com/mishamyrt/nuga-lib/device"
 	"github.com/mishamyrt/nuga-lib/examples/keycodes/annotation"
 	"github.com/mishamyrt/nuga-lib/examples/keycodes/keymap"
 	"github.com/mishamyrt/nuga-lib/features/keys"
@@ -25,7 +25,7 @@ func main() {
 	if err != nil {
 		die("Error reading file: %v", err)
 	}
-	var state dump.State
+	var state device.State
 	err = json.Unmarshal(data, &state)
 	if err != nil {
 		die("Error unmarshalling: %v", err)

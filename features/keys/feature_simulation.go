@@ -8,18 +8,21 @@ import (
 // FeatureSimulation represents simulated keys feature.
 type FeatureSimulation struct {
 	state    *State
+	defaults *device.KeysState
 	template *layout.Template
 }
 
 // NewSimulation creates simulated keys from template.
-func NewSimulation(s *StateData, model device.Model) (*FeatureSimulation, error) {
+func NewSimulation(s *device.KeysState, model device.Model) (*FeatureSimulation, error) {
 	var (
 		f   FeatureSimulation
 		err error
 	)
+
+	f.defaults = s
 	f.template = layout.GetKeystrokeTemplate(model)
 	if f.template != nil {
-		f.state, err = s.Parse(f.template)
+		f.state, err = ParseState(s, f.template)
 	}
 	if err != nil {
 		return nil, err
@@ -79,23 +82,23 @@ func (f *FeatureSimulation) SetMacros(m Macros) error {
 }
 
 // GetStateData returns current simulated state.
-func (f *FeatureSimulation) GetStateData() (*StateData, error) {
+func (f *FeatureSimulation) GetStateData() (*device.KeysState, error) {
 	if f.template == nil {
-		return &StateData{
+		return &device.KeysState{
 			Mac:    make([]byte, 1024),
 			Win:    make([]byte, 1024),
 			Macros: make([]byte, 1024),
 		}, nil
 	}
-	return f.state.Data(f.template)
+	return f.state.Data(f.template, f.defaults)
 }
 
 // SetStateData sets current simulated state.
-func (f *FeatureSimulation) SetStateData(s *StateData) error {
+func (f *FeatureSimulation) SetStateData(s *device.KeysState) error {
 	if f.template == nil {
 		return ErrNoTemplate
 	}
-	state, err := s.Parse(f.template)
+	state, err := ParseState(s, f.template)
 	if err != nil {
 		return err
 	}
