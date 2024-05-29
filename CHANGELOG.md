@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog][],
 and this project adheres to [Semantic Versioning][].
 
 
+## [v0.9.3](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.9.3) - 2024-05-29
+### Bug Fixes
+- correctly set keycodes
+
+### Refactoring
+- move dumps to device
+
+
+## [v0.9.2](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.9.2) - 2024-05-28
+### Bug Fixes
+- set backlight effect params
+
+
 ## [v0.9.1](https://github.com/mishamyrt/nuga-lib/releases/tag/v0.9.1) - 2024-05-27
 ### Bug Fixes
 - avoid non-template keyboard parsing
@@ -247,7 +260,9 @@ and this project adheres to [Semantic Versioning][].
 
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.9.1...HEAD
+[Unreleased]: https://github.com/mishamyrt/nuga-lib/compare/v0.9.3...HEAD
+[v0.9.3]: https://github.com/mishamyrt/nuga-lib/compare/v0.9.2...v0.9.3
+[v0.9.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.9.1...v0.9.2
 [v0.9.1]: https://github.com/mishamyrt/nuga-lib/compare/v0.9.0...v0.9.1
 [v0.9.0]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.2...v0.9.0
 [v0.8.2]: https://github.com/mishamyrt/nuga-lib/compare/v0.8.1...v0.8.2
